@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SmartEdJourney — From Learning to Earning</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#08111f; --bg2:#0b1929; --bg3:#0f2035;
+  --card:#0d1e30; --border:rgba(255,255,255,0.07); --borderl:rgba(255,255,255,0.12);
+  --white:#ffffff; --offwhite:#c8daf0; --muted:#5f82a6; --muted2:#90aec8;
+  --g1:#4caf50; --g2:#66bb6a; --g3:#a8d5aa;
+  --b1:#1565c0; --b2:#1e88e5; --b3:#64b5f6;
+  --grad:linear-gradient(135deg,#1565c0,#4caf50);
+  --grad2:linear-gradient(135deg,#4caf50,#1e88e5);
+  --glow-g:rgba(76,175,80,0.15); --glow-b:rgba(30,136,229,0.15);
+  --f:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:var(--f);background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none;}
+*{cursor:none!important;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--g1);border-radius:2px;}
+
+/* ══ CURSOR ══ */
+#cx{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;}
+#cdot{width:7px;height:7px;background:var(--g1);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:width .18s,height .18s,background .18s;}
+#cring{width:34px;height:34px;border:1.5px solid rgba(76,175,80,.45);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:width .32s cubic-bezier(.22,1,.36,1),height .32s cubic-bezier(.22,1,.36,1),border-color .2s;}
+body.ch #cdot{width:14px;height:14px;background:var(--b3);}
+body.ch #cring{width:52px;height:52px;border-color:rgba(100,181,246,.4);}
+
+/* ══ NAV ══ */
+nav{position:fixed;inset:0 0 auto 0;z-index:600;height:66px;background:rgba(8,17,31,0.9);backdrop-filter:blur(28px);border-bottom:1px solid var(--border);transition:background .3s;}
+nav.scrolled{background:rgba(8,17,31,0.98);}
+.ni{max-width:1300px;margin:0 auto;padding:0 44px;height:100%;display:flex;align-items:center;gap:0;}
+.nlogo{display:flex;align-items:center;text-decoration:none;margin-right:36px;flex-shrink:0;}
+.nlogo-text{display:flex;flex-direction:column;line-height:1.15;}
+.nname2{font-size:1.05rem;font-weight:800;letter-spacing:-.01em;}
+.nname2 .nw{color:var(--white);}
+.nname2 .ng{color:var(--g1);}
+.ntagline{font-size:.52rem;font-weight:600;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:1px;}
+.nlinks{display:flex;align-items:stretch;height:66px;flex:1;}
+.nitem{position:relative;}
+.nlink{font-size:.67rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:0 15px;height:100%;display:flex;align-items:center;gap:5px;background:none;border:none;transition:color .2s;white-space:nowrap;}
+.nlink:hover,.nlink.act{color:var(--white);}
+.nlink svg{width:9px;height:9px;fill:currentColor;transition:transform .25s;}
+.nlink.act svg{transform:rotate(180deg);}
+.drop{position:absolute;top:66px;left:0;min-width:240px;background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--g1);padding:8px 0;opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .22s,transform .22s;z-index:700;}
+.nitem:hover .drop{opacity:1;pointer-events:all;transform:translateY(0);}
+.drop-item{display:block;font-size:.78rem;color:var(--muted2);padding:10px 20px;transition:background .15s,color .15s,padding-left .15s;cursor:none;}
+.drop-item:hover{background:rgba(76,175,80,.07);color:var(--g1);padding-left:26px;}
+.ncta{font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--grad);color:#fff;padding:.52rem 1.25rem;border:none;margin-left:auto;flex-shrink:0;border-radius:4px;transition:opacity .2s,transform .15s,box-shadow .2s;box-shadow:0 4px 20px rgba(76,175,80,.25);}
+.ncta:hover{opacity:.88;transform:translateY(-1px);box-shadow:0 8px 32px rgba(76,175,80,.4);}
+
+/* ══ HERO ══ */
+#hero{min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
+canvas#hbg{position:absolute;inset:0;z-index:0;}
+.hspot{position:absolute;inset:0;background:radial-gradient(700px at var(--hx,50%) var(--hy,50%),rgba(30,136,229,.08),transparent 65%);z-index:1;pointer-events:none;transition:background .04s;}
+.hgrid{position:absolute;inset:0;z-index:1;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:64px 64px;}
+.hfade{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,transparent 10%,rgba(8,17,31,.55) 55%,var(--bg) 100%);}
+.hc{position:relative;z-index:3;max-width:1300px;margin:0 auto;padding:0 44px 80px;width:100%;}
+.hbadge{display:inline-flex;align-items:center;gap:9px;background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.22);padding:.35rem .95rem;border-radius:100px;margin-bottom:36px;}
+.hbadge-dot{width:6px;height:6px;background:var(--g1);border-radius:50%;animation:hbpulse 2s infinite;}
+@keyframes hbpulse{0%,100%{box-shadow:0 0 0 0 rgba(76,175,80,.5);}50%{box-shadow:0 0 0 7px rgba(76,175,80,0);}}
+.hbadge-txt{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--g2);}
+.hh1{font-size:clamp(3rem,7.5vw,8rem);font-weight:900;line-height:1.05;letter-spacing:-.05em;margin-bottom:0;}
+.hline{display:block;overflow:visible;padding-bottom:.12em;}
+.hline-inner{display:block;transform:translateY(110%);transition:transform .95s cubic-bezier(.22,1,.36,1);padding-bottom:.05em;}
+.hline-inner.in{transform:translateY(0);}
+.hline.grad .hline-inner{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hline.dim .hline-inner{color:var(--muted2);font-weight:300;font-style:italic;}
+.hdivide{height:1px;background:var(--border);margin:40px 0;}
+.hbot{display:grid;grid-template-columns:1fr auto;gap:56px;align-items:end;}
+.hdesc{font-size:1rem;line-height:1.8;color:var(--muted2);max-width:480px;}
+.hrhs{display:flex;flex-direction:column;align-items:flex-end;gap:28px;}
+.hstats{display:flex;gap:44px;}
+.hstat-n{font-size:2.8rem;font-weight:900;letter-spacing:-.045em;line-height:1;}
+.hstat-n sup{font-size:1.3rem;color:var(--g1);}
+.hstat-l{font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.hbtns{display:flex;gap:10px;}
+.bp{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:var(--grad);color:#fff;padding:.72rem 1.5rem;border:none;border-radius:4px;transition:opacity .2s,transform .15s,box-shadow .2s;box-shadow:0 4px 22px rgba(76,175,80,.3);}
+.bp:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 10px 36px rgba(76,175,80,.45);}
+.bo{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:transparent;color:var(--white);padding:.72rem 1.5rem;border:1px solid rgba(255,255,255,.16);border-radius:4px;transition:border-color .2s,color .2s,transform .15s;}
+.bo:hover{border-color:var(--g1);color:var(--g1);transform:translateY(-2px);}
+.hscroll{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;z-index:4;}
+.hscroll-t{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.hscroll-l{width:1px;height:48px;background:linear-gradient(to bottom,var(--g1),transparent);animation:scrl 2.2s ease-in-out infinite;}
+@keyframes scrl{0%,100%{opacity:.3;height:32px;}50%{opacity:1;height:48px;}}
+
+/* ══ MARQUEE ══ */
+.mqbar{overflow:hidden;background:var(--grad);padding:12px 0;}
+.mqt{display:flex;white-space:nowrap;animation:mqa 26s linear infinite;}
+.mqt:hover{animation-play-state:paused;}
+.mqi{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#fff;padding:0 32px;opacity:.9;}
+.mqsep{opacity:.4;}
+@keyframes mqa{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ══ SECTION BASE ══ */
+.sec{padding:108px 0;}
+.w{max-width:1300px;margin:0 auto;padding:0 44px;}
+.sh{display:grid;grid-template-columns:160px 1fr;gap:56px;padding-bottom:52px;border-bottom:1px solid var(--border);align-items:start;}
+.sn{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding-top:6px;}
+.sh2{font-size:clamp(1.9rem,4vw,3.6rem);font-weight:900;letter-spacing:-.04em;line-height:1.1;overflow:visible;}
+.sh2 .g{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline;}
+.ssub{font-size:.92rem;color:var(--muted2);line-height:1.8;max-width:480px;margin-top:14px;}
+
+/* ══ REVEAL ══ */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .85s cubic-bezier(.22,1,.36,1),transform .85s cubic-bezier(.22,1,.36,1);}
+.rv.in{opacity:1;transform:none;}
+.d1{transition-delay:.07s;}.d2{transition-delay:.14s;}.d3{transition-delay:.22s;}.d4{transition-delay:.3s;}
+
+/* ══ ABOUT ══ */
+#about{background:var(--bg2);}
+.abody{display:grid;grid-template-columns:160px 1fr 280px;gap:56px;padding-top:52px;}
+.acopy p{font-size:.94rem;line-height:1.9;color:var(--muted2);margin-bottom:16px;}
+.apillars{border-left:1px solid var(--border);display:flex;flex-direction:column;}
+.apillar{padding:18px 0 18px 22px;border-bottom:1px solid var(--border);transition:background .2s;}
+.apillar:last-child{border-bottom:none;}
+.apillar:hover{background:rgba(76,175,80,.04);}
+.apillar-ico{font-size:.95rem;margin-bottom:6px;}
+.apillar-t{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g1);margin-bottom:3px;}
+.apillar-b{font-size:.77rem;color:var(--muted);line-height:1.6;}
+.ametrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:52px;}
+.amet{background:var(--bg2);padding:32px 26px;transition:background .25s;}
+.amet:hover{background:var(--card);}
+.amet-n{font-size:2.6rem;font-weight:900;letter-spacing:-.05em;line-height:1;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.amet-l{font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:5px;}
+
+/* ══ SERVICES — hover expand ══ */
+#services{background:var(--bg);}
+.svcl{margin-top:52px;}
+.svrow{border-top:1px solid var(--border);display:grid;grid-template-columns:52px 1fr 32px;gap:0;transition:background .22s;overflow:hidden;}
+.svrow:last-child{border-bottom:1px solid var(--border);}
+.svrow:hover{background:rgba(255,255,255,.025);}
+.svidx{font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--muted);padding:28px 0 28px 4px;display:flex;align-items:flex-start;}
+.svmain{padding:22px 28px 0 16px;}
+.svnr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:22px;}
+.svname{font-size:1.25rem;font-weight:800;letter-spacing:-.025em;transition:color .2s;}
+.svrow:hover .svname{color:var(--g1);}
+.svarr{color:var(--g1);font-size:1rem;opacity:0;transform:translateX(-8px);transition:opacity .22s,transform .22s;}
+.svrow:hover .svarr{opacity:1;transform:none;}
+.svexp{max-height:0;overflow:hidden;transition:max-height .48s cubic-bezier(.22,1,.36,1);}
+.svrow:hover .svexp{max-height:180px;}
+.svbody{font-size:.8rem;color:var(--muted);line-height:1.75;padding-bottom:10px;}
+.svtags{display:flex;flex-wrap:wrap;gap:5px;padding-bottom:20px;}
+.svtag{font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:3px 9px;border-radius:2px;transition:border-color .2s,color .2s;}
+.svrow:hover .svtag{border-color:rgba(76,175,80,.3);color:var(--g3);}
+
+/* ══ PROGRAMS ══ */
+#programs{background:var(--bg2);}
+.playout{display:grid;grid-template-columns:160px 1fr;gap:56px;padding-top:52px;}
+.ptabs{display:flex;flex-direction:column;position:sticky;top:78px;height:fit-content;}
+.ptab{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:none;border:none;border-bottom:1px solid var(--border);padding:14px 0;text-align:left;color:var(--muted);display:flex;align-items:center;justify-content:space-between;transition:color .2s;}
+.ptab:first-child{border-top:1px solid var(--border);}
+.ptab.act,.ptab:hover{color:var(--g1);}
+.ptab .pd{width:5px;height:5px;border-radius:50%;background:var(--border);transition:background .2s;}
+.ptab.act .pd{background:var(--g1);}
+.ppanel{display:none;}.ppanel.act{display:block;}
+.pcats{display:flex;flex-direction:column;}
+.pcat{border-top:1px solid var(--border);}
+.pcat:last-child{border-bottom:1px solid var(--border);}
+.pcath{display:flex;align-items:center;justify-content:space-between;padding:16px 0;cursor:pointer;gap:10px;}
+.pcath:hover .pcatn{color:var(--g1);}
+.pcatn{font-size:.86rem;font-weight:700;transition:color .2s;}
+.pcatm{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.pcatc{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.pcata{color:var(--muted);font-size:.68rem;transition:transform .32s;}
+.pcata.open{transform:rotate(180deg);}
+.pcatb{max-height:0;overflow:hidden;transition:max-height .42s cubic-bezier(.22,1,.36,1);}
+.pcatb.open{max-height:800px;}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding-bottom:14px;}
+.deg{font-size:.75rem;color:var(--muted);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-start;gap:8px;}
+.deg::before{content:'';width:4px;height:4px;min-width:4px;background:var(--g1);border-radius:50%;margin-top:6px;flex-shrink:0;}
+
+/* ══ PULL QUOTE ══ */
+#pq{background:var(--bg3);padding:0;overflow:hidden;}
+.pqinner{max-width:1300px;margin:0 auto;padding:88px 44px;position:relative;}
+.pqinner::before{content:'"';position:absolute;top:-20px;left:36px;font-size:20rem;font-weight:900;color:rgba(76,175,80,.04);line-height:1;pointer-events:none;}
+.pqtext{font-size:clamp(1.7rem,3.8vw,3.2rem);font-weight:900;letter-spacing:-.04em;line-height:1.15;max-width:820px;position:relative;z-index:1;overflow:visible;}
+.pqtext .hl{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline;padding-bottom:.05em;}
+.pqtext .dim{color:var(--muted);font-weight:300;font-style:italic;}
+.pqsrc{margin-top:32px;font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.pqdivl{position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--grad);}
+
+/* ══ CAREER ══ */
+#career{background:var(--bg);}
+.cbody{display:grid;grid-template-columns:160px 1fr 340px;gap:56px;padding-top:52px;}
+.csteps{display:flex;flex-direction:column;}
+.cstep{display:grid;grid-template-columns:32px 1fr;gap:18px;padding:22px 0;border-top:1px solid var(--border);transition:background .2s;}
+.cstep:last-child{border-bottom:1px solid var(--border);}
+.cstep:hover{background:rgba(255,255,255,.018);}
+.csn{width:22px;height:22px;background:var(--grad);color:#fff;font-size:.65rem;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;margin-top:1px;}
+.cst{font-size:.86rem;font-weight:700;margin-bottom:4px;}
+.csb{font-size:.77rem;color:var(--muted);line-height:1.65;}
+.ccards{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.ccard{background:var(--card);padding:20px 18px;transition:background .2s,transform .2s;}
+.ccard:hover{background:var(--bg3);transform:translateX(4px);}
+.ccico{font-size:.88rem;margin-bottom:7px;}
+.cct{font-size:.77rem;font-weight:700;margin-bottom:3px;}
+.ccb{font-size:.72rem;color:var(--muted);line-height:1.6;}
+
+/* ══ WHY ══ */
+#why{background:var(--bg2);}
+.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:52px;}
+.wcard{background:var(--bg2);padding:40px 30px;transition:background .25s,transform .25s;}
+.wcard:hover{background:var(--card);transform:translateY(-5px);}
+.wcn{font-size:.56rem;font-weight:700;letter-spacing:.2em;color:var(--muted);margin-bottom:18px;}
+.wct{font-size:1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:9px;line-height:1.15;}
+.wcb{font-size:.79rem;color:var(--muted);line-height:1.75;}
+
+/* ══ TESTIMONIALS ══ */
+#testimonials{background:var(--bg);}
+.tswrap{overflow:hidden;margin-top:52px;position:relative;}
+.tstrack{display:flex;gap:1px;background:var(--border);transition:transform .55s cubic-bezier(.22,1,.36,1);}
+.tcard{background:var(--bg);padding:28px 24px;min-width:250px;flex:1;display:flex;flex-direction:column;gap:12px;transition:background .22s;}
+.tcard:hover{background:var(--card);}
+.tstars{color:var(--g1);font-size:.58rem;letter-spacing:.08em;}
+.ttxt{font-size:.77rem;color:var(--muted2);line-height:1.8;flex:1;}
+.trule{height:1px;background:var(--border);}
+.tname{font-size:.74rem;font-weight:700;}
+.tinfo{font-size:.6rem;color:var(--muted);margin-top:1px;}
+.tnav{display:flex;align-items:center;gap:12px;margin-top:20px;}
+.tnavbtn{width:38px;height:38px;border:1px solid var(--border);background:transparent;color:var(--muted2);font-size:.85rem;display:flex;align-items:center;justify-content:center;border-radius:3px;transition:border-color .2s,color .2s,background .2s;}
+.tnavbtn:hover{border-color:var(--g1);color:var(--g1);background:rgba(76,175,80,.07);}
+.tprog{flex:1;height:2px;background:var(--border);overflow:hidden;}
+.tprogf{height:100%;background:var(--grad);transition:width .5s cubic-bezier(.22,1,.36,1);}
+.tcnt{font-size:.6rem;font-weight:600;letter-spacing:.1em;color:var(--muted);}
+
+/* ══ PARTNER ══ */
+#partner{background:var(--bg2);}
+.pbody{display:grid;grid-template-columns:160px 1fr 320px;gap:56px;padding-top:52px;}
+.ptypes{display:flex;flex-direction:column;}
+.ptype{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:18px 0;border-top:1px solid var(--border);transition:background .2s;}
+.ptype:last-child{border-bottom:1px solid var(--border);}
+.ptype:hover{background:rgba(255,255,255,.018);}
+.ptyico{font-size:.82rem;padding-top:2px;}
+.ptyt{font-size:.82rem;font-weight:700;margin-bottom:3px;}
+.ptyb{font-size:.74rem;color:var(--muted);line-height:1.6;}
+.pbox{background:var(--card);border:1px solid var(--border);padding:32px;display:flex;flex-direction:column;gap:18px;align-self:start;border-top:2px solid var(--g1);}
+.pboxt{font-size:1.05rem;font-weight:800;letter-spacing:-.02em;}
+.pboxb{font-size:.79rem;color:var(--muted2);line-height:1.7;}
+.walink{display:flex;align-items:center;gap:12px;padding:16px;background:rgba(37,211,102,.05);border:1px solid rgba(37,211,102,.18);text-decoration:none;border-radius:4px;transition:background .2s,transform .18s;}
+.walink:hover{background:rgba(37,211,102,.12);transform:translateX(4px);}
+.waico{width:36px;height:36px;background:rgba(37,211,102,.1);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;border-radius:4px;}
+.walbl{font-size:.56rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.waval{font-size:.8rem;font-weight:700;color:#25d366;margin-top:1px;}
+
+/* ══ REFERRAL ══ */
+#referral{background:var(--bg3);}
+.rbody{display:grid;grid-template-columns:160px 1fr 1fr;gap:56px;padding-top:52px;}
+.rsteps{display:flex;flex-direction:column;}
+.rstep{display:grid;grid-template-columns:26px 1fr;gap:14px;padding:18px 0;border-top:1px solid var(--border);}
+.rstep:last-child{border-bottom:1px solid var(--border);}
+.rsn{width:22px;height:22px;background:var(--grad);color:#fff;font-size:.66rem;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;}
+.rst{font-size:.8rem;font-weight:700;margin-bottom:3px;}
+.rsb{font-size:.73rem;color:var(--muted);line-height:1.6;}
+.rcards{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.rcard{background:var(--bg3);padding:18px;transition:background .2s;}
+.rcard:hover{background:var(--card);}
+.rctop{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.rcico{font-size:.82rem;}
+.rcbadge{font-size:.54rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(76,175,80,.1);color:var(--g1);padding:2px 7px;border-radius:2px;}
+.rct{font-size:.78rem;font-weight:700;margin-bottom:3px;}
+.rcb{font-size:.71rem;color:var(--muted);line-height:1.55;}
+
+/* ══ CONTACT ══ */
+#contact{background:var(--bg);}
+.conbody{display:grid;grid-template-columns:160px 1fr 340px;gap:56px;padding-top:52px;}
+.addrs{display:flex;flex-direction:column;}
+.addr{display:grid;grid-template-columns:18px 1fr;gap:9px;padding:16px 0;border-top:1px solid var(--border);font-size:.78rem;color:var(--muted);line-height:1.7;}
+.addr:last-child{border-bottom:1px solid var(--border);}
+.addr strong{color:var(--muted2);font-weight:600;}
+.clinks{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.clink{display:flex;align-items:center;justify-content:space-between;padding:17px 18px;background:var(--bg);text-decoration:none;transition:background .2s;}
+.clink:hover{background:var(--card);}
+.clinkl{display:flex;align-items:center;gap:11px;}
+.clico{width:32px;height:32px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:.82rem;border-radius:4px;}
+.cllbl{font-size:.54rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.clval{font-size:.78rem;font-weight:600;color:var(--white);margin-top:1px;}
+.clarr{color:var(--muted);transition:color .2s,transform .2s;}
+.clink:hover .clarr{color:var(--g1);transform:translateX(4px);}
+.socgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:1px;}
+.socbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:16px;background:var(--bg);border:none;transition:background .2s;text-decoration:none;}
+.socbtn:hover{background:var(--card);}
+.socico{font-size:.85rem;}
+.soclbl{font-size:.54rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+
+/* ══ FOOTER ══ */
+footer{background:var(--bg2);border-top:1px solid var(--border);}
+.ftop{max-width:1300px;margin:0 auto;padding:52px 44px 40px;display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:52px;}
+.fbrand{font-size:1rem;font-weight:900;letter-spacing:-.025em;}
+.fbrand span{color:var(--g1);}
+.ftag{font-size:.68rem;color:var(--muted);margin-top:5px;line-height:1.65;}
+.faddrs{margin-top:14px;font-size:.68rem;color:var(--muted);line-height:1.9;}
+.faddrs strong{color:var(--muted2);}
+.fsoc{display:flex;gap:5px;margin-top:14px;}
+.fsoc a{width:26px;height:26px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;text-decoration:none;color:var(--muted);border-radius:3px;transition:background .2s,color .2s;}
+.fsoc a:hover{background:var(--g1);color:#000;}
+.fct{font-size:.56rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.flinks a{font-size:.75rem;color:var(--muted);text-decoration:none;transition:color .2s,padding-left .15s;}
+.flinks a:hover{color:var(--g1);padding-left:4px;}
+.fbot{max-width:1300px;margin:0 auto;padding:18px 44px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.63rem;color:var(--muted);}
+
+/* ══ POPUP ══ */
+.ovl{display:none;position:fixed;inset:0;z-index:900;background:rgba(4,10,20,.92);backdrop-filter:blur(18px);align-items:center;justify-content:center;}
+.ovl.open{display:flex;}
+.pbox2{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--g1);padding:34px;max-width:420px;width:92%;position:relative;animation:popin .3s cubic-bezier(.22,1,.36,1);max-height:90vh;overflow-y:auto;border-radius:6px;}
+@keyframes popin{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+.pclose{position:absolute;top:12px;right:12px;background:transparent;border:1px solid var(--border);color:var(--muted);width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.72rem;border-radius:3px;transition:border-color .2s,color .2s;}
+.pclose:hover{border-color:var(--g1);color:var(--g1);}
+.pt{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:3px;}
+.ps{font-size:.73rem;color:var(--muted);margin-bottom:18px;}
+.pls{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.pl{display:flex;align-items:center;gap:11px;padding:13px 15px;background:var(--bg2);text-decoration:none;transition:background .18s;}
+.pl:hover{background:var(--card);}
+.plico{width:32px;height:32px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0;border-radius:3px;}
+.plname{font-size:.8rem;font-weight:700;color:var(--white);}
+.plh{font-size:.63rem;color:var(--muted);margin-top:1px;}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1024px){
+  .abody,.cbody,.pbody,.conbody,.rbody{grid-template-columns:1fr;gap:32px;}
+  .abody>*:first-child,.cbody>*:first-child,.pbody>*:first-child,.conbody>*:first-child,.rbody>*:first-child{display:none;}
+  .sh{grid-template-columns:1fr;gap:14px;}
+  .playout{grid-template-columns:1fr;}
+  .wgrid{grid-template-columns:1fr 1fr;}
+  .ametrics{grid-template-columns:1fr 1fr;}
+  .ftop{grid-template-columns:1fr 1fr;gap:32px;}
+}
+@media(max-width:640px){
+  .hbot{grid-template-columns:1fr;gap:28px;}
+  .hrhs{align-items:flex-start;}
+  .hstats{gap:28px;}
+  .wgrid,.ametrics{grid-template-columns:1fr;}
+  .dgrid{grid-template-columns:1fr;}
+  .nlinks{display:none;}
+  .w,.hc{padding:0 20px;}
+  .hc{padding-bottom:72px;}
+}
+</style>
+</head>
+<body>
+
+<div id="cx"><div id="cring"></div><div id="cdot"></div></div>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <div class="ni">
+    <a href="#hero" class="nlogo">
+      <div class="nlogo-text">
+        <div class="nname2"><span class="nw">SmartEd</span><span class="ng">Journey</span></div>
+        <div class="ntagline">STAY SMART &nbsp;|&nbsp; STAY AHEAD</div>
+      </div>
+    </a>
+    <div class="nlinks">
+      <div class="nitem">
+        <button class="nlink" onclick="this.classList.toggle('act')">Services <svg viewBox="0 0 10 6"><path d="M0 0l5 6 5-6z"/></svg></button>
+        <div class="drop">
+          <span class="drop-item" onclick="go('services')">Education Counseling</span>
+          <span class="drop-item" onclick="go('career')">Career Counseling</span>
+          <span class="drop-item" onclick="go('services')">Guaranteed Admissions</span>
+          <span class="drop-item" onclick="go('services')">SEJ Community</span>
+          <span class="drop-item" onclick="go('services')">Accommodation & Guardianship</span>
+          <span class="drop-item" onclick="go('services')">Parent Counseling</span>
+        </div>
+      </div>
+      <div class="nitem">
+        <button class="nlink" onclick="this.classList.toggle('act')">Programs <svg viewBox="0 0 10 6"><path d="M0 0l5 6 5-6z"/></svg></button>
+        <div class="drop">
+          <span class="drop-item" onclick="go('programs')">Undergraduate (UG)</span>
+          <span class="drop-item" onclick="go('programs')">Postgraduate (PG)</span>
+          <span class="drop-item" onclick="go('online')">Online UG Programs</span>
+          <span class="drop-item" onclick="go('online')">Online PG Programs</span>
+          <span class="drop-item" onclick="go('online')">Certificates & Diplomas</span>
+        </div>
+      </div>
+      <div class="nitem"><button class="nlink" onclick="go('career')">Career</button></div>
+      <div class="nitem"><button class="nlink" onclick="go('testimonials')">Stories</button></div>
+      <div class="nitem">
+        <button class="nlink" onclick="this.classList.toggle('act')">Partner <svg viewBox="0 0 10 6"><path d="M0 0l5 6 5-6z"/></svg></button>
+        <div class="drop">
+          <span class="drop-item" onclick="go('partner')">Partner With Us</span>
+          <span class="drop-item" onclick="go('referral')">Referral Program</span>
+        </div>
+      </div>
+      <div class="nitem"><button class="nlink" onclick="go('contact')">Contact</button></div>
+    </div>
+    <button class="ncta" onclick="openP('cp')">Talk to an Expert</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <canvas id="hbg"></canvas>
+  <div class="hspot" id="hspot"></div>
+  <div class="hgrid"></div>
+  <div class="hfade"></div>
+  <div class="hc">
+    <div class="hbadge"><div class="hbadge-dot"></div><span class="hbadge-txt">India's Premier Education & Career Partner · Est. 2022</span></div>
+    <h1 class="hh1">
+      <span class="hline"><span class="hline-inner">Your Path</span></span>
+      <span class="hline dim"><span class="hline-inner">from Learning</span></span>
+      <span class="hline grad"><span class="hline-inner">to Earning.</span></span>
+    </h1>
+    <div class="hdivide"></div>
+    <div class="hbot">
+      <p class="hdesc">SmartEdJourney is India's most trusted education and career partner — built on three years of earned credibility, 200+ college partnerships, and a relentless commitment to every student we serve.</p>
+      <div class="hrhs">
+        <div class="hstats">
+          <div><div class="hstat-n"><span class="cnt" data-t="200">0</span><sup>+</sup></div><div class="hstat-l">College Tie-Ups</div></div>
+          <div><div class="hstat-n"><span class="cnt" data-t="100">0</span><sup>+</sup></div><div class="hstat-l">Students Placed</div></div>
+          <div><div class="hstat-n"><span class="cnt" data-t="3">0</span><sup>+</sup></div><div class="hstat-l">Years of Trust</div></div>
+        </div>
+        <div class="hbtns">
+          <button class="bp" onclick="openP('cp')">Talk to an Expert</button>
+          <button class="bo" onclick="go('about')">Our Story</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hscroll"><span class="hscroll-t">Scroll</span><div class="hscroll-l"></div></div>
+</section>
+
+<!-- ══ MARQUEE ══ -->
+<div class="mqbar"><div class="mqt" id="mqt"></div></div>
+
+<!-- ══ ABOUT ══ -->
+<section id="about" class="sec">
+  <div class="w">
+    <div class="sh rv"><div class="sn">01 / About</div><div><h2 class="sh2">We didn't start with a<br/>pitch deck. We started<br/>with <span class="g">trust.</span></h2><p class="ssub">Three years. Zero advertising. 100+ admissions. All word of mouth. That's how SmartEdJourney was built — and it's still how we operate.</p></div></div>
+    <div class="abody">
+      <div class="sn rv">Our Story</div>
+      <div class="acopy rv d1">
+        <p>SmartEdJourney is India's most trusted education and career partner — not built in a boardroom, but forged through three years of genuine human connection, word-of-mouth credibility, and an unwavering commitment to every student we serve.</p>
+        <p>For three years, we grew entirely through referrals — no marketing spend, no advertising — until we crossed the milestone of 100+ student admissions. That achievement was our signal to scale.</p>
+        <p>Each member of our team has carved out a niche through years of individual effort and earned trust. We've come together under SmartEdJourney to create something larger than any one of us — a platform where every student finds not just a consultant, but a genuine advocate for their future.</p>
+      </div>
+      <div class="apillars rv d2">
+        <div class="apillar"><div class="apillar-ico">🎯</div><div class="apillar-t">Vision</div><div class="apillar-b">India's most trusted education & career partner — from the right degree to the first milestone.</div></div>
+        <div class="apillar"><div class="apillar-ico">🤝</div><div class="apillar-t">Mission</div><div class="apillar-b">End-to-end counseling with radical transparency, zero middlemen, and a human touch.</div></div>
+        <div class="apillar"><div class="apillar-ico">❤️</div><div class="apillar-t">Commitment</div><div class="apillar-b">We stay in touch before, during, and long after admission. Your success is our reputation.</div></div>
+      </div>
+    </div>
+    <div class="ametrics rv d3">
+      <div class="amet"><div class="amet-n">200+</div><div class="amet-l">College Partnerships</div></div>
+      <div class="amet"><div class="amet-n">Zero</div><div class="amet-l">Middlemen. Ever.</div></div>
+      <div class="amet"><div class="amet-n">100%</div><div class="amet-l">Transparent Process</div></div>
+      <div class="amet"><div class="amet-n">1:1</div><div class="amet-l">Personalised Counseling</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section id="services" class="sec">
+  <div class="w">
+    <div class="sh rv"><div class="sn">02 / Services</div><div><h2 class="sh2">Everything you need,<br/><span class="g">under one roof.</span></h2><p class="ssub">From your first college choice to your first job offer — we're with you every step of the way.</p></div></div>
+    <div class="svcl" id="svcl"></div>
+  </div>
+</section>
+
+<!-- ══ PROGRAMS ══ -->
+<section id="programs" class="sec">
+  <div class="w">
+    <div class="sh rv"><div class="sn">03 / Programs</div><div><h2 class="sh2">UG & PG Programs across<br/><span class="g">every discipline.</span></h2><p class="ssub">Hundreds of degree options across all major fields. Click any category to explore.</p></div></div>
+    <div class="playout">
+      <div class="ptabs rv">
+        <button class="ptab act" onclick="swProg('ug',this)">Undergraduate (UG) <div class="pd"></div></button>
+        <button class="ptab" onclick="swProg('pg',this)">Postgraduate (PG) <div class="pd"></div></button>
+      </div>
+      <div>
+        <div class="ppanel act" id="pug"><div class="pcats" id="ug-c"></div></div>
+        <div class="ppanel" id="ppg"><div class="pcats" id="pg-c"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ONLINE ══ -->
+<section id="online" class="sec" style="background:var(--bg2);">
+  <div class="w">
+    <div class="sh rv"><div class="sn">04 / Online</div><div><h2 class="sh2">Work. Learn. <span class="g">Grow.</span><br/>Simultaneously.</h2><p class="ssub">UGC/AICTE-recognised online and part-time degrees from top Indian universities.</p></div></div>
+    <div class="playout">
+      <div class="ptabs rv">
+        <button class="ptab act" onclick="swOnline('uo',this)">Online UG <div class="pd"></div></button>
+        <button class="ptab" onclick="swOnline('po',this)">Online PG <div class="pd"></div></button>
+        <button class="ptab" onclick="swOnline('co',this)">Certificates <div class="pd"></div></button>
+      </div>
+      <div>
+        <div class="ppanel act" id="puo"><div class="pcats" id="uo-c"></div></div>
+        <div class="ppanel" id="ppo"><div class="pcats" id="po-c"></div></div>
+        <div class="ppanel" id="pco"><div class="pcats" id="co-c"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PULL QUOTE ══ -->
+<section id="pq">
+  <div class="pqinner rv">
+    <div class="pqdivl"></div>
+    <p class="pqtext">We don't stop at admission.<br/><span class="hl">We stay with you</span> until you<br/><span class="dim">land your first job.</span></p>
+    <div class="pqsrc">SmartEdJourney — Our Promise to Every Student</div>
+  </div>
+</section>
+
+<!-- ══ CAREER ══ -->
+<section id="career" class="sec">
+  <div class="w">
+    <div class="sh rv"><div class="sn">05 / Career</div><div><h2 class="sh2">From confusion<br/>to <span class="g">clarity.</span></h2><p class="ssub">Industry-experienced mentors help you understand not just what to study — but why, and exactly where it takes you.</p></div></div>
+    <div class="cbody">
+      <div class="sn rv">Process</div>
+      <div class="csteps rv d1">
+        <div class="cstep"><div class="csn">01</div><div><div class="cst">Profile Assessment</div><div class="csb">Deep-dive into your academic background, interests, strengths, and long-term aspirations.</div></div></div>
+        <div class="cstep"><div class="csn">02</div><div><div class="cst">Industry Expert Session</div><div class="csb">1:1 sessions with professionals from your field — real insights, not textbook advice.</div></div></div>
+        <div class="cstep"><div class="csn">03</div><div><div class="cst">Career Roadmap</div><div class="csb">A personalised, actionable plan covering degree choice, skill-building, and placement goals.</div></div></div>
+        <div class="cstep"><div class="csn">04</div><div><div class="cst">Resume & Interview Readiness</div><div class="csb">Professional resume building, LinkedIn optimisation, and mock interview coaching.</div></div></div>
+        <div class="cstep"><div class="csn">05</div><div><div class="cst">Placement Support</div><div class="csb">On-campus and off-campus placement via the SmartEdJourney community network.</div></div></div>
+      </div>
+      <div class="ccards rv d2">
+        <div class="ccard"><div class="ccico">📋</div><div class="cct">Resume Building</div><div class="ccb">Crafted to stand out to recruiters in your target industry.</div></div>
+        <div class="ccard"><div class="ccico">🎤</div><div class="cct">Interview Coaching</div><div class="ccb">Mock interviews, GD prep, and real feedback from mentors.</div></div>
+        <div class="ccard"><div class="ccico">🔗</div><div class="cct">Network Access</div><div class="ccb">SEJ community for off-campus opportunities and mentoring.</div></div>
+        <div class="ccard"><div class="ccico">🧭</div><div class="cct">Career Mapping</div><div class="ccb">Personalised roadmaps aligned to your strengths and demand.</div></div>
+        <div class="ccard"><div class="ccico">📊</div><div class="cct">Personal Branding</div><div class="ccb">LinkedIn optimisation and digital presence for the modern job market.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHY ══ -->
+<section id="why" class="sec">
+  <div class="w">
+    <div class="sh rv"><div class="sn">06 / Why Us</div><div><h2 class="sh2">Guaranteed admissions.<br/><span class="g">No stress. No middlemen.</span></h2><p class="ssub">Built on one belief: every student deserves honest guidance, not a sales pitch.</p></div></div>
+    <div class="wgrid" id="wgrid"></div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section id="testimonials" class="sec">
+  <div class="w">
+    <div class="sh rv"><div class="sn">07 / Stories</div><div><h2 class="sh2">Real students.<br/><span class="g">Real journeys.</span></h2><p class="ssub">25 stories from across India — proof that the SmartEdJourney difference is real.</p></div></div>
+    <div class="tswrap"><div class="tstrack" id="tst"></div></div>
+    <div class="tnav rv">
+      <button class="tnavbtn" onclick="tgo(-1)">←</button>
+      <button class="tnavbtn" onclick="tgo(1)">→</button>
+      <div class="tprog"><div class="tprogf" id="tpf"></div></div>
+      <div class="tcnt" id="tct">1 / 25</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PARTNER ══ -->
+<section id="partner" class="sec">
+  <div class="w">
+    <div class="sh rv"><div class="sn">08 / Partner</div><div><h2 class="sh2">Grow together.<br/><span class="g">Impact thousands.</span></h2><p class="ssub">Colleges, corporates, coaching institutes, or individual counselors — let's build something meaningful.</p></div></div>
+    <div class="pbody">
+      <div class="sn rv">Who We Work With</div>
+      <div class="ptypes rv d1">
+        <div class="ptype"><div class="ptyico">🏫</div><div><div class="ptyt">Colleges & Universities</div><div class="ptyb">List your programs and reach thousands of motivated students across India.</div></div></div>
+        <div class="ptype"><div class="ptyico">🏢</div><div><div class="ptyt">Corporates & Employers</div><div class="ptyb">Partner for campus placements, internships, and talent pipeline building.</div></div></div>
+        <div class="ptype"><div class="ptyico">📚</div><div><div class="ptyt">Coaching Institutes</div><div class="ptyb">Collaborate on student preparation, co-counseling, and referral programs.</div></div></div>
+        <div class="ptype"><div class="ptyico">👤</div><div><div class="ptyt">Individual Counselors</div><div class="ptyb">Join our growing network of counselors and mentors under the SEJ umbrella.</div></div></div>
+      </div>
+      <div class="pbox rv d2">
+        <div class="pboxt">Ready to partner?</div>
+        <div class="pboxb">Reach out directly on WhatsApp and our team will connect with you to explore collaboration opportunities.</div>
+        <a href="https://wa.me/918939639748" target="_blank" class="walink"><div class="waico">💬</div><div><div class="walbl">Connect Instantly</div><div class="waval">Chat on WhatsApp →</div></div></a>
+        <div style="font-size:.72rem;color:var(--muted);text-align:center;">or call <a href="tel:+918939639748" style="color:var(--g1);text-decoration:none;">+91 89396 39748</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REFERRAL ══ -->
+<section id="referral" class="sec">
+  <div class="w">
+    <div class="sh rv"><div class="sn">09 / Referral</div><div><h2 class="sh2">Refer a friend.<br/>Earn real <span class="g">rewards.</span></h2><p class="ssub">Every successful referral is a life changed — and we make sure you're rewarded for it.</p></div></div>
+    <div class="rbody">
+      <div class="sn rv">How It Works</div>
+      <div class="rsteps rv d1">
+        <div class="rstep"><div class="rsn">1</div><div><div class="rst">Refer Someone You Know</div><div class="rsb">Share SmartEdJourney with a student or family who needs guidance.</div></div></div>
+        <div class="rstep"><div class="rsn">2</div><div><div class="rst">They Join SmartEdJourney</div><div class="rsb">Your referral connects with our team, enrols, and begins their journey.</div></div></div>
+        <div class="rstep"><div class="rsn">3</div><div><div class="rst">You Get Rewarded</div><div class="rsb">Earn cash, exclusive gifts, priority access, and community recognition.</div></div></div>
+      </div>
+      <div class="rcards rv d2">
+        <div class="rcard"><div class="rctop"><div class="rcico">💰</div><div class="rcbadge">Per Referral</div></div><div class="rct">Cash Incentives</div><div class="rcb">Direct cash for every student who enrols via your referral.</div></div>
+        <div class="rcard"><div class="rctop"><div class="rcico">🎁</div><div class="rcbadge">Top Referrers</div></div><div class="rct">Exclusive Gifts</div><div class="rcb">Special thank-you gifts for our most valued referral partners.</div></div>
+        <div class="rcard"><div class="rctop"><div class="rcico">⭐</div><div class="rcbadge">VIP Access</div></div><div class="rct">Priority Access</div><div class="rcb">Priority booking for counseling sessions and community events.</div></div>
+        <div class="rcard"><div class="rctop"><div class="rcico">🏆</div><div class="rcbadge">Honour</div></div><div class="rct">Community Champion</div><div class="rcb">Be celebrated as a Champion Partner who helped shape lives.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact" class="sec">
+  <div class="w">
+    <div class="sh rv"><div class="sn">10 / Contact</div><div><h2 class="sh2">Ready to start<br/>your <span class="g">journey?</span></h2><p class="ssub">No waiting rooms. No gatekeepers. Reach out and speak to our experts today.</p></div></div>
+    <div class="conbody">
+      <div class="sn rv">Offices</div>
+      <div class="addrs rv d1">
+        <div class="addr"><span>📍</span><div><strong>Assam Office</strong><br/>Natun Sarania, Gandhi Basti Road, Silpukhuri, Guwahati, Assam</div></div>
+        <div class="addr"><span>📍</span><div><strong>Karnataka Office</strong><br/>HSR Layout, Sector 1, 27th Main, Bengaluru, Karnataka</div></div>
+        <div class="addr"><span>✉️</span><div><strong>Email</strong><br/>smartedjourney.sols@gmail.com</div></div>
+      </div>
+      <div class="rv d2">
+        <div class="clinks">
+          <a href="tel:+918951679748" class="clink"><div class="clinkl"><div class="clico">📞</div><div><div class="cllbl">Call</div><div class="clval">+91 89516 79748</div></div></div><span class="clarr">→</span></a>
+          <a href="tel:+917099016113" class="clink"><div class="clinkl"><div class="clico">📞</div><div><div class="cllbl">Call</div><div class="clval">+91 70990 16113</div></div></div><span class="clarr">→</span></a>
+          <a href="https://wa.me/918939639748" target="_blank" class="clink"><div class="clinkl"><div class="clico">💬</div><div><div class="cllbl">WhatsApp</div><div class="clval">+91 89396 39748</div></div></div><span class="clarr">→</span></a>
+          <a href="mailto:smartedjourney.sols@gmail.com" class="clink"><div class="clinkl"><div class="clico">✉️</div><div><div class="cllbl">Email</div><div class="clval">smartedjourney.sols@gmail.com</div></div></div><span class="clarr">→</span></a>
+        </div>
+        <div class="socgrid">
+          <a href="https://www.facebook.com/smartedjourney25/" target="_blank" class="socbtn"><span class="socico">f</span><span class="soclbl">Facebook</span></a>
+          <a href="https://www.instagram.com/smartedjourney25/?hl=en" target="_blank" class="socbtn"><span class="socico">📷</span><span class="soclbl">Instagram</span></a>
+          <button class="socbtn" onclick="openP('cp')" style="grid-column:span 2;"><span class="socico">→</span><span class="soclbl">Talk to Us</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="ftop">
+    <div>
+      <div class="fbrand">SmartEd<span>Journey</span></div>
+      <div class="ftag">Empowering Your Path from Learning to Earning · Stay Smart · Stay Ahead</div>
+      <div class="faddrs"><strong>Assam:</strong> Natun Sarania, Gandhi Basti Road, Silpukhuri, Guwahati<br/><strong>Karnataka:</strong> HSR Layout, Sector 1, 27th Main, Bengaluru</div>
+      <div class="fsoc">
+        <a href="https://www.facebook.com/smartedjourney25/" target="_blank">f</a>
+        <a href="https://www.instagram.com/smartedjourney25/?hl=en" target="_blank">in</a>
+        <a href="https://wa.me/918939639748" target="_blank">W</a>
+      </div>
+    </div>
+    <div><div class="fct">Services</div><ul class="flinks"><li><a href="#services">Education Counseling</a></li><li><a href="#career">Career Counseling</a></li><li><a href="#programs">UG & PG Programs</a></li><li><a href="#online">Online Education</a></li><li><a href="#services">Accommodation</a></li><li><a href="#services">Parent Counseling</a></li></ul></div>
+    <div><div class="fct">Company</div><ul class="flinks"><li><a href="#about">About Us</a></li><li><a href="#why">Why Us</a></li><li><a href="#testimonials">Student Stories</a></li><li><a href="#partner">Partner With Us</a></li><li><a href="#referral">Referral Program</a></li></ul></div>
+    <div><div class="fct">Contact</div><ul class="flinks"><li><a href="tel:+918951679748">+91 89516 79748</a></li><li><a href="tel:+917099016113">+91 70990 16113</a></li><li><a href="https://wa.me/918939639748">WhatsApp</a></li><li><a href="mailto:smartedjourney.sols@gmail.com">Email</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2025 SmartEdJourney. All rights reserved.</span><span>Guwahati, Assam · Bengaluru, Karnataka · India</span></div>
+</footer>
+
+<!-- ══ POPUP ══ -->
+<div class="ovl" id="cp" onclick="closeP('cp',event)">
+  <div class="pbox2">
+    <button class="pclose" onclick="closeP('cp')">✕</button>
+    <div class="pt">Talk to an Expert</div>
+    <div class="ps">We typically respond within minutes.</div>
+    <div class="pls">
+      <a href="tel:+918951679748" class="pl"><div class="plico">📞</div><div><div class="plname">+91 89516 79748</div><div class="plh">Call us directly</div></div></a>
+      <a href="tel:+917099016113" class="pl"><div class="plico">📞</div><div><div class="plname">+91 70990 16113</div><div class="plh">Call us directly</div></div></a>
+      <a href="https://wa.me/918939639748" target="_blank" class="pl"><div class="plico">💬</div><div><div class="plname">+91 89396 39748</div><div class="plh">Chat on WhatsApp</div></div></a>
+      <a href="mailto:smartedjourney.sols@gmail.com" class="pl"><div class="plico">✉️</div><div><div class="plname">smartedjourney.sols@gmail.com</div><div class="plh">Email us anytime</div></div></a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ DATA ══ */
+const SVCS=[
+  {n:'Education Counseling',d:'Comprehensive admission counseling for Medical, Engineering, and all Degree programs — from shortlisting to final enrollment with zero surprises.',tags:['Medical Admissions','Engineering','UG & PG Programs','Documentation']},
+  {n:'Career Counseling',d:'In-depth 1:1 sessions with industry experts to help you choose the right career path, build your resume, and ace your interviews.',tags:['1:1 Expert Sessions','Resume Building','Interview Coaching','Personal Branding']},
+  {n:'Guaranteed Admissions',d:'Direct partnerships with 200+ premier private colleges across India — transparently, with zero middlemen and no hidden fees.',tags:['Direct College Tie-Ups','No Hidden Fees','Pan-India Network']},
+  {n:'SEJ Community',d:'A thriving network of students and working professionals with access to off-campus placements and peer mentoring.',tags:['Off-Campus Placements','Professional Network','Peer Mentoring']},
+  {n:'Accommodation & Guardianship',d:'Rental housing assistance and local guardian services for students relocating — so families can breathe easy.',tags:['Rental Assistance','Local Guardian','Relocation Support']},
+  {n:'Parent Counseling',d:'Dedicated 1:1 sessions with parents to align every decision with what matters most to your family.',tags:['1:1 Parent Sessions','Aspiration Mapping','Family Communication']},
+];
+const WHY=[
+  {t:'Guaranteed Admission',b:'Direct partnerships with 200+ premier colleges — no brokers, no uncertainty, no stress.'},
+  {t:'3 Years of Earned Trust',b:'We grew from zero to 100+ students purely through referrals. That\'s proof, not marketing.'},
+  {t:'Radical Transparency',b:'No hidden fees. No last-minute surprises. You always know what\'s happening and why.'},
+  {t:'Pan-India Network',b:'200+ college and university partnerships spanning every major city and discipline.'},
+  {t:'The Human Touch',b:'You\'re not a case file — you\'re a student with a dream. We treat every student that way.'},
+  {t:'Beyond Counseling',b:'Internships, resume building, interview coaching, job placement — long after admission day.'},
+];
+const TESTS=[
+  {n:'P Borkotoky',d:'MBBS',s:'Assam',t:'SmartEdJourney secured my MBBS seat when everything seemed impossible. Truly life-changing guidance.'},
+  {n:'R Das',d:'B.Tech',s:'Assam',t:'One call cleared all my confusion. No jargon, no pressure — just honest, practical advice.'},
+  {n:'A Kalita',d:'BDS',s:'Assam',t:'My BDS admission was handled so smoothly. They stayed in touch even after joining college.'},
+  {n:'D Gogoi',d:'MBA',s:'Assam',t:'From shortlisting to final enrollment, handled professionally. I didn\'t have to chase anyone once.'},
+  {n:'S Baruah',d:'B.Pharm',s:'Assam',t:'Finding accommodation was daunting. SmartEdJourney found me a great PG near college within days.'},
+  {n:'P Nath',d:'M.Sc Nursing',s:'Assam',t:'My parents were anxious. The team counseled them separately and put their minds completely at ease.'},
+  {n:'R Deka',d:'BBA',s:'Assam',t:'Their career counseling helped me discover my passion for marketing over finance. Life-changing.'},
+  {n:'B Saikia',d:'B.Tech CSE',s:'Assam',t:'Zero middlemen, zero confusion. I knew exactly what I was paying. Refreshingly honest.'},
+  {n:'H Borah',d:'MBBS',s:'Assam',t:'The resume they built got me a research internship during my first year. Outstanding team.'},
+  {n:'S Choudhury',d:'B.Tech',s:'Assam',t:'My parents trusted them completely, and that trust was never broken.'},
+  {n:'M Talukdar',d:'BBA LLB',s:'Assam',t:'I was torn between law and business. Their 1:1 career session gave me total clarity.'},
+  {n:'A Bhuyan',d:'MBA',s:'Assam',t:'From Guwahati to my dream college — guided me through everything including GD-PI prep.'},
+  {n:'D Sharma',d:'B.Tech IT',s:'Maharashtra',t:'Secured my seat in 3 weeks flat. I genuinely wish I had found them a year earlier.'},
+  {n:'R Verma',d:'MBA',s:'Delhi',t:'Interview coaching is next level. Mock sessions were so realistic the actual interview felt easy.'},
+  {n:'A Krishnan',d:'BDS',s:'Tamil Nadu',t:'Knowledge of dental college admissions was impressive. They knew every college, every fee.'},
+  {n:'K Mehta',d:'B.Tech CSE',s:'Rajasthan',t:'Got my first job before finishing my final semester through their community network!'},
+  {n:'S Pillai',d:'M.Tech',s:'Kerala',t:'My mom was skeptical but one session with the team and she was fully on board.'},
+  {n:'P Agarwal',d:'M.Sc Biotech',s:'Uttar Pradesh',t:'Found accommodation, got career counseling, landed an internship — all through SmartEdJourney.'},
+  {n:'N Reddy',d:'MBBS',s:'Telangana',t:'Medical admissions seemed overwhelming. The team made it feel like a walk in the park.'},
+  {n:'I Banerjee',d:'B.Tech ECE',s:'West Bengal',t:'They stayed in touch months after admission. Shared internship leads, helped me settle in.'},
+  {n:'T Iyer',d:'B.Com (Hons)',s:'Tamil Nadu',t:'One career counseling session and I had complete clarity. Worth every minute.'},
+  {n:'V Singh',d:'BBA',s:'Punjab',t:'No hidden costs, no vague timelines. Everything communicated clearly from day one.'},
+  {n:'J Patel',d:'M.Sc Data Science',s:'Gujarat',t:'Guided me to a program I hadn\'t even considered — the perfect fit for my goals.'},
+  {n:'C Nair',d:'B.Sc Nursing',s:'Karnataka',t:'Moving from Kerala to Karnataka — SmartEdJourney made the transition completely seamless.'},
+  {n:'M Rao',d:'MBA Finance',s:'Andhra Pradesh',t:'Resume, interview prep, placement — delivered on every promise. Placed with a top firm.'},
+];
+const UG=[
+  {n:'Medical & Allied Health',d:['MBBS','BDS','BAMS','BHMS','BNYS','B.Pharm','B.Sc Nursing','B.Sc MLT','B.Sc Radiology','B.Sc Optometry','B.Sc Physiotherapy','B.Sc Nutrition & Dietetics']},
+  {n:'Engineering & Technology',d:['B.Tech CSE','B.Tech IT','B.Tech ECE','B.Tech EE','B.Tech Mechanical','B.Tech Civil','B.Tech Chemical','B.Tech Aerospace','B.Tech Biotechnology','B.Tech Data Science & AI','B.Tech Robotics','B.Tech Cybersecurity','B.Arch','B.Plan']},
+  {n:'Business & Commerce',d:['BBA','B.Com','B.Com (Hons)','BBA LLB','BMS','BBA Finance','BBA Marketing','BBA HR','BBA International Business','BBA Entrepreneurship','BBA Digital Marketing']},
+  {n:'Law',d:['BA LLB (5-year)','BBA LLB (5-year)','B.Com LLB (5-year)','LLB (3-year)','BSL LLB']},
+  {n:'Arts, Design & Media',d:['BA','BFA','B.Des','BVA','BA Journalism','BA Film & TV','BA Advertising','BA Animation','BA Photography','BA Interior Design','BA Graphic Design','BA Liberal Arts']},
+  {n:'Science',d:['B.Sc Physics','B.Sc Chemistry','B.Sc Maths','B.Sc Biology','B.Sc Biotechnology','B.Sc Microbiology','B.Sc CS','B.Sc Statistics','B.Sc Environmental Science','B.Sc Agriculture','B.Sc Food Technology','B.Sc Forensic Science','B.Sc Data Science']},
+  {n:'Hospitality & Travel',d:['BHM','B.Sc Hotel Management','BBA Hospitality','BA Tourism Management','B.Sc Culinary Arts','BBA Aviation Management']},
+  {n:'Education & Social Sciences',d:['B.Ed','BA Education','BSW','BA Psychology','BA Sociology','BA Economics','BA Geography','BA History','BA Public Administration']},
+];
+const PG=[
+  {n:'Medical & Allied Health',d:['MD','MS','MDS','M.Pharm','M.Sc Nursing','MPH','M.Sc Medical Microbiology','M.Sc Biotechnology','MHA','M.Sc Physiotherapy','PG Diploma Clinical Research']},
+  {n:'Engineering & Technology',d:['M.Tech CSE','M.Tech Data Science & AI','M.Tech Electronics','M.Tech Civil','M.Tech Mechanical','M.Tech Electrical','M.Tech Cybersecurity','M.Tech Robotics','M.Tech Software Engineering','M.Arch','M.Tech Aerospace']},
+  {n:'Business & Management',d:['MBA','MBA Finance','MBA Marketing','MBA HR','MBA Operations','MBA International Business','MBA Business Analytics','MBA Entrepreneurship','MBA Supply Chain','PGDM','Executive MBA']},
+  {n:'Law',d:['LLM','LLM Corporate Law','LLM Criminal Law','LLM International Law','LLM Constitutional Law','LLM IP Rights','LLM Tax Law']},
+  {n:'Arts, Design & Media',d:['MA','MFA','M.Des','MA Journalism','MA Film Studies','MA English Lit','MA History','MA Political Science','MA Sociology','MA Economics','MA Psychology']},
+  {n:'Science',d:['M.Sc Physics','M.Sc Chemistry','M.Sc Maths','M.Sc Biotechnology','M.Sc Microbiology','M.Sc CS','M.Sc Data Science','M.Sc AI','M.Sc Environmental Science','M.Sc Statistics','M.Sc Agriculture']},
+  {n:'IT & CS',d:['MCA','M.Sc IT','M.Sc Cyber Security','M.Sc AI & ML','M.Sc Cloud Computing','M.Sc Big Data','PG Diploma Data Science','PG Diploma AI','PG Diploma Blockchain']},
+];
+const OUG=[
+  {n:'Business & Commerce',d:['BBA Online','B.Com Online','BBA Finance Online','BBA Marketing Online','BBA HR Online','BBA Digital Marketing Online']},
+  {n:'Science & Technology',d:['B.Sc CS Online','B.Sc IT Online','B.Sc Data Science Online','B.Sc Maths & Computing Online']},
+  {n:'Arts & Humanities',d:['BA English Online','BA Political Science Online','BA History Online','BA Sociology Online','BA Economics Online','BA Psychology Online']},
+];
+const OPG=[
+  {n:'Business & Management',d:['MBA Online','MBA Finance Online','MBA Marketing Online','MBA HR Online','MBA Business Analytics Online','MBA Digital Marketing Online','PGDM Online','Executive MBA Online']},
+  {n:'IT & CS',d:['MCA Online','M.Sc CS Online','M.Sc Data Science Online','M.Sc AI & ML Online','M.Sc Cybersecurity Online','M.Sc Cloud Computing Online']},
+  {n:'Arts & Social Sciences',d:['MA English Online','MA History Online','MA Sociology Online','MA Economics Online','MA Psychology Online','MSW Online']},
+];
+const CERT=[
+  {n:'Business & Finance',d:['PG Certificate Business Analytics','PG Certificate Financial Management','Certificate in Digital Marketing','Certificate in Entrepreneurship','Diploma in Business Administration']},
+  {n:'Technology & Data',d:['PG Certificate Data Science','PG Certificate AI & ML','Certificate in Python','Certificate in Web Development','PG Certificate Cloud Computing','Certificate in Cybersecurity','DCA']},
+  {n:'Creative & Others',d:['PG Certificate Mass Communication','Certificate in Graphic Design','Diploma in Journalism','Certificate in Event Management','PG Certificate Hospital Administration']},
+];
+
+/* ══ CANVAS HERO BACKGROUND ══ */
+(function(){
+  const cv=document.getElementById('hbg'),cx=cv.getContext('2d');
+  function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  const pts=Array.from({length:60},()=>({
+    x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
+    vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+    r:Math.random()*2+.5,
+    c:Math.random()>.5?'76,175,80':'30,136,229',
+    a:Math.random()*.4+.1
+  }));
+  function draw(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    pts.forEach(p=>{
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      cx.fillStyle=`rgba(${p.c},${p.a})`;cx.fill();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>cv.width)p.vx*=-1;
+      if(p.y<0||p.y>cv.height)p.vy*=-1;
+    });
+    pts.forEach((p,i)=>pts.slice(i+1).forEach(q=>{
+      const d=Math.hypot(p.x-q.x,p.y-q.y);
+      if(d<130){
+        cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(q.x,q.y);
+        cx.strokeStyle=`rgba(76,175,80,${.06*(1-d/130)})`;
+        cx.lineWidth=.5;cx.stroke();
+      }
+    }));
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ══ CURSOR ══ */
+const cdot=document.getElementById('cdot'),cring=document.getElementById('cring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cdot.style.left=mx+'px';cdot.style.top=my+'px';
+  const h=document.getElementById('hero'),r=h.getBoundingClientRect();
+  if(my>r.top&&my<r.bottom){
+    h.style.setProperty('--hx',((mx-r.left)/r.width*100).toFixed(1)+'%');
+    h.style.setProperty('--hy',((my-r.top)/r.height*100).toFixed(1)+'%');
+  }
+});
+(function lag(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;cring.style.left=rx+'px';cring.style.top=ry+'px';requestAnimationFrame(lag);})();
+document.querySelectorAll('a,button,.apillar,.svrow,.pcath,.cstep,.ptype,.rstep,.rcard,.ccard,.wcard,.tcard,.amet,.clink,.socbtn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+});
+
+/* ══ NAV SCROLL ══ */
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>50);});
+
+/* ══ HERO LINES REVEAL ══ */
+setTimeout(()=>{
+  document.querySelectorAll('.hline-inner').forEach((l,i)=>setTimeout(()=>l.classList.add('in'),i*200));
+},150);
+
+/* ══ COUNTER ANIMATION ══ */
+function animCount(el){
+  const t=+el.dataset.t,dur=1600;
+  let s=0;const iv=setInterval(()=>{s=Math.min(s+1,t);el.textContent=s;if(s>=t)clearInterval(iv);},dur/t);
+}
+const cro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){animCount(e.target);cro.unobserve(e.target);}}),{threshold:.6});
+document.querySelectorAll('.cnt').forEach(el=>cro.observe(el));
+
+/* ══ MARQUEE ══ */
+(function(){
+  const items=['Medical Admissions','Engineering Counseling','Career Guidance','Resume Building','Interview Coaching','Job Placement','Online Degrees','UG & PG Programs','Pan-India Network','Zero Middlemen','200+ Colleges','Accommodation Support','Parent Counseling'];
+  const t=document.getElementById('mqt');
+  [...items,...items].forEach(it=>{const s=document.createElement('span');s.className='mqi';s.innerHTML=it+' <span class="mqsep">·</span>';t.appendChild(s);});
+})();
+
+/* ══ SCROLL REVEAL ══ */
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.05,rootMargin:'0px 0px -20px 0px'});
+function obsAll(){document.querySelectorAll('.rv').forEach(el=>ro.observe(el));}
+
+/* ══ RENDER SERVICES ══ */
+(function(){
+  const el=document.getElementById('svcl');
+  SVCS.forEach((s,i)=>{
+    const r=document.createElement('div');r.className='svrow rv';
+    r.innerHTML=`<div class="svidx">0${i+1}</div><div class="svmain"><div class="svnr"><div class="svname">${s.n}</div><span class="svarr">→</span></div><div class="svexp"><div class="svbody">${s.d}</div><div class="svtags">${s.tags.map(t=>`<span class="svtag">${t}</span>`).join('')}</div></div></div>`;
+    el.appendChild(r);
+  });
+})();
+
+/* ══ RENDER WHY ══ */
+(function(){
+  const el=document.getElementById('wgrid');
+  WHY.forEach((w,i)=>{
+    const d=document.createElement('div');d.className='wcard rv';
+    d.innerHTML=`<div class="wcn">0${i+1}</div><div class="wct">${w.t}</div><div class="wcb">${w.b}</div>`;
+    el.appendChild(d);
+  });
+})();
+
+/* ══ TESTIMONIALS SCROLL ══ */
+let ti=0;const VIS=5;
+(function(){
+  const el=document.getElementById('tst');
+  TESTS.forEach(t=>{
+    const d=document.createElement('div');d.className='tcard';
+    d.innerHTML=`<div class="tstars">★★★★★</div><div class="ttxt">"${t.t}"</div><div class="trule"></div><div><div class="tname">${t.n}</div><div class="tinfo">${t.d} · ${t.s}</div></div>`;
+    el.appendChild(d);
+  });
+  updT();
+})();
+function tgo(d){ti=Math.max(0,Math.min(TESTS.length-VIS,ti+d));updT();}
+function updT(){
+  const tr=document.getElementById('tst');
+  const cw=(tr.children[0]?tr.children[0].offsetWidth:250)+1;
+  tr.style.transform=`translateX(-${ti*cw}px)`;
+  document.getElementById('tpf').style.width=((ti+VIS)/TESTS.length*100)+'%';
+  document.getElementById('tct').textContent=`${ti+1} / ${TESTS.length}`;
+}
+
+/* ══ PROGRAMS ══ */
+function buildCats(data,id){
+  const el=document.getElementById(id);if(!el)return;
+  data.forEach(c=>{
+    const d=document.createElement('div');d.className='pcat';
+    d.innerHTML=`<div class="pcath" onclick="togCat(this)"><span class="pcatn">${c.n}</span><div class="pcatm"><span class="pcatc">${c.d.length} programs</span><span class="pcata">▼</span></div></div><div class="pcatb"><div class="dgrid">${c.d.map(x=>`<div class="deg">${x}</div>`).join('')}</div></div>`;
+    el.appendChild(d);
+  });
+}
+buildCats(UG,'ug-c');buildCats(PG,'pg-c');
+buildCats(OUG,'uo-c');buildCats(OPG,'po-c');buildCats(CERT,'co-c');
+
+function togCat(h){
+  const b=h.nextElementSibling,a=h.querySelector('.pcata'),open=b.classList.contains('open');
+  b.classList.toggle('open',!open);a.classList.toggle('open',!open);
+}
+function swProg(id,btn){
+  document.querySelectorAll('#programs .ptab').forEach(b=>b.classList.remove('act'));
+  document.querySelectorAll('#programs .ppanel').forEach(p=>p.classList.remove('act'));
+  btn.classList.add('act');document.getElementById('p'+id).classList.add('act');
+}
+function swOnline(id,btn){
+  btn.closest('.ptabs').querySelectorAll('.ptab').forEach(b=>b.classList.remove('act'));
+  document.querySelectorAll('#online .ppanel').forEach(p=>p.classList.remove('act'));
+  btn.classList.add('act');document.getElementById('p'+id).classList.add('act');
+}
+
+/* ══ UTILS ══ */
+function go(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+function openP(id){document.getElementById(id).classList.add('open');}
+function closeP(id,e){if(!e||e.target.id===id)document.getElementById(id).classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.ovl.open').forEach(o=>o.classList.remove('open'));});
+
+obsAll();
+setTimeout(obsAll,120);
+window.addEventListener('resize',updT);
+</script>
+</body>
+</html>
