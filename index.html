@@ -1,0 +1,1527 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SmartEdJourney</title>
+<meta name="description" content="SmartEdJourney: India's trusted education and career partner. Admissions counseling, career guidance, online degrees and placement support.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: floating glass nav, 3D cap hero on the right, pastel soft-card sections, ink marquee band. */
+:root{
+  --bg:#F6F4FF; --bg2:#ECF6FF; --card:#FFFFFF; --ink:#16123F; --muted:#5A5782; --line:rgba(22,18,63,.10);
+  --lav:#D5C9FF; --mint:#BCF2D6; --peach:#FFD6C0; --sky:#C4E5FF; --butter:#FFF1AE; --pink:#FFCDE6;
+  --green:#12A065; --blue:#3558F0; --violet:#7A5CFF;
+  --f-display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  --f-body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:28px; --shadow:0 18px 50px -18px rgba(53,40,160,.28),0 2px 6px rgba(22,18,63,.05);
+  --gut:max(20px,env(safe-area-inset-left,0px)); --gutr:max(20px,env(safe-area-inset-right,0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.65 var(--f-body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;letter-spacing:-.025em;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--violet);outline-offset:3px;border-radius:10px}
+.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.w{max-width:1240px;margin:0 auto;padding-inline:var(--gut) var(--gutr)}
+section{scroll-margin-top:84px}
+.sec{padding-block:clamp(64px,9vw,120px)}
+.sh{max-width:760px;margin-bottom:clamp(32px,5vw,56px)}
+.sh h2{font-size:clamp(2.1rem,4.8vw,3.8rem);font-weight:800;line-height:1.02}
+.sh p{margin-top:16px;color:var(--muted);font-size:1.08rem;max-width:56ch}
+.hl{background:linear-gradient(transparent 58%,var(--butter) 58% 92%,transparent 92%);padding:0 .12em;border-radius:6px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:600;font-size:.82rem}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:12px;border:0;border-radius:999px;padding:10px 10px 10px 24px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.btn .ar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;transition:transform .25s}
+.btn:hover .ar{transform:translateX(3px) rotate(-8deg)}
+.btn-p{background:var(--ink);color:#fff;box-shadow:0 12px 28px -10px rgba(22,18,63,.6)}
+.btn-p .ar{background:linear-gradient(135deg,var(--green),var(--blue));color:#fff}
+.btn-p:hover{transform:translateY(-2px)}
+.btn-s{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn-s .ar{background:var(--lav)}
+.btn-s:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+
+/* nav */
+nav{position:fixed;z-index:600;top:calc(12px + env(safe-area-inset-top,0px));left:var(--gut);right:var(--gutr);max-width:1240px;margin:0 auto}
+.ni{display:flex;align-items:center;gap:8px;height:64px;padding:0 10px 0 22px;background:rgba(255,255,255,.78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.9);border-radius:999px;box-shadow:0 10px 40px -14px rgba(53,40,160,.35)}
+.logo{font:800 1.28rem var(--f-display);text-decoration:none;letter-spacing:-.03em;margin-right:auto;line-height:1}
+.logo b{background:linear-gradient(90deg,var(--green),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo small{display:block;font:600 .56rem var(--f-body);letter-spacing:.2em;color:var(--muted);margin-top:4px;text-transform:uppercase}
+.nlinks{display:flex;gap:2px}
+.nitem{position:relative}
+.nlink{background:none;border:0;padding:10px 14px;border-radius:999px;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:6px;transition:background .2s}
+.nlink:hover,.nitem.open>.nlink{background:var(--lav)}
+.nlink svg{width:10px;height:10px;fill:currentColor;transition:transform .25s}
+.nitem.open .nlink svg{transform:rotate(180deg)}
+.drop{position:absolute;top:calc(100% + 8px);left:0;min-width:260px;background:#fff;border-radius:22px;padding:8px;box-shadow:var(--shadow);border:1px solid var(--line);opacity:0;pointer-events:none;transform:translateY(-6px) scale(.98);transition:opacity .2s,transform .2s}
+.nitem:hover .drop,.nitem.open .drop{opacity:1;pointer-events:auto;transform:none}
+.drop button{display:block;width:100%;text-align:left;background:none;border:0;padding:11px 14px;border-radius:14px;font-weight:500}
+.drop button:hover{background:var(--bg)}
+.ncta{padding:6px 6px 6px 20px;font-size:.9rem}
+.ncta .ar{width:34px;height:34px}
+.burger{display:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--ink);flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.burger span{width:18px;height:2px;background:#fff;border-radius:2px;transition:transform .25s,opacity .2s}
+.burger.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.on span:nth-child(2){opacity:0}
+.burger.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+#mmenu{display:none;position:fixed;inset:0;z-index:590;background:var(--bg);padding:calc(96px + env(safe-area-inset-top,0px)) var(--gutr) 40px var(--gut);overflow-y:auto}
+#mmenu.on{display:block}
+#mmenu h4{font:700 .75rem var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--violet);margin:22px 0 4px}
+#mmenu button.mi{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:14px 2px;font:700 1.2rem var(--f-display)}
+#mmenu .btn{margin-top:26px}
+
+/* hero */
+#hero{position:relative;padding-top:calc(120px + env(safe-area-inset-top,0px));padding-bottom:40px;overflow:hidden;background:radial-gradient(1200px 600px at 85% 10%,rgba(227,218,255,.75) 0,transparent 60%),radial-gradient(900px 500px at 0% 60%,rgba(212,245,230,.7) 0,transparent 60%)}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;animation:drift 14s ease-in-out infinite alternate;pointer-events:none}
+.b1{width:360px;height:360px;background:var(--pink);left:-80px;top:120px}
+.b2{width:300px;height:300px;background:var(--sky);right:20%;bottom:-60px;animation-delay:-5s}
+@keyframes drift{to{transform:translate(40px,-30px) scale(1.12)}}
+.hgrid{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:24px;align-items:center}
+.hbadge{margin-bottom:26px}
+.hbadge i{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(18,160,101,.2);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(18,160,101,0)}}
+h1{font-size:clamp(2.9rem,6.1vw,5.5rem);font-weight:800;line-height:.95;letter-spacing:-.045em}
+h1 .l3{display:inline;padding:0;background:linear-gradient(transparent 62%,var(--mint) 62% 93%,transparent 93%);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hdesc{margin-top:28px;font-size:1.15rem;color:var(--muted);max-width:50ch}
+.hbtns{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+.stage{position:relative;height:clamp(340px,46vw,600px);min-width:0}
+#hero3d{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y;display:block}
+.tip{position:absolute;pointer-events:none;z-index:2;transform:translate(-50%,-140%);background:var(--ink);color:#fff;font:700 .85rem var(--f-body);padding:7px 14px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 20px -8px rgba(22,18,63,.6)}
+.no3d .stage{background:radial-gradient(circle at 50% 50%,var(--lav),transparent 65%)}
+.hstats{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;max-width:760px}
+.st{background:#fff;border-radius:24px;padding:18px 22px;box-shadow:var(--shadow)}
+.st:nth-child(1){background:var(--mint)}.st:nth-child(2){background:var(--butter)}.st:nth-child(3){background:var(--pink)}
+.st b{display:block;font:800 clamp(2rem,4vw,3rem) var(--f-display);letter-spacing:-.04em;line-height:1}
+.st>span{font-size:.88rem;font-weight:600;color:rgba(22,18,63,.75)}
+
+/* marquee */
+.mqwrap{overflow:hidden;padding:34px 0}
+.mqbar{background:var(--ink);padding:18px 0;overflow:hidden}
+.mqt{display:flex;gap:14px;width:max-content;animation:mq 38s linear infinite}
+.mqbar:hover .mqt{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mqi{display:inline-flex;align-items:center;gap:10px;padding:8px 20px;border-radius:999px;font:700 1rem var(--f-display);white-space:nowrap;color:var(--ink)}
+.mqi:nth-child(5n+1){background:var(--lav)}.mqi:nth-child(5n+2){background:var(--mint)}.mqi:nth-child(5n+3){background:var(--peach)}.mqi:nth-child(5n+4){background:var(--sky)}.mqi:nth-child(5n){background:var(--butter)}
+
+/* finder */
+.finder{background:linear-gradient(135deg,#fff,#F3EEFF);border-radius:40px;padding:clamp(24px,4vw,56px);box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.finder h2{font-size:clamp(1.9rem,3.8vw,3rem);font-weight:800;line-height:1.04}
+.finder p{color:var(--muted);margin-top:12px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:600;transition:transform .2s,background .2s,border-color .2s}
+.chip:hover{transform:translateY(-2px) rotate(-1deg);border-color:var(--violet)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fres{background:var(--ink);color:#fff;border-radius:30px;padding:clamp(22px,3vw,34px);min-height:290px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.fres h3{font-size:1.7rem;font-weight:800}
+.fres .tags{display:flex;flex-wrap:wrap;gap:8px}
+.fres .tags span{padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.88rem;font-weight:500}
+.fres .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:auto}
+.fres .btn-s{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.fres .btn-s .ar{background:rgba(255,255,255,.18)}
+.fres .btn-p{background:#fff;color:var(--ink)}
+.fres .small{color:rgba(255,255,255,.7);margin:0}
+
+/* about */
+.abody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
+.acopy{display:grid;gap:18px;color:var(--muted);font-size:1.05rem}
+.acopy p:first-child{color:var(--ink);font-size:1.25rem;font-weight:500;line-height:1.5}
+.flips{display:grid;gap:16px;grid-template-columns:repeat(3,minmax(0,1fr));perspective:1100px}
+.flip{position:relative;aspect-ratio:3/4.2;border:0;background:none;padding:0;text-align:left;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.3,.5,1)}
+.flip.on,.flip:focus-visible{transform:rotateY(180deg)}
+@media(hover:hover){.flip:hover{transform:rotateY(180deg)}}
+.face{position:absolute;inset:0;border-radius:28px;padding:20px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow)}
+.face.f{background:var(--c)}
+.face.f .i{width:44px;height:44px;stroke-width:1.6}
+.face.f h3{font-size:1.4rem;font-weight:800}
+.face.b{transform:rotateY(180deg);background:var(--ink);color:#fff;font-size:.9rem;line-height:1.5;justify-content:center}
+.face.b h3{font-size:1.1rem;margin-bottom:8px;color:var(--c)}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:clamp(28px,4vw,48px)}
+.met{border-radius:26px;padding:24px;background:#fff;box-shadow:var(--shadow);border:1px solid var(--line)}
+.met b{display:block;font:800 clamp(2rem,3.4vw,2.8rem) var(--f-display);letter-spacing:-.04em;line-height:1}
+.met span{color:var(--muted);font-weight:500;font-size:.95rem}
+
+/* services */
+.svg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.svc{position:relative;border-radius:var(--r);padding:28px;background:var(--c);display:flex;flex-direction:column;gap:14px;min-height:300px;transition:box-shadow .3s,outline-color .3s;outline:3px solid transparent;outline-offset:3px}
+.svc .ic{width:58px;height:58px;border-radius:20px;background:rgba(255,255,255,.7);display:grid;place-items:center}
+.svc .ic .i{width:28px;height:28px}
+.svc h3{font-size:1.45rem;font-weight:800;line-height:1.1}
+.svc p{color:rgba(22,18,63,.78);font-size:.98rem}
+.svc .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
+.svc .tags span{background:rgba(255,255,255,.7);padding:5px 12px;border-radius:999px;font-size:.78rem;font-weight:600}
+.svc.ping{outline-color:var(--ink);box-shadow:0 0 0 10px rgba(122,92,255,.25)}
+
+/* programs */
+.ptabs{display:flex;flex-wrap:wrap;gap:8px;padding:6px;background:#fff;border-radius:999px;width:max-content;max-width:100%;box-shadow:var(--shadow);margin-bottom:26px}
+.ptab{border:0;background:none;padding:12px 22px;border-radius:999px;font-weight:700;display:flex;gap:8px;align-items:center;transition:background .25s,color .25s}
+.ptab small{font-weight:600;opacity:.6}
+.ptab:hover{background:var(--bg)}
+.ptab.act{background:var(--ink);color:#fff}
+.pwrap{min-height:var(--ph,0px)}
+.ppanel{display:none}.ppanel.act{display:block}
+.pcats{display:grid;gap:12px}
+.pcat{background:#fff;border-radius:24px;border:1px solid var(--line);overflow:hidden;transition:box-shadow .3s}
+.pcat.open{box-shadow:var(--shadow)}
+.pcath{width:100%;display:flex;align-items:center;gap:14px;padding:20px 24px;border:0;background:none;text-align:left}
+.pcath .dot{width:14px;height:14px;border-radius:50%;background:var(--c)}
+.pcath .n{font:700 1.15rem var(--f-display);flex:1;min-width:0}
+.pcath .c{font-size:.85rem;color:var(--muted);font-weight:600}
+.pcath .x{width:34px;height:34px;border-radius:50%;background:var(--bg);display:grid;place-items:center;transition:transform .35s,background .25s}
+.pcat.open .x{transform:rotate(45deg);background:var(--c)}
+.pcatb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.2,.9,.3,1)}
+.pcat.open .pcatb{grid-template-rows:1fr}
+.pcatb>div{overflow:hidden}
+.dgrid{display:flex;flex-wrap:wrap;gap:8px;padding:0 24px 24px}
+.deg{padding:8px 16px;border-radius:999px;background:color-mix(in srgb,var(--c) 45%,#fff);font-weight:600;font-size:.9rem}
+#online{background:linear-gradient(180deg,transparent,rgba(232,244,255,.8) 20%,rgba(232,244,255,.8) 80%,transparent)}
+
+/* quote */
+#pq{padding:clamp(70px,10vw,140px) var(--gutr) clamp(70px,10vw,140px) var(--gut);text-align:center;position:relative;overflow:hidden}
+.pqtext{font:800 clamp(2.2rem,6vw,5rem)/1.02 var(--f-display);letter-spacing:-.04em;max-width:15ch;margin:0 auto;text-wrap:balance;position:relative;z-index:2}
+.pqtext em{font-style:normal;background:var(--butter);padding:0 .15em;border-radius:.2em}
+.pqtext span{color:var(--violet)}
+.pqsrc{margin-top:26px;color:var(--muted);font-weight:600;position:relative;z-index:2}
+.orb{position:absolute;border-radius:50%;pointer-events:none;box-shadow:inset -16px -20px 40px rgba(22,18,63,.18),inset 14px 14px 30px rgba(255,255,255,.8);will-change:transform}
+.o1{width:150px;height:150px;background:var(--lav);left:8%;top:18%}
+.o2{width:100px;height:100px;background:var(--mint);right:10%;top:12%}
+.o3{width:190px;height:190px;background:var(--peach);right:6%;bottom:8%}
+.o4{width:80px;height:80px;background:var(--sky);left:14%;bottom:12%}
+
+/* career */
+.cbody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
+.tl{position:relative;padding-left:46px;display:grid;gap:14px}
+.tl::before{content:'';position:absolute;left:17px;top:10px;bottom:10px;width:4px;border-radius:4px;background:var(--line)}
+.tl i.fill{position:absolute;left:17px;top:10px;width:4px;border-radius:4px;background:linear-gradient(var(--green),var(--blue));height:0}
+.step{position:relative;background:#fff;border-radius:24px;padding:20px 24px;border:1px solid var(--line);transition:transform .3s,box-shadow .3s}
+.step .n{position:absolute;left:-46px;top:18px;width:38px;height:38px;border-radius:50%;background:#fff;border:3px solid var(--line);display:grid;place-items:center;font:800 .85rem var(--f-display);transition:.3s}
+.step.on{box-shadow:var(--shadow);transform:translateX(6px)}
+.step.on .n{background:var(--ink);border-color:var(--ink);color:#fff}
+.step h3{font-size:1.15rem;font-weight:800}
+.step p{color:var(--muted);font-size:.95rem;margin-top:4px}
+.ccards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.cc{border-radius:26px;padding:22px;background:var(--c);transform-style:preserve-3d}
+.cc:last-child{grid-column:span 2}
+.cc .i{width:30px;height:30px;margin-bottom:12px}
+.cc h3{font-size:1.1rem;font-weight:800}
+.cc p{font-size:.92rem;color:rgba(22,18,63,.75);margin-top:4px}
+
+/* why */
+.wgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.wc{border-radius:var(--r);padding:26px;background:var(--c);min-height:280px;display:flex;flex-direction:column;gap:12px}
+.wc b{font:800 3.4rem var(--f-display);letter-spacing:-.05em;line-height:1;opacity:.28}
+.wc h3{font-size:1.3rem;font-weight:800;margin-top:auto}
+.wc p{font-size:.95rem;color:rgba(22,18,63,.78)}
+
+/* stories */
+.tbar{display:flex;align-items:center;gap:14px;margin-top:24px}
+.tbtn{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--line);background:#fff;display:grid;place-items:center;transition:background .2s,transform .2s}
+.tbtn:hover{background:var(--ink);color:#fff;transform:scale(1.06)}
+.tprog{flex:1;height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.tprog i{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--green),var(--blue));border-radius:6px;transition:width .2s}
+.tcnt{font-weight:700;font-variant-numeric:tabular-nums}
+.tscroll{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gut);padding:12px var(--gutr) 20px var(--gut);margin-inline:calc(-1*var(--gut)) calc(-1*var(--gutr));scrollbar-width:none}
+.tscroll::-webkit-scrollbar{display:none}
+.tc{flex:0 0 min(320px,84vw);scroll-snap-align:start;margin:0;display:flex;flex-direction:column;align-items:flex-start;border:1px solid #E5E7EB;background:#fff;padding:20px;border-radius:12px;min-height:290px}
+.tc .stars{display:flex;gap:4px;margin-top:12px}
+.tc blockquote{margin:12px 0 0;font-size:.92rem;line-height:1.6;color:#6B7280;flex:1}
+.tc figcaption{display:flex;align-items:center;gap:12px;margin-top:16px}
+.tc figcaption h3{font:500 1.1rem var(--f-body);color:#111827;letter-spacing:0}
+.tc figcaption p{font-size:.88rem;color:#6B7280}
+.av{width:48px;height:48px;flex:none;border-radius:50%;background:linear-gradient(135deg,var(--lav),var(--sky));color:var(--ink);display:grid;place-items:center;font:800 1.1rem var(--f-display)}
+
+/* partner referral contact */
+.two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:20px}
+.pts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pt{background:#fff;border-radius:var(--r);padding:24px;border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.pt .ic{width:50px;height:50px;border-radius:18px;background:var(--c);display:grid;place-items:center}
+.pt h3{font-size:1.15rem;font-weight:800}.pt p{color:var(--muted);font-size:.95rem}
+.cta{background:var(--ink);color:#fff;border-radius:34px;padding:clamp(26px,3.5vw,40px);display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden}
+.cta::after{content:'';position:absolute;width:260px;height:260px;border-radius:50%;right:-80px;bottom:-90px;background:radial-gradient(circle at 35% 30%,var(--mint),var(--violet));opacity:.9}
+.cta h3{font-size:2rem;font-weight:800;position:relative;z-index:1}
+.cta p{color:rgba(255,255,255,.78);position:relative;z-index:1}
+.cta .btn{align-self:flex-start;position:relative;z-index:1;background:#fff;color:var(--ink)}
+.cta .btn .ar{background:var(--mint)}
+.cta small{position:relative;z-index:1;color:rgba(255,255,255,.75)}
+.steps3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:20px}
+.s3{border-radius:var(--r);padding:24px;background:var(--c)}
+.s3 b{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--ink);color:#fff;font:800 1rem var(--f-display);margin-bottom:14px}
+.s3 h3{font-size:1.15rem;font-weight:800}.s3 p{font-size:.93rem;color:rgba(22,18,63,.75);margin-top:4px}
+.rcards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.rc{border-radius:var(--r);padding:24px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:10px;transform-style:preserve-3d}
+.rc .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rc .ic{width:48px;height:48px;border-radius:16px;background:var(--c);display:grid;place-items:center}
+.rc .bd{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--bg)}
+.rc h3{font-size:1.1rem;font-weight:800}.rc p{font-size:.92rem;color:var(--muted)}
+.cgrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px}
+.offices{background:#fff;border-radius:var(--r);padding:28px;display:grid;gap:20px;border:1px solid var(--line);align-content:start}
+.addr{display:flex;gap:14px}
+.addr .ic{width:44px;height:44px;border-radius:14px;background:var(--lav);display:grid;place-items:center;flex:none}
+.addr strong{display:block}.addr span{color:var(--muted);font-size:.95rem;overflow-wrap:anywhere}
+.clinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.cl{display:flex;align-items:center;gap:14px;padding:18px;border-radius:24px;background:var(--c);text-decoration:none;transition:transform .25s,box-shadow .25s;min-width:0}
+.cl:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:var(--shadow)}
+.cl .ic{width:44px;height:44px;border-radius:15px;background:rgba(255,255,255,.75);display:grid;place-items:center;flex:none}
+.cl div{min-width:0}.cl small{display:block;font-weight:600;opacity:.7;line-height:1.2}.cl b{display:block;overflow-wrap:anywhere;line-height:1.3;font-size:.95rem}
+.soc{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+.soc .btn{padding:8px 8px 8px 20px}
+
+/* footer */
+footer{background:var(--ink);color:#fff;border-radius:44px 44px 0 0;margin-top:40px;padding:clamp(40px,6vw,72px) var(--gutr) calc(24px + env(safe-area-inset-bottom,0px)) var(--gut)}
+.ft{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
+.fb{font:800 1.8rem var(--f-display);letter-spacing:-.03em}
+.fb span{color:var(--mint)}
+.ft p,.ft li,.ft a{color:rgba(255,255,255,.72);font-size:.92rem;text-decoration:none}
+.ft a:hover{color:#fff}
+.ft h4{font:700 .78rem var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--lav);margin-bottom:12px}
+.ft ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ft .bio{margin-top:12px;display:grid;gap:8px}
+.fbot{max-width:1240px;margin:36px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:rgba(255,255,255,.55);font-size:.85rem}
+
+/* fab + modal */
+.fab{position:fixed;z-index:500;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;background:#1FBF6B;color:#04281a;text-decoration:none;font-weight:700;padding:14px 20px 14px 16px;border-radius:999px;box-shadow:0 14px 30px -10px rgba(18,160,101,.7);transition:transform .2s}
+.fab:hover{transform:translateY(-3px) scale(1.03)}
+.ovl{position:fixed;inset:0;z-index:900;display:none;align-items:center;justify-content:center;background:rgba(22,18,63,.5);backdrop-filter:blur(8px);padding:20px}
+.ovl.open{display:flex}
+.modal{position:relative;background:#fff;border-radius:34px;padding:clamp(24px,4vw,40px);width:min(520px,100%);box-shadow:0 40px 80px -20px rgba(22,18,63,.5);animation:pop .35s cubic-bezier(.3,1.4,.5,1)}
+@keyframes pop{from{transform:scale(.9) translateY(20px);opacity:0}}
+.modal h3{font-size:2rem;font-weight:800}.modal>p{color:var(--muted);margin:4px 0 20px}
+.modal .x{position:absolute;right:16px;top:16px;width:42px;height:42px;border-radius:50%;border:0;background:var(--bg);display:grid;place-items:center}
+.modal .list{display:grid;gap:10px}
+.modal .cl{background:var(--bg)}
+
+/* reveal (visible by default; JS arms below-fold items) */
+.pre{opacity:0;transform:translateY(26px)}
+.rv{transition:opacity .8s cubic-bezier(.2,.9,.3,1),transform .8s cubic-bezier(.2,.9,.3,1)}
+.tilt{transition:transform .25s ease-out,box-shadow .3s;will-change:transform}
+
+/* responsive */
+@media(max-width:1000px){
+  .hgrid,.abody,.cbody,.two,.cgrid,.finder{grid-template-columns:minmax(0,1fr)}
+  .svg{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wgrid,.rcards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ft{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nlinks{display:none}
+  .burger{display:flex}
+  .ncta{display:none}
+  .stage{order:-1;height:clamp(300px,60vw,420px)}
+}
+@media(max-width:640px){
+  .svg,.pts,.steps3,.clinks,.ccards{grid-template-columns:minmax(0,1fr)}
+  .cc:last-child{grid-column:auto}
+  .wgrid,.rcards,.ft{grid-template-columns:minmax(0,1fr)}
+  .hstats{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .st{padding:14px}
+  .flips{gap:10px}.face{padding:14px}.face.f h3{font-size:.86rem;overflow-wrap:anywhere}.face.b{font-size:.74rem;padding:10px}.face.f .i{width:32px;height:32px}
+  .ptabs{border-radius:26px}
+  .fab span{display:none}.fab{padding:15px}
+  .o1,.o3{width:90px;height:90px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .pre{opacity:1;transform:none}
+}
+
+#kgrid{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+
+/* ══ page fade ══ */
+html{scroll-behavior:auto}
+#xfade{position:fixed;inset:0;z-index:700;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .3s ease}
+#xfade.on{opacity:1;pointer-events:auto}
+
+/* ══ chat ══ */
+.fab{bottom:calc(92px + env(safe-area-inset-bottom,0px));padding:12px;width:54px;height:54px;justify-content:center}
+.fab span{display:none}
+.cbtn{position:fixed;z-index:750;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;border:0;border-radius:999px;background:var(--ink);color:#fff;font-weight:700;padding:14px 22px 14px 18px;box-shadow:0 16px 34px -12px rgba(22,18,63,.7);transition:transform .2s}
+.cbtn:hover{transform:translateY(-3px)}
+.cbtn .dot{width:9px;height:9px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.3)}
+.cpanel{position:fixed;z-index:760;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:min(396px,calc(100vw - 24px));height:min(640px,calc(100dvh - 40px - env(safe-area-inset-bottom,0px) - env(safe-area-inset-top,0px)));display:none;flex-direction:column;background:#fff;border-radius:30px;box-shadow:0 30px 70px -20px rgba(22,18,63,.55),0 0 0 1px var(--line);overflow:hidden}
+.cpanel.open{display:flex;animation:pop .3s cubic-bezier(.3,1.3,.5,1)}
+body.chat-open .cbtn{display:none}
+.chead{display:flex;align-items:center;gap:12px;padding:16px 16px 14px 20px;background:linear-gradient(135deg,var(--lav),var(--sky) 70%,var(--mint))}
+.chead .av2{width:42px;height:42px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;flex:none}
+.chead b{display:block;font:800 1.05rem var(--f-display);line-height:1.1}
+.chead small{font-size:.78rem;color:rgba(22,18,63,.75)}
+.chead button{margin-left:auto;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.7);display:grid;place-items:center}
+.cmsgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--bg);scroll-behavior:smooth}
+.msg{max-width:88%;padding:11px 15px;border-radius:20px;font-size:.94rem;line-height:1.5;overflow-wrap:anywhere;white-space:pre-line;animation:msgin .25s ease-out}
+@keyframes msgin{from{opacity:0;transform:translateY(8px)}}
+.msg.bot{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:6px}
+.msg.me{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:6px}
+.msg.note{align-self:center;background:none;color:var(--muted);font-size:.8rem;text-align:center;padding:2px 8px}
+.typing{align-self:flex-start;background:#fff;border:1px solid var(--line);border-radius:20px;padding:12px 16px;display:flex;gap:5px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:bl 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bl{40%{transform:translateY(-4px);opacity:.5}}
+.cchips{display:flex;flex-wrap:wrap;gap:8px;align-self:flex-start;max-width:100%}
+.cchips button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-weight:600;font-size:.85rem;transition:background .2s,border-color .2s}
+.cchips button:hover{background:var(--lav);border-color:var(--violet)}
+.cform{align-self:stretch;background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px;display:grid;gap:10px}
+.cform label{font-size:.78rem;font-weight:700;color:var(--muted);display:grid;gap:4px}
+.cform input,.cform textarea{font:inherit;font-size:.95rem;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--bg);color:var(--ink);width:100%;resize:vertical;min-height:44px}
+.cform input:focus,.cform textarea:focus{outline:none;border-color:var(--violet)}
+.cform .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.cform .row{display:flex;gap:8px;flex-wrap:wrap}
+.cform small{color:var(--muted);font-size:.75rem;line-height:1.4}
+.cbtn2{border:0;border-radius:999px;padding:11px 18px;font-weight:700;font-size:.9rem;background:var(--ink);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.cbtn2.alt{background:var(--bg);color:var(--ink);border:1.5px solid var(--line)}
+.cfoot{display:flex;gap:8px;padding:10px 12px 0;background:#fff;border-top:1px solid var(--line)}
+.cfoot a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-weight:700;font-size:.8rem;padding:8px 6px;border-radius:999px;background:var(--bg);white-space:nowrap}
+.cfoot a:hover{background:var(--lav)}
+.cfoot .i{width:1em;height:1em}
+.cin{display:flex;gap:8px;padding:10px 12px calc(12px + env(safe-area-inset-bottom,0px));background:#fff}
+.cin input{flex:1;min-width:0;font:inherit;border:1.5px solid var(--line);border-radius:999px;padding:12px 16px;background:var(--bg);color:var(--ink)}
+.cin input:focus{outline:none;border-color:var(--violet)}
+.cin button{width:46px;height:46px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--green),var(--blue));color:#fff;display:grid;place-items:center;flex:none}
+@media(max-width:640px){
+  .cpanel{left:10px;right:10px;width:auto;bottom:calc(10px + env(safe-area-inset-bottom,0px));height:min(86dvh,680px);border-radius:26px}
+  .cbtn span.t{display:none}.cbtn{padding:16px}
+  .fab{width:52px;height:52px}
+  body.chat-open .fab{display:none}
+}
+
+/* ── chat bubbles + orb header (design port of ChatBubble / AiOrb) ── */
+.chead canvas{width:46px;height:46px;flex:none;border-radius:50%;background:rgba(255,255,255,.72)}
+.chead small{display:block}
+.crow{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px}
+.crow.me{flex-direction:row-reverse}
+.cav{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;font:700 .68rem var(--f-body);background:var(--lav);color:var(--ink)}
+.crow.me .cav{background:var(--ink);color:#fff}
+.ccol{min-width:0;max-width:calc(100% - 44px)}
+.cbub{border-radius:12px;padding:12px;font-size:.94rem;line-height:1.5;white-space:pre-line;overflow-wrap:anywhere;color:var(--ink)}
+.crow.bot .cbub{background:#ECE8FA;border-top-left-radius:4px}
+.crow.me .cbub{background:var(--ink);color:#fff;border-top-right-radius:4px}
+.cbub svg{display:block}
+.cacts{display:flex;gap:4px;margin-top:6px}
+.cact{width:26px;height:26px;border-radius:8px;border:0;background:none;color:var(--muted);display:grid;place-items:center;transition:background .2s,color .2s}
+.cact:hover{background:var(--lav);color:var(--ink)}
+.cact .i{width:14px;height:14px}
+
+</style>
+</head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/><circle cx="9" cy="7" r="4"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-10 6L2 7"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.1A8.4 8.4 0 1 1 21 11.5z"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v9H5v-9M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
+<symbol id="i-rupee" viewBox="0 0 24 24"><path d="M6 4h12M6 9h12M9 4c5 0 6 5 0 5M9 9l6 11"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.8 1.2 6.9-6.2-3.2-6.2 3.2L7 14.1 2 9.3l6.9-1z"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h6"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10a7 7 0 0 1-14 0M12 17v5"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-4 3 3 5-6"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="m22 10-10-5L2 10l10 5zM6 12v5c3 2 9 2 12 0v-5M22 10v6"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5zM20 17v4H6.5A2.5 2.5 0 0 1 4 18.5"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></symbol>
+<symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></symbol>
+<symbol id="i-fb" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+<symbol id="i-ig" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+</defs></svg>
+
+<div id="xfade"></div>
+<div id="mmenu">
+  <h4>Services</h4>
+  <button class="mi" onclick="go('services',0)">Education Counseling</button>
+  <button class="mi" onclick="go('career')">Career Counseling</button>
+  <button class="mi" onclick="go('services',2)">Guaranteed Admissions</button>
+  <button class="mi" onclick="go('services',3)">SEJ Community</button>
+  <button class="mi" onclick="go('services',4)">Accommodation &amp; Guardianship</button>
+  <button class="mi" onclick="go('services',5)">Parent Counseling</button>
+  <h4>Explore</h4>
+  <button class="mi" onclick="go('programs')">UG &amp; PG Programs</button>
+  <button class="mi" onclick="go('online')">Online Programs</button>
+  <button class="mi" onclick="go('testimonials')">Stories</button>
+  <button class="mi" onclick="go('partner')">Partner With Us</button>
+  <button class="mi" onclick="go('referral')">Referral Program</button>
+  <button class="mi" onclick="go('contact')">Contact</button>
+  <button class="btn btn-p" onclick="closeMenus();openP('cp')">Talk to an Expert <span class="ar"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+</div>
+
+<nav id="nav"><div class="ni">
+  <a href="#hero" class="logo" onclick="event.preventDefault();go('hero')">SmartEd<b>Journey</b><small>Stay smart | Stay ahead</small></a>
+  <div class="nlinks">
+    <div class="nitem"><button class="nlink" onclick="toggleDD(this)">Services <svg viewBox="0 0 10 6"><path d="M0 0l5 6 5-6z"/></svg></button>
+      <div class="drop">
+        <button onclick="go('services',0)">Education Counseling</button><button onclick="go('career')">Career Counseling</button><button onclick="go('services',2)">Guaranteed Admissions</button><button onclick="go('services',3)">SEJ Community</button><button onclick="go('services',4)">Accommodation &amp; Guardianship</button><button onclick="go('services',5)">Parent Counseling</button>
+      </div></div>
+    <div class="nitem"><button class="nlink" onclick="toggleDD(this)">Programs <svg viewBox="0 0 10 6"><path d="M0 0l5 6 5-6z"/></svg></button>
+      <div class="drop">
+        <button onclick="goTab('programs','ug')">Undergraduate (UG)</button><button onclick="goTab('programs','pg')">Postgraduate (PG)</button><button onclick="goTab('online','uo')">Online UG Programs</button><button onclick="goTab('online','po')">Online PG Programs</button><button onclick="goTab('online','co')">Certificates &amp; Diplomas</button>
+      </div></div>
+    <div class="nitem"><button class="nlink" onclick="go('career')">Career</button></div>
+    <div class="nitem"><button class="nlink" onclick="go('testimonials')">Stories</button></div>
+    <div class="nitem"><button class="nlink" onclick="toggleDD(this)">Partner <svg viewBox="0 0 10 6"><path d="M0 0l5 6 5-6z"/></svg></button>
+      <div class="drop"><button onclick="go('partner')">Partner With Us</button><button onclick="go('referral')">Referral Program</button></div></div>
+    <div class="nitem"><button class="nlink" onclick="go('contact')">Contact</button></div>
+  </div>
+  <button class="btn btn-p ncta" onclick="openP('cp')">Talk to an Expert <span class="ar"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+  <button class="burger" id="burger" aria-label="Open menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</div></nav>
+
+<header id="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="w">
+    <div class="hgrid">
+      <div>
+        <div class="pill hbadge"><i></i>India's Premier Education &amp; Career Partner · Est. 2021</div>
+        <h1>Your Path<br/>from Learning<br/><span class="l3">to Earning.</span></h1>
+        <p class="hdesc">SmartEdJourney is India's most trusted education and career partner, built on five years of earned credibility, 300+ college partnerships, and a relentless commitment to every student we serve.</p>
+        <div class="hbtns">
+          <button class="btn btn-p" onclick="openP('cp')">Talk to an Expert <span class="ar"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+          <button class="btn btn-s" onclick="go('about')">Our Story <span class="ar"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+        </div>
+      </div>
+      <div class="stage"><canvas id="hero3d" aria-label="Interactive 3D graduation cap with floating shapes" role="img"></canvas><div class="tip" id="tip" hidden></div></div>
+    </div>
+    <div class="hstats">
+      <div class="st tilt"><b><span class="cnt" data-t="300">300</span>+</b><span>College Tie-Ups</span></div>
+      <div class="st tilt"><b><span class="cnt" data-t="200">200</span>+</b><span>Student Admissions</span></div>
+      <div class="st tilt"><b><span class="cnt" data-t="5">5</span>+</b><span>Years of Trust</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="mqwrap"><div class="mqbar"><div class="mqt" id="mqt"></div></div></div>
+
+<section id="finder" class="sec" style="padding-top:20px">
+  <div class="w">
+    <div class="finder rv">
+      <div>
+        <span class="pill"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg> 10-second path finder</span>
+        <h2 style="margin-top:16px">What are you into? We'll point you to the right programs.</h2>
+        <p>Pick the field that excites you. You'll see real programs we counsel for, with a shortcut to the full list.</p>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="fres" id="fres" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>We didn't start with a pitch deck. We started with <span class="hl">trust.</span></h2><p>Five years. Zero advertising. 200+ admissions. All word of mouth. That's how SmartEdJourney was built, and it's still how we operate.</p></div>
+    <div class="abody">
+      <div class="acopy rv">
+        <p>SmartEdJourney is India's most trusted education and career partner. It was not built in a boardroom. It was forged through five years of genuine human connection, word-of-mouth credibility, and an unwavering commitment to every student we serve.</p>
+        <p>For five years, we grew entirely through referrals, with no marketing spend and no advertising, until we crossed the milestone of 200+ student admissions. That achievement was our signal to scale.</p>
+        <p>Each member of our team has carved out a niche through years of individual effort and earned trust. We've come together under SmartEdJourney to create something larger than any one of us: a platform where every student finds not just a consultant, but a genuine advocate for their future.</p>
+      </div>
+      <div class="flips rv">
+        <button class="flip" onclick="this.classList.toggle('on')" style="--c:var(--lav)"><span class="face f"><svg class="i" aria-hidden="true"><use href="#i-target"/></svg><h3>Vision</h3></span><span class="face b"><h3>Vision</h3>India's most trusted education &amp; career partner, from the right degree to the first milestone.</span></button>
+        <button class="flip" onclick="this.classList.toggle('on')" style="--c:var(--mint)"><span class="face f"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg><h3>Mission</h3></span><span class="face b"><h3>Mission</h3>End-to-end counseling with radical transparency, zero middlemen, and a human touch.</span></button>
+        <button class="flip" onclick="this.classList.toggle('on')" style="--c:var(--peach)"><span class="face f"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg><h3>Commitment</h3></span><span class="face b"><h3>Commitment</h3>We stay in touch before, during, and long after admission. Your success is our reputation.</span></button>
+      </div>
+    </div>
+    <div class="metrics rv">
+      <div class="met tilt"><b>300+</b><span>College Partnerships</span></div>
+      <div class="met tilt"><b>Zero</b><span>Middlemen. Ever.</span></div>
+      <div class="met tilt"><b>100%</b><span>Transparent Process</span></div>
+      <div class="met tilt"><b>1:1</b><span>Personalised Counseling</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>Everything you need, <span class="hl">under one roof.</span></h2><p>From your first college choice to your first job offer, we're with you every step of the way.</p></div>
+    <div class="svg" id="svcl"></div>
+  </div>
+</section>
+
+<section id="programs" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>UG &amp; PG programs across <span class="hl">every discipline.</span></h2><p>Hundreds of degree options across all major fields. Tap any category to explore.</p></div>
+    <div class="ptabs" role="tablist">
+      <button class="ptab act" role="tab" onclick="swProg('ug',this)">Undergraduate (UG) <small id="n-ug"></small></button>
+      <button class="ptab" role="tab" onclick="swProg('pg',this)">Postgraduate (PG) <small id="n-pg"></small></button>
+    </div>
+    <div class="pwrap">
+      <div class="ppanel act" id="pug"><div class="pcats" id="ug-c"></div></div>
+      <div class="ppanel" id="ppg"><div class="pcats" id="pg-c"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="online" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>Work. Learn. Grow. <span class="hl">Simultaneously.</span></h2><p>UGC/AICTE-recognised online and part-time degrees from top Indian universities.</p></div>
+    <div class="ptabs" role="tablist">
+      <button class="ptab act" role="tab" onclick="swOnline('uo',this)">Online UG</button>
+      <button class="ptab" role="tab" onclick="swOnline('po',this)">Online PG</button>
+      <button class="ptab" role="tab" onclick="swOnline('co',this)">Certificates</button>
+    </div>
+    <div class="pwrap">
+      <div class="ppanel act" id="puo"><div class="pcats" id="uo-c"></div></div>
+      <div class="ppanel" id="ppo"><div class="pcats" id="po-c"></div></div>
+      <div class="ppanel" id="pco"><div class="pcats" id="co-c"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pq">
+  <div class="orb o1" data-d="30"></div><div class="orb o2" data-d="-20"></div><div class="orb o3" data-d="45"></div><div class="orb o4" data-d="-35"></div>
+  <p class="pqtext rv">We don't stop at admission. <em>We stay with you</em> until you <span>land your first job.</span></p>
+  <div class="pqsrc">SmartEdJourney: our promise to every student</div>
+</section>
+
+<section id="career" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>From confusion to <span class="hl">clarity.</span></h2><p>Industry-experienced mentors help you understand not just what to study, but why, and exactly where it takes you.</p></div>
+    <div class="cbody">
+      <div class="tl rv" id="tl"><i class="fill" id="tlfill"></i>
+        <div class="step"><span class="n">1</span><h3>Profile Assessment</h3><p>Deep-dive into your academic background, interests, strengths, and long-term aspirations.</p></div>
+        <div class="step"><span class="n">2</span><h3>Industry Expert Session</h3><p>1:1 sessions with professionals from your field, with real insights instead of textbook advice.</p></div>
+        <div class="step"><span class="n">3</span><h3>Career Roadmap</h3><p>A personalised, actionable plan covering degree choice, skill-building, and placement goals.</p></div>
+        <div class="step"><span class="n">4</span><h3>Resume &amp; Interview Readiness</h3><p>Professional resume building, LinkedIn optimisation, and mock interview coaching.</p></div>
+        <div class="step"><span class="n">5</span><h3>Placement Support</h3><p>On-campus and off-campus placement via the SmartEdJourney community network.</p></div>
+      </div>
+      <div class="ccards rv">
+        <div class="cc tilt" style="--c:var(--lav)"><svg class="i" aria-hidden="true"><use href="#i-doc"/></svg><h3>Resume Building</h3><p>Crafted to stand out to recruiters in your target industry.</p></div>
+        <div class="cc tilt" style="--c:var(--mint)"><svg class="i" aria-hidden="true"><use href="#i-mic"/></svg><h3>Interview Coaching</h3><p>Mock interviews, GD prep, and real feedback from mentors.</p></div>
+        <div class="cc tilt" style="--c:var(--peach)"><svg class="i" aria-hidden="true"><use href="#i-link"/></svg><h3>Network Access</h3><p>SEJ community for off-campus opportunities and mentoring.</p></div>
+        <div class="cc tilt" style="--c:var(--sky)"><svg class="i" aria-hidden="true"><use href="#i-compass"/></svg><h3>Career Mapping</h3><p>Personalised roadmaps aligned to your strengths and demand.</p></div>
+        <div class="cc tilt" style="--c:var(--butter)"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg><h3>Personal Branding</h3><p>LinkedIn optimisation and digital presence for the modern job market.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>Guaranteed admissions. <span class="hl">No stress. No middlemen.</span></h2><p>Built on one belief: every student deserves honest guidance, not a sales pitch.</p></div>
+    <div class="wgrid" id="wgrid"></div>
+  </div>
+</section>
+
+<section id="testimonials" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>Real students. <span class="hl">Real journeys.</span></h2><p>25 stories from across India, proof that the SmartEdJourney difference is real.</p></div>
+    <div class="tscroll" id="tst"></div>
+    <div class="tbar">
+      <button class="tbtn" aria-label="Previous story" onclick="tgo(-1)"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></button>
+      <button class="tbtn" aria-label="Next story" onclick="tgo(1)"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <div class="tprog"><i id="tpf"></i></div>
+      <div class="tcnt" id="tct">1 / 25</div>
+    </div>
+  </div>
+</section>
+
+<section id="partner" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>Grow together. <span class="hl">Impact thousands.</span></h2><p>Colleges, corporates, coaching institutes, or individual counselors. Let's build something meaningful.</p></div>
+    <div class="two">
+      <div class="pts rv">
+        <div class="pt"><span class="ic" style="--c:var(--lav)"><svg class="i" aria-hidden="true"><use href="#i-cap"/></svg></span><h3>Colleges &amp; Universities</h3><p>List your programs and reach thousands of motivated students across India.</p></div>
+        <div class="pt"><span class="ic" style="--c:var(--mint)"><svg class="i" aria-hidden="true"><use href="#i-building"/></svg></span><h3>Corporates &amp; Employers</h3><p>Partner for campus placements, internships, and talent pipeline building.</p></div>
+        <div class="pt"><span class="ic" style="--c:var(--peach)"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span><h3>Coaching Institutes</h3><p>Collaborate on student preparation, co-counseling, and referral programs.</p></div>
+        <div class="pt"><span class="ic" style="--c:var(--sky)"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span><h3>Individual Counselors</h3><p>Join our growing network of counselors and mentors under the SEJ umbrella.</p></div>
+      </div>
+      <div class="cta rv">
+        <h3>Ready to partner?</h3>
+        <p>Reach out directly on WhatsApp and our team will connect with you to explore collaboration opportunities.</p>
+        <a class="btn" href="https://wa.me/918939639748" target="_blank" rel="noopener">Chat on WhatsApp <span class="ar"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></span></a>
+        <small>or call +91 89396 39748</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="referral" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>Refer a friend. Earn real <span class="hl">rewards.</span></h2><p>Every successful referral is a life changed, and we make sure you're rewarded for it.</p></div>
+    <div class="steps3 rv">
+      <div class="s3" style="--c:var(--lav)"><b>1</b><h3>Refer Someone You Know</h3><p>Share SmartEdJourney with a student or family who needs guidance.</p></div>
+      <div class="s3" style="--c:var(--mint)"><b>2</b><h3>They Join SmartEdJourney</h3><p>Your referral connects with our team, enrols, and begins their journey.</p></div>
+      <div class="s3" style="--c:var(--butter)"><b>3</b><h3>You Get Rewarded</h3><p>Earn cash, exclusive gifts, priority access, and community recognition.</p></div>
+    </div>
+    <div class="rcards rv">
+      <div class="rc tilt"><div class="top"><span class="ic" style="--c:var(--mint)"><svg class="i" aria-hidden="true"><use href="#i-rupee"/></svg></span><span class="bd">Per Referral</span></div><h3>Cash Incentives</h3><p>Direct cash for every student who enrols via your referral.</p></div>
+      <div class="rc tilt"><div class="top"><span class="ic" style="--c:var(--pink)"><svg class="i" aria-hidden="true"><use href="#i-gift"/></svg></span><span class="bd">Top Referrers</span></div><h3>Exclusive Gifts</h3><p>Special thank-you gifts for our most valued referral partners.</p></div>
+      <div class="rc tilt"><div class="top"><span class="ic" style="--c:var(--butter)"><svg class="i" aria-hidden="true"><use href="#i-star"/></svg></span><span class="bd">VIP Access</span></div><h3>Priority Access</h3><p>Priority booking for counseling sessions and community events.</p></div>
+      <div class="rc tilt"><div class="top"><span class="ic" style="--c:var(--sky)"><svg class="i" aria-hidden="true"><use href="#i-trophy"/></svg></span><span class="bd">Honour</span></div><h3>Community Champion</h3><p>Be celebrated as a Champion Partner who helped shape lives.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="sec">
+  <div class="w">
+    <div class="sh rv"><h2>Ready to start your <span class="hl">journey?</span></h2><p>No waiting rooms. No gatekeepers. Reach out and speak to our experts today.</p></div>
+    <div class="cgrid">
+      <div class="offices rv">
+        <div class="addr"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><div><strong>Assam Office</strong><span>Natun Sarania, Gandhi Basti Road, Silpukhuri, Guwahati, Assam</span></div></div>
+        <div class="addr"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><div><strong>Karnataka Office</strong><span>HSR Layout, Sector 1, 27th Main, Bengaluru, Karnataka</span></div></div>
+        <div class="addr"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span><div><strong>Email</strong><span>smartedjourney.sols@gmail.com</span></div></div>
+      </div>
+      <div class="rv">
+        <div class="clinks">
+          <a class="cl" style="--c:var(--lav)" href="tel:+918951679748"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><div><small>Call</small><b>+91 89516 79748</b></div></a>
+          <a class="cl" style="--c:var(--sky)" href="tel:+917099016113"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><div><small>Call</small><b>+91 70990 16113</b></div></a>
+          <a class="cl" style="--c:var(--sky)" href="tel:+919282477990"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><div><small>Call</small><b>+91 92824 77990</b></div></a>
+          <a class="cl" style="--c:var(--mint)" href="https://wa.me/918939639748" target="_blank" rel="noopener"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></span><div><small>WhatsApp</small><b>+91 89396 39748</b></div></a>
+          <a class="cl" style="--c:var(--peach)" href="mailto:smartedjourney.sols@gmail.com"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span><div><small>Email</small><b>smartedjourney.sols@gmail.com</b></div></a>
+        </div>
+        <div class="soc">
+          <a class="btn btn-s" href="https://www.facebook.com/smartedjourney25/" target="_blank" rel="noopener">Facebook <span class="ar"><svg class="i" aria-hidden="true"><use href="#i-fb"/></svg></span></a>
+          <a class="btn btn-s" href="https://www.instagram.com/smartedjourney25/?hl=en" target="_blank" rel="noopener">Instagram <span class="ar"><svg class="i" aria-hidden="true"><use href="#i-ig"/></svg></span></a>
+          <button class="btn btn-p" onclick="openP('cp')">Talk to Us <span class="ar"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div>
+      <div class="fb">SmartEd<span>Journey</span></div>
+      <p style="margin-top:10px">Empowering Your Path from Learning to Earning · Stay Smart · Stay Ahead</p>
+      <p class="bio"><span><strong style="color:#fff">Assam:</strong> Natun Sarania, Gandhi Basti Road, Silpukhuri, Guwahati</span><span><strong style="color:#fff">Karnataka:</strong> HSR Layout, Sector 1, 27th Main, Bengaluru</span></p>
+    </div>
+    <div><h4>Services</h4><ul><li><a href="#services">Education Counseling</a></li><li><a href="#career">Career Counseling</a></li><li><a href="#programs">UG &amp; PG Programs</a></li><li><a href="#online">Online Education</a></li><li><a href="#services">Accommodation</a></li><li><a href="#services">Parent Counseling</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="#about">About Us</a></li><li><a href="#why">Why Us</a></li><li><a href="#testimonials">Student Stories</a></li><li><a href="#partner">Partner With Us</a></li><li><a href="#referral">Referral Program</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li><a href="tel:+918951679748">+91 89516 79748</a></li><li><a href="tel:+917099016113">+91 70990 16113</a></li><li><a href="tel:+919282477990">+91 92824 77990</a></li><li><a href="https://wa.me/918939639748" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:smartedjourney.sols@gmail.com">smartedjourney.sols@gmail.com</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2026 SmartEdJourney. All rights reserved.</span><span>Guwahati, Assam · Bengaluru, Karnataka · India</span></div>
+</footer>
+
+<a class="fab" href="https://wa.me/918939639748" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg><span>Chat with us</span></a>
+
+<div class="ovl" id="cp" onclick="closeP('cp',event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Talk to an Expert">
+    <button class="x" aria-label="Close" onclick="closeP('cp')"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+    <h3>Talk to an Expert</h3><p>We typically respond within minutes.</p>
+    <div class="list">
+      <a class="cl" href="tel:+918951679748"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><div><b>+91 89516 79748</b><small>Call us directly</small></div></a>
+      <a class="cl" href="tel:+917099016113"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><div><b>+91 70990 16113</b><small>Call us directly</small></div></a>
+      <a class="cl" href="tel:+919282477990"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><div><b>+91 92824 77990</b><small>Call us directly</small></div></a>
+      <a class="cl" href="https://wa.me/918939639748" target="_blank" rel="noopener"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></span><div><b>+91 89396 39748</b><small>Chat on WhatsApp</small></div></a>
+      <a class="cl" href="mailto:smartedjourney.sols@gmail.com"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span><div><b>smartedjourney.sols@gmail.com</b><small>Email us anytime</small></div></a>
+    </div>
+  </div>
+</div>
+<script>/* Paste your Google Apps Script web-app URL between the quotes to email chat questions to your Gmail. See setup steps. */
+window.SEJ_CHAT_ENDPOINT='';</script>
+<button class="cbtn" id="cbtn" aria-label="Open chat assistant" onclick="SEJChat.open()"><span class="dot"></span><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg><span class="t">Ask us anything</span></button>
+<section class="cpanel" id="cpanel" role="dialog" aria-label="SmartEdJourney assistant" aria-modal="false">
+  <div class="chead"><canvas id="corb" aria-hidden="true"></canvas><div><b>SEJ Assistant</b><small id="cstat" aria-live="polite">Assistant is ready</small></div><button aria-label="Close chat" onclick="SEJChat.close()"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="cmsgs" id="cmsgs" aria-live="polite"></div>
+  <div class="cfoot"><a href="https://wa.me/918939639748" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg>WhatsApp</a><a href="tel:+918951679748"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Call</a><a href="mailto:smartedjourney.sols@gmail.com"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>Email</a></div>
+  <form class="cin" id="cin" autocomplete="off"><input id="cinput" type="text" maxlength="400" placeholder="Type your question…" aria-label="Your question"><button type="submit" aria-label="Send"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button></form>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const SVCS=[
+  {n:'Education Counseling',d:'Comprehensive admission counseling for Medical, Engineering, and all Degree programs — from shortlisting to final enrollment with zero surprises.',tags:['Medical Admissions','Engineering','UG & PG Programs','Documentation']},
+  {n:'Career Counseling',d:'In-depth 1:1 sessions with industry experts to help you choose the right career path, build your resume, and ace your interviews.',tags:['1:1 Expert Sessions','Resume Building','Interview Coaching','Personal Branding']},
+  {n:'Guaranteed Admissions',d:'Direct partnerships with 300+ premier private colleges across India — transparently, with zero middlemen and no hidden fees.',tags:['Direct College Tie-Ups','No Hidden Fees','Pan-India Network']},
+  {n:'SEJ Community',d:'A thriving network of students and working professionals with access to off-campus placements and peer mentoring.',tags:['Off-Campus Placements','Professional Network','Peer Mentoring']},
+  {n:'Accommodation & Guardianship',d:'Rental housing assistance and local guardian services for students relocating — so families can breathe easy.',tags:['Rental Assistance','Local Guardian','Relocation Support']},
+  {n:'Parent Counseling',d:'Dedicated 1:1 sessions with parents to align every decision with what matters most to your family.',tags:['1:1 Parent Sessions','Aspiration Mapping','Family Communication']},
+];
+const WHY=[
+  {t:'Guaranteed Admission',b:'Direct partnerships with 300+ premier colleges — no brokers, no uncertainty, no stress.'},
+  {t:'5 Years of Earned Trust',b:'We grew from zero to 200+ students purely through referrals. That\'s proof, not marketing.'},
+  {t:'Radical Transparency',b:'No hidden fees. No last-minute surprises. You always know what\'s happening and why.'},
+  {t:'Pan-India Network',b:'300+ college and university partnerships spanning every major city and discipline.'},
+  {t:'The Human Touch',b:'You\'re not a case file — you\'re a student with a dream. We treat every student that way.'},
+  {t:'Beyond Counseling',b:'Internships, resume building, interview coaching, job placement — long after admission day.'},
+];
+const TESTS=[
+  {n:'P Borkotoky',d:'MBBS',s:'Assam',t:'SmartEdJourney secured my MBBS seat when everything seemed impossible. Truly life-changing guidance.'},
+  {n:'R Das',d:'B.Tech',s:'Assam',t:'One call cleared all my confusion. No jargon, no pressure — just honest, practical advice.'},
+  {n:'A Kalita',d:'BDS',s:'Assam',t:'My BDS admission was handled so smoothly. They stayed in touch even after joining college.'},
+  {n:'D Gogoi',d:'MBA',s:'Assam',t:'From shortlisting to final enrollment, handled professionally. I didn\'t have to chase anyone once.'},
+  {n:'S Baruah',d:'B.Pharm',s:'Assam',t:'Finding accommodation was daunting. SmartEdJourney found me a great PG near college within days.'},
+  {n:'P Nath',d:'M.Sc Nursing',s:'Assam',t:'My parents were anxious. The team counseled them separately and put their minds completely at ease.'},
+  {n:'R Deka',d:'BBA',s:'Assam',t:'Their career counseling helped me discover my passion for marketing over finance. Life-changing.'},
+  {n:'B Saikia',d:'B.Tech CSE',s:'Assam',t:'Zero middlemen, zero confusion. I knew exactly what I was paying. Refreshingly honest.'},
+  {n:'H Borah',d:'MBBS',s:'Assam',t:'The resume they built got me a research internship during my first year. Outstanding team.'},
+  {n:'S Choudhury',d:'B.Tech',s:'Assam',t:'My parents trusted them completely, and that trust was never broken.'},
+  {n:'M Talukdar',d:'BBA LLB',s:'Assam',t:'I was torn between law and business. Their 1:1 career session gave me total clarity.'},
+  {n:'A Bhuyan',d:'MBA',s:'Assam',t:'From Guwahati to my dream college — guided me through everything including GD-PI prep.'},
+  {n:'D Sharma',d:'B.Tech IT',s:'Maharashtra',t:'Secured my seat in 3 weeks flat. I genuinely wish I had found them a year earlier.'},
+  {n:'R Verma',d:'MBA',s:'Delhi',t:'Interview coaching is next level. Mock sessions were so realistic the actual interview felt easy.'},
+  {n:'A Krishnan',d:'BDS',s:'Tamil Nadu',t:'Knowledge of dental college admissions was impressive. They knew every college, every fee.'},
+  {n:'K Mehta',d:'B.Tech CSE',s:'Rajasthan',t:'Got my first job before finishing my final semester through their community network!'},
+  {n:'S Pillai',d:'M.Tech',s:'Kerala',t:'My mom was skeptical but one session with the team and she was fully on board.'},
+  {n:'P Agarwal',d:'M.Sc Biotech',s:'Uttar Pradesh',t:'Found accommodation, got career counseling, landed an internship — all through SmartEdJourney.'},
+  {n:'N Reddy',d:'MBBS',s:'Telangana',t:'Medical admissions seemed overwhelming. The team made it feel like a walk in the park.'},
+  {n:'I Banerjee',d:'B.Tech ECE',s:'West Bengal',t:'They stayed in touch months after admission. Shared internship leads, helped me settle in.'},
+  {n:'T Iyer',d:'B.Com (Hons)',s:'Tamil Nadu',t:'One career counseling session and I had complete clarity. Worth every minute.'},
+  {n:'V Singh',d:'BBA',s:'Punjab',t:'No hidden costs, no vague timelines. Everything communicated clearly from day one.'},
+  {n:'J Patel',d:'M.Sc Data Science',s:'Gujarat',t:'Guided me to a program I hadn\'t even considered — the perfect fit for my goals.'},
+  {n:'C Nair',d:'B.Sc Nursing',s:'Karnataka',t:'Moving from Kerala to Karnataka — SmartEdJourney made the transition completely seamless.'},
+  {n:'M Rao',d:'MBA Finance',s:'Andhra Pradesh',t:'Resume, interview prep, placement — delivered on every promise. Placed with a top firm.'},
+];
+const UG=[
+  {n:'Medical & Allied Health',d:['MBBS','BDS','BAMS','BHMS','BNYS','B.Pharm','B.Sc Nursing','B.Sc MLT','B.Sc Radiology','B.Sc Optometry','B.Sc Physiotherapy','B.Sc Nutrition & Dietetics']},
+  {n:'Engineering & Technology',d:['B.Tech CSE','B.Tech IT','B.Tech ECE','B.Tech EE','B.Tech Mechanical','B.Tech Civil','B.Tech Chemical','B.Tech Aerospace','B.Tech Biotechnology','B.Tech Data Science & AI','B.Tech Robotics','B.Tech Cybersecurity','B.Arch','B.Plan']},
+  {n:'Business & Commerce',d:['BBA','B.Com','B.Com (Hons)','BBA LLB','BMS','BBA Finance','BBA Marketing','BBA HR','BBA International Business','BBA Entrepreneurship','BBA Digital Marketing']},
+  {n:'Law',d:['BA LLB (5-year)','BBA LLB (5-year)','B.Com LLB (5-year)','LLB (3-year)','BSL LLB']},
+  {n:'Arts, Design & Media',d:['BA','BFA','B.Des','BVA','BA Journalism','BA Film & TV','BA Advertising','BA Animation','BA Photography','BA Interior Design','BA Graphic Design','BA Liberal Arts']},
+  {n:'Science',d:['B.Sc Physics','B.Sc Chemistry','B.Sc Maths','B.Sc Biology','B.Sc Biotechnology','B.Sc Microbiology','B.Sc CS','B.Sc Statistics','B.Sc Environmental Science','B.Sc Agriculture','B.Sc Food Technology','B.Sc Forensic Science','B.Sc Data Science']},
+  {n:'Hospitality & Travel',d:['BHM','B.Sc Hotel Management','BBA Hospitality','BA Tourism Management','B.Sc Culinary Arts','BBA Aviation Management']},
+  {n:'Education & Social Sciences',d:['B.Ed','BA Education','BSW','BA Psychology','BA Sociology','BA Economics','BA Geography','BA History','BA Public Administration']},
+];
+const PG=[
+  {n:'Medical & Allied Health',d:['MD','MS','MDS','M.Pharm','M.Sc Nursing','MPH','M.Sc Medical Microbiology','M.Sc Biotechnology','MHA','M.Sc Physiotherapy','PG Diploma Clinical Research']},
+  {n:'Engineering & Technology',d:['M.Tech CSE','M.Tech Data Science & AI','M.Tech Electronics','M.Tech Civil','M.Tech Mechanical','M.Tech Electrical','M.Tech Cybersecurity','M.Tech Robotics','M.Tech Software Engineering','M.Arch','M.Tech Aerospace']},
+  {n:'Business & Management',d:['MBA','MBA Finance','MBA Marketing','MBA HR','MBA Operations','MBA International Business','MBA Business Analytics','MBA Entrepreneurship','MBA Supply Chain','PGDM','Executive MBA']},
+  {n:'Law',d:['LLM','LLM Corporate Law','LLM Criminal Law','LLM International Law','LLM Constitutional Law','LLM IP Rights','LLM Tax Law']},
+  {n:'Arts, Design & Media',d:['MA','MFA','M.Des','MA Journalism','MA Film Studies','MA English Lit','MA History','MA Political Science','MA Sociology','MA Economics','MA Psychology']},
+  {n:'Science',d:['M.Sc Physics','M.Sc Chemistry','M.Sc Maths','M.Sc Biotechnology','M.Sc Microbiology','M.Sc CS','M.Sc Data Science','M.Sc AI','M.Sc Environmental Science','M.Sc Statistics','M.Sc Agriculture']},
+  {n:'IT & CS',d:['MCA','M.Sc IT','M.Sc Cyber Security','M.Sc AI & ML','M.Sc Cloud Computing','M.Sc Big Data','PG Diploma Data Science','PG Diploma AI','PG Diploma Blockchain']},
+];
+const OUG=[
+  {n:'Business & Commerce',d:['BBA Online','B.Com Online','BBA Finance Online','BBA Marketing Online','BBA HR Online','BBA Digital Marketing Online']},
+  {n:'Science & Technology',d:['B.Sc CS Online','B.Sc IT Online','B.Sc Data Science Online','B.Sc Maths & Computing Online']},
+  {n:'Arts & Humanities',d:['BA English Online','BA Political Science Online','BA History Online','BA Sociology Online','BA Economics Online','BA Psychology Online']},
+];
+const OPG=[
+  {n:'Business & Management',d:['MBA Online','MBA Finance Online','MBA Marketing Online','MBA HR Online','MBA Business Analytics Online','MBA Digital Marketing Online','PGDM Online','Executive MBA Online']},
+  {n:'IT & CS',d:['MCA Online','M.Sc CS Online','M.Sc Data Science Online','M.Sc AI & ML Online','M.Sc Cybersecurity Online','M.Sc Cloud Computing Online']},
+  {n:'Arts & Social Sciences',d:['MA English Online','MA History Online','MA Sociology Online','MA Economics Online','MA Psychology Online','MSW Online']},
+];
+const CERT=[
+  {n:'Business & Finance',d:['PG Certificate Business Analytics','PG Certificate Financial Management','Certificate in Digital Marketing','Certificate in Entrepreneurship','Diploma in Business Administration']},
+  {n:'Technology & Data',d:['PG Certificate Data Science','PG Certificate AI & ML','Certificate in Python','Certificate in Web Development','PG Certificate Cloud Computing','Certificate in Cybersecurity','DCA']},
+  {n:'Creative & Others',d:['PG Certificate Mass Communication','Certificate in Graphic Design','Diploma in Journalism','Certificate in Event Management','PG Certificate Hospital Administration']},
+];
+
+/* ══ helpers ══ */
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const ICO=n=>`<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const PAL=['var(--lav)','var(--mint)','var(--peach)','var(--sky)','var(--butter)','var(--pink)'];
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+/* ══ render: marquee, services, why, stories, programs ══ */
+(function(){
+  const items=['Medical Admissions','Engineering Counseling','Career Guidance','Resume Building','Interview Coaching','Job Placement','Online Degrees','UG & PG Programs','Pan-India Network','Zero Middlemen','300+ Colleges','Accommodation Support','Parent Counseling'];
+  const t=$('#mqt');[...items,...items].forEach(it=>{const s=document.createElement('span');s.className='mqi';s.textContent=it;t.appendChild(s);});
+  const sic=['cap','compass','shield','users','home','heart'];
+  $('#svcl').innerHTML=SVCS.map((s,i)=>`<article class="svc tilt rv" style="--c:${PAL[i%6]}"><div class="ic">${ICO(sic[i])}</div><h3>${esc(s.n)}</h3><p>${esc(s.d)}</p><div class="tags">${s.tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div></article>`).join('');
+  $('#wgrid').innerHTML=WHY.map((w,i)=>`<div class="wc tilt rv" style="--c:${PAL[(i+1)%6]}"><b>0${i+1}</b><h3>${esc(w.t)}</h3><p>${esc(w.b)}</p></div>`).join('');
+  $('#tst').innerHTML=TESTS.map((t,i)=>`<figure class="tc"><div class="qi"><svg width="44" height="40" viewBox="0 0 44 40" fill="none" aria-hidden="true"><path d="M33.172 5.469q2.555 0 4.547 1.547a7.4 7.4 0 0 1 2.695 4.007q.47 1.711.469 3.61 0 2.883-1.125 5.86a22.8 22.8 0 0 1-3.094 5.577 33 33 0 0 1-4.57 4.922A35 35 0 0 1 26.539 35l-3.398-3.398q5.296-4.243 7.218-6.563 1.946-2.32 2.016-4.617-2.86-.329-4.781-2.461-1.923-2.133-1.922-4.992 0-3.117 2.18-5.297 2.202-2.203 5.32-2.203m-20.625 0q2.555 0 4.547 1.547a7.4 7.4 0 0 1 2.695 4.007q.47 1.711.469 3.61 0 2.883-1.125 5.86a22.8 22.8 0 0 1-3.094 5.577 33 33 0 0 1-4.57 4.922A35 35 0 0 1 5.914 35l-3.398-3.398q5.296-4.243 7.218-6.563 1.946-2.32 2.016-4.617-2.86-.329-4.781-2.461-1.922-2.133-1.922-4.992 0-3.117 2.18-5.297 2.202-2.203 5.32-2.203" fill="#2563EB"/></svg></div><div class="stars" role="img" aria-label="5 out of 5 stars"><svg width="16" height="15" viewBox="0 0 16 15" fill="none" aria-hidden="true"><path d="M7.524.464a.5.5 0 0 1 .952 0l1.432 4.41a.5.5 0 0 0 .476.345h4.637a.5.5 0 0 1 .294.904L11.563 8.85a.5.5 0 0 0-.181.559l1.433 4.41a.5.5 0 0 1-.77.559L8.294 11.65a.5.5 0 0 0-.588 0l-3.751 2.726a.5.5 0 0 1-.77-.56l1.433-4.41a.5.5 0 0 0-.181-.558L.685 6.123A.5.5 0 0 1 .98 5.22h4.637a.5.5 0 0 0 .476-.346z" fill="#FF532E"/></svg><svg width="16" height="15" viewBox="0 0 16 15" fill="none" aria-hidden="true"><path d="M7.524.464a.5.5 0 0 1 .952 0l1.432 4.41a.5.5 0 0 0 .476.345h4.637a.5.5 0 0 1 .294.904L11.563 8.85a.5.5 0 0 0-.181.559l1.433 4.41a.5.5 0 0 1-.77.559L8.294 11.65a.5.5 0 0 0-.588 0l-3.751 2.726a.5.5 0 0 1-.77-.56l1.433-4.41a.5.5 0 0 0-.181-.558L.685 6.123A.5.5 0 0 1 .98 5.22h4.637a.5.5 0 0 0 .476-.346z" fill="#FF532E"/></svg><svg width="16" height="15" viewBox="0 0 16 15" fill="none" aria-hidden="true"><path d="M7.524.464a.5.5 0 0 1 .952 0l1.432 4.41a.5.5 0 0 0 .476.345h4.637a.5.5 0 0 1 .294.904L11.563 8.85a.5.5 0 0 0-.181.559l1.433 4.41a.5.5 0 0 1-.77.559L8.294 11.65a.5.5 0 0 0-.588 0l-3.751 2.726a.5.5 0 0 1-.77-.56l1.433-4.41a.5.5 0 0 0-.181-.558L.685 6.123A.5.5 0 0 1 .98 5.22h4.637a.5.5 0 0 0 .476-.346z" fill="#FF532E"/></svg><svg width="16" height="15" viewBox="0 0 16 15" fill="none" aria-hidden="true"><path d="M7.524.464a.5.5 0 0 1 .952 0l1.432 4.41a.5.5 0 0 0 .476.345h4.637a.5.5 0 0 1 .294.904L11.563 8.85a.5.5 0 0 0-.181.559l1.433 4.41a.5.5 0 0 1-.77.559L8.294 11.65a.5.5 0 0 0-.588 0l-3.751 2.726a.5.5 0 0 1-.77-.56l1.433-4.41a.5.5 0 0 0-.181-.558L.685 6.123A.5.5 0 0 1 .98 5.22h4.637a.5.5 0 0 0 .476-.346z" fill="#FF532E"/></svg><svg width="16" height="15" viewBox="0 0 16 15" fill="none" aria-hidden="true"><path d="M7.524.464a.5.5 0 0 1 .952 0l1.432 4.41a.5.5 0 0 0 .476.345h4.637a.5.5 0 0 1 .294.904L11.563 8.85a.5.5 0 0 0-.181.559l1.433 4.41a.5.5 0 0 1-.77.559L8.294 11.65a.5.5 0 0 0-.588 0l-3.751 2.726a.5.5 0 0 1-.77-.56l1.433-4.41a.5.5 0 0 0-.181-.558L.685 6.123A.5.5 0 0 1 .98 5.22h4.637a.5.5 0 0 0 .476-.346z" fill="#FF532E"/></svg></div><blockquote>${esc(t.t)}</blockquote><figcaption><span class="av">${esc(t.n[0])}</span><div><h3>${esc(t.n)}</h3><p>${esc(t.d)} · ${esc(t.s)}</p></div></figcaption></figure>`).join('');
+  const build=(data,id)=>{$('#'+id).innerHTML=data.map((c,i)=>`<div class="pcat" style="--c:${PAL[i%6]}"><button class="pcath" onclick="togCat(this.parentElement)" aria-expanded="false"><span class="dot"></span><span class="n">${esc(c.n)}</span><span class="c">${c.d.length} programs</span><span class="x">${ICO('arrow').replace('<svg','<svg style="transform:rotate(-45deg);width:16px;height:16px"')}</span></button><div class="pcatb"><div><div class="dgrid">${c.d.map(x=>`<span class="deg">${esc(x)}</span>`).join('')}</div></div></div></div>`).join('');};
+  build(UG,'ug-c');build(PG,'pg-c');build(OUG,'uo-c');build(OPG,'po-c');build(CERT,'co-c');
+  $('#n-ug').textContent=UG.length+' fields';$('#n-pg').textContent=PG.length+' fields';
+})();
+function togCat(el,force){const o=force!==undefined?force:!el.classList.contains('open');el.classList.toggle('open',o);const b=$('.pcath',el);if(b)b.setAttribute('aria-expanded',o);}
+
+/* ══ tabs (no ancestor transforms, height held during switch so nothing jumps) ══ */
+function swTab(sec,id,btn){
+  const box=btn.closest('.ptabs'),wrap=box.nextElementSibling,top0=box.getBoundingClientRect().top;
+  wrap.style.setProperty('--ph',wrap.offsetHeight+'px');
+  $$('.ptab',box).forEach(b=>b.classList.remove('act'));btn.classList.add('act');
+  $$('#'+sec+' .ppanel').forEach(p=>p.classList.remove('act'));
+  $$('#'+sec+' .pcat.open').forEach(c=>togCat(c,false));
+  $('#p'+id).classList.add('act');
+  wrap.style.setProperty('--ph','0px');
+  const d=box.getBoundingClientRect().top-top0;if(Math.abs(d)>1)scrollBy(0,d);
+}
+function swProg(id,btn){swTab('programs',id,btn);}
+function swOnline(id,btn){swTab('online',id,btn);}
+function goTab(sec,id){const p=$('#p'+id);const idx=$$('#'+sec+' .ppanel').indexOf(p);const btn=$$('#'+sec+' .ptab')[idx];if(btn&&!btn.classList.contains('act'))swTab(sec,id,btn);go(sec);}
+
+/* ══ navigation ══ */
+function closeMenus(){$$('.nitem.open').forEach(n=>n.classList.remove('open'));$('#mmenu').classList.remove('on');$('#burger').classList.remove('on');document.body.style.overflow='';}
+function toggleDD(btn){const it=btn.closest('.nitem'),was=it.classList.contains('open');closeMenus();if(!was)it.classList.add('open');}
+function toggleMenu(){const on=!$('#mmenu').classList.contains('on');closeMenus();$('#mmenu').classList.toggle('on',on);$('#burger').classList.toggle('on',on);document.body.style.overflow=on?'hidden':'';}
+document.addEventListener('click',e=>{if(!e.target.closest('.nitem'))$$('.nitem.open').forEach(n=>n.classList.remove('open'));});
+let goTarget=null,goBusy=false;
+function go(id,idx){
+  const el=document.getElementById(id);if(!el)return;closeMenus();
+  const card=typeof idx==='number'?$$('.svc')[idx]:null;
+  const jump=()=>{const root=document.documentElement,p=root.style.scrollBehavior;root.style.scrollBehavior='auto';(card||el).scrollIntoView({block:card?'center':'start'});root.style.scrollBehavior=p;if(card){card.classList.add('ping');setTimeout(()=>card.classList.remove('ping'),1800);}};
+  if(reduce){jump();return;}
+  goTarget=jump;const f=$('#xfade');
+  if(goBusy)return;goBusy=true;f.classList.add('on');
+  setTimeout(()=>{goTarget();setTimeout(()=>{f.classList.remove('on');goBusy=false;},140);},320);
+}
+$$('footer a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.getAttribute('href').slice(1));}));
+function openP(id){$('#'+id).classList.add('open');}
+function closeP(id,e){if(!e||e.target.id===id)$('#'+id).classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){$$('.ovl.open').forEach(o=>o.classList.remove('open'));closeMenus();}});
+
+/* ══ path finder ══ */
+(function(){
+  const lanes=[['Medicine & health','Medical & Allied Health','heart'],['Engineering & tech','Engineering & Technology','spark'],['Business','Business & Commerce','chart'],['Law','Law','shield'],['Design & media','Arts, Design & Media','compass'],['Science','Science','target'],['Hospitality & travel','Hospitality & Travel','pin'],['Teaching & society','Education & Social Sciences','book']];
+  $('#chips').innerHTML=lanes.map((l,i)=>`<button class="chip" data-i="${i}">${ICO(l[2])}${l[0]}</button>`).join('')+`<button class="chip" data-i="-1">${ICO('spark')}Not sure yet</button>`;
+  const res=$('#fres');
+  const idle=()=>{res.innerHTML=`<h3>Start with one tap.</h3><p class="small">Your matching programs show up here.</p><div class="row"><button class="btn btn-p" onclick="openP('cp')">Talk to an Expert <span class="ar">${ICO('arrow')}</span></button></div>`;};
+  idle();
+  $('#chips').addEventListener('click',e=>{
+    const b=e.target.closest('.chip');if(!b)return;$$('.chip').forEach(c=>c.classList.toggle('on',c===b));
+    const i=+b.dataset.i;
+    if(i<0){res.innerHTML=`<h3>That's completely fine.</h3><p class="small">Most students start here. A 1:1 career counseling session maps your strengths to real options before you commit to a degree.</p><div class="row"><button class="btn btn-p" onclick="openP('cp')">Book a free chat <span class="ar">${ICO('arrow')}</span></button><button class="btn btn-s" onclick="go('career')">See how it works <span class="ar">${ICO('arrow')}</span></button></div>`;return;}
+    const ci=UG.findIndex(c=>c.n===lanes[i][1]);const c=UG[ci];
+    res.innerHTML=`<h3>${esc(c.n)}</h3><p class="small">${c.d.length} undergraduate programs, for example:</p><div class="tags">${c.d.slice(0,8).map(x=>`<span>${esc(x)}</span>`).join('')}</div><div class="row"><button class="btn btn-p" id="seeall">See all ${c.d.length} programs <span class="ar">${ICO('arrow')}</span></button><button class="btn btn-s" onclick="openP('cp')">Talk to an Expert <span class="ar">${ICO('arrow')}</span></button></div>`;
+    $('#seeall').onclick=()=>{goTab('programs','ug');togCat($$('#ug-c .pcat')[ci],true);};
+  });
+})();
+
+/* ══ stories carousel ══ */
+(function(){
+  const tr=$('#tst'),n=TESTS.length;
+  const step=()=>{const c=tr.children[0];return c?c.getBoundingClientRect().width+16:300;};
+  window.tgo=d=>tr.scrollBy({left:d*step(),behavior:reduce?'auto':'smooth'});
+  const upd=()=>{const max=tr.scrollWidth-tr.clientWidth;const i=Math.min(n,Math.round(tr.scrollLeft/step())+1);$('#tct').textContent=i+' / '+n;$('#tpf').style.width=(max>0?Math.max(8,tr.scrollLeft/max*100):100)+'%';};
+  tr.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+})();
+
+/* ══ career timeline ══ */
+(function(){
+  const tl=$('#tl'),fill=$('#tlfill'),steps=$$('.step',tl);
+  function upd(){
+    const r=tl.getBoundingClientRect(),mid=innerHeight*.62;let last=-1;
+    steps.forEach((s,i)=>{const on=s.getBoundingClientRect().top<mid;s.classList.toggle('on',on);if(on)last=i;});
+    if(last>=0){const s=steps[last].getBoundingClientRect();fill.style.height=Math.max(0,Math.min(r.height-20,s.top-r.top+22))+'px';}else fill.style.height='0px';
+  }
+  addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+})();
+
+/* ══ counters ══ */
+$$('.cnt').forEach(el=>{
+  const t=+el.dataset.t;if(reduce)return;
+  const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){io.disconnect();let s=0;const iv=setInterval(()=>{s=Math.min(t,s+Math.ceil(t/50));el.textContent=s;if(s>=t)clearInterval(iv);},28);}});io.observe(el);
+});
+
+/* ══ 3D tilt cards ══ */
+if(matchMedia('(hover:hover)').matches&&!reduce){
+  $$('.tilt').forEach(c=>{
+    c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(900px) rotateY(${x*10}deg) rotateX(${-y*10}deg) translateY(-4px)`;});
+    c.addEventListener('pointerleave',()=>{c.style.transform='';});
+  });
+}
+
+/* ══ floating orbs parallax ══ */
+(function(){
+  const orbs=$$('.orb');if(reduce)return;
+  addEventListener('scroll',()=>{const pq=$('#pq').getBoundingClientRect();if(pq.bottom<0||pq.top>innerHeight)return;const p=(pq.top+pq.height/2-innerHeight/2)/innerHeight;orbs.forEach(o=>{o.style.transform=`translateY(${p*+o.dataset.d*4}px)`;});},{passive:true});
+})();
+
+/* ══ reveal on scroll (everything is visible if this never runs) ══ */
+(function(){
+  if(reduce||!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove('pre');io.unobserve(e.target);}}),{threshold:.08});
+  $$('.rv').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight*.92){el.classList.add('pre');io.observe(el);}});
+})();
+
+/* ══ 3D hero: realistic mortarboard + desk objects, each linking to a section ══ */
+(function(){
+  const cv=$('#hero3d');
+  const fail=()=>document.body.classList.add('no3d');
+  if(!cv||!window.THREE){fail();return;}
+  const T=THREE;
+  let R;try{R=new T.WebGLRenderer({canvas:cv,antialias:true,alpha:true});}catch(e){fail();return;}
+  R.setPixelRatio(Math.min(devicePixelRatio,2));
+  R.outputEncoding=T.sRGBEncoding;R.toneMapping=T.ACESFilmicToneMapping;R.toneMappingExposure=1.05;
+  const scene=new T.Scene(),cam=new T.PerspectiveCamera(32,1,.1,100);cam.position.set(0,.6,18);cam.lookAt(0,0,0);
+
+  /* studio reflections so metals, paper and felt read as real materials */
+  try{
+    const pm=new T.PMREMGenerator(R),env=new T.Scene();
+    const g=document.createElement('canvas');g.width=4;g.height=256;const x=g.getContext('2d'),gr=x.createLinearGradient(0,0,0,256);
+    gr.addColorStop(0,'#f2efff');gr.addColorStop(.45,'#b9b3dc');gr.addColorStop(1,'#6f6a9c');x.fillStyle=gr;x.fillRect(0,0,4,256);
+    const gt=new T.CanvasTexture(g);gt.encoding=T.sRGBEncoding;
+    env.add(new T.Mesh(new T.SphereGeometry(40,32,16),new T.MeshBasicMaterial({map:gt,side:T.BackSide})));
+    const panel=(w,h,p,r,i)=>{const m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({color:new T.Color(i,i,i),side:T.DoubleSide}));m.position.set(...p);m.lookAt(0,0,0);env.add(m);};
+    panel(16,9,[-14,14,14],0,6);panel(7,14,[22,6,6],0,3.5);panel(14,4,[0,-18,10],0,1.4);panel(10,8,[0,26,-6],0,3.5);
+    scene.environment=pm.fromScene(env,.03).texture;pm.dispose();
+  }catch(e){}
+  scene.add(new T.HemisphereLight(0xffffff,0x8d85c4,.22));
+  const key=new T.DirectionalLight(0xfff4e6,1.25);key.position.set(-6,9,9);scene.add(key);
+  const fill=new T.DirectionalLight(0xc9d4ff,.4);fill.position.set(8,2,6);scene.add(fill);
+  const rim=new T.DirectionalLight(0xdcd6ff,.7);rim.position.set(0,4,-9);scene.add(rim);
+
+  /* ── material + texture helpers ── */
+  const std=(c,r,m,o)=>new T.MeshStandardMaterial(Object.assign({color:new T.Color(c).convertSRGBToLinear(),roughness:r,metalness:m||0},o||{}));
+  const phys=(c,r,m,o)=>new T.MeshPhysicalMaterial(Object.assign({color:new T.Color(c).convertSRGBToLinear(),roughness:r,metalness:m||0},o||{}));
+  const canvasTex=(w,h,draw,srgb)=>{const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new T.CanvasTexture(c);if(srgb!==false)t.encoding=T.sRGBEncoding;t.anisotropy=4;return t;};
+  const noiseTex=canvasTex(128,128,(x,w,h)=>{const d=x.createImageData(w,h);for(let i=0;i<d.data.length;i+=4){const v=110+Math.random()*60;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255;}x.putImageData(d,0,0);},false);
+  noiseTex.wrapS=noiseTex.wrapT=T.RepeatWrapping;noiseTex.repeat.set(7,7);
+  const felt=c=>std(c,.97,0,{bumpMap:noiseTex,bumpScale:.3});
+  const gold=()=>phys(0xcfa23c,.24,1,{clearcoat:.35,clearcoatRoughness:.2});
+  const brass=()=>phys(0xb48a3c,.32,1,{clearcoat:.2});
+  const rrect=(w,h,r)=>{const s=new T.Shape(),x=-w/2,y=-h/2;s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);return s;};
+  const add=(parent,geo,mat,pos,rot)=>{const m=new T.Mesh(geo,mat);if(pos)m.position.set(...pos);if(rot)m.rotation.set(...rot);parent.add(m);return m;};
+  /* box with softly rounded edges so highlights roll across the corners like real objects */
+  const bev=(parent,w,h,d,r,mat,pos,rot)=>{const b=Math.min(r,w/2-.002,h/2-.002,d/2-.002);
+    const g=new T.ExtrudeGeometry(rrect(w-2*b,h-2*b,Math.max(.003,Math.min(r,w/2,h/2)*.55)),{depth:d-2*b,bevelEnabled:true,bevelThickness:b,bevelSize:b,bevelSegments:3,curveSegments:5});
+    g.translate(0,0,-(d-2*b)/2);return add(parent,g,mat,pos,rot);};
+  const spline=(pts,n)=>new T.SplineCurve(pts.map(p=>new T.Vector2(p[0],p[1]))).getPoints(n);
+
+  const root=new T.Group();scene.add(root);
+
+  /* ── mortarboard (Career) ── */
+  function makeCap(){
+    const g=new T.Group(),fm=felt(0x171a30);
+    const bg=new T.ExtrudeGeometry(rrect(2.74,2.74,.04),{depth:.06,bevelEnabled:true,bevelThickness:.018,bevelSize:.018,bevelSegments:3,curveSegments:6});
+    bg.rotateX(-Math.PI/2);bg.translate(0,-.03,0);
+    const board=add(g,bg,fm);board.rotation.y=Math.PI/4;
+    const prof=[[.0,-.95],[1.0,-.95],[1.04,-.9],[1.02,-.5],[.98,-.15],[.9,-.03]].map(p=>new T.Vector2(p[0],p[1]));
+    const skull=add(g,new T.LatheGeometry(prof,64),Object.assign(fm.clone(),{side:T.DoubleSide}));skull.position.y=-.05;
+    add(g,new T.TorusGeometry(1.03,.03,10,64),std(0x0d1022,.9,0),[0,-1.0,0],[Math.PI/2,0,0]);
+    /* covered button */
+    add(g,new T.LatheGeometry([[0,.0],[.12,.0],[.13,.03],[.1,.07],[.0,.09]].map(p=>new T.Vector2(p[0],p[1])),24),gold(),[0,.06,0]);
+    const path=new T.CatmullRomCurve3([[0,.12,0],[.5,.14,.07],[1.2,.12,.05],[1.8,.06,.02],[2.0,-.12,0],[2.03,-.5,0]].map(p=>new T.Vector3(...p)));
+    add(g,new T.TubeGeometry(path,80,.03,10,false),std(0xc59a3e,.45,.55,{bumpMap:noiseTex,bumpScale:.4}));
+    const t=new T.Group();t.position.set(2.03,-.5,0);g.add(t);
+    /* tassel: turned gold head, tie ring, fine silk strands */
+    add(t,new T.LatheGeometry([[0,.1],[.04,.1],[.06,.06],[.07,.0],[.055,-.06],[.075,-.1],[.07,-.15],[0,-.16]].map(p=>new T.Vector2(p[0],p[1])),20),gold(),[0,0,0]);
+    add(t,new T.TorusGeometry(.062,.012,8,20),brass(),[0,-.07,0],[Math.PI/2,0,0]);
+    const silk=std(0xd8b155,.4,.55);
+    for(let i=0;i<70;i++){const a=Math.random()*Math.PI*2,rr=Math.random()*.06,len=.55+Math.random()*.14;
+      add(t,new T.CylinderGeometry(.007,.006,len,5),silk,[Math.cos(a)*rr,-.14-len/2,Math.sin(a)*rr],[Math.sin(a)*.05,0,Math.cos(a)*.05]);}
+    g.userData.isCap=true;g.rotation.set(.42,0,-.05);g.scale.setScalar(1.12);
+    return g;
+  }
+
+  /* ── rolled diploma (About) ── */
+  function makeDiploma(){
+    const g=new T.Group();
+    const skin=canvasTex(256,128,(x,w,h)=>{const gr=x.createLinearGradient(0,0,0,h);gr.addColorStop(0,'#f1e6c9');gr.addColorStop(.5,'#f7eed6');gr.addColorStop(1,'#e8dcbc');x.fillStyle=gr;x.fillRect(0,0,w,h);
+      for(let i=0;i<900;i++){x.fillStyle=`rgba(120,95,50,${Math.random()*.07})`;x.fillRect(Math.random()*w,Math.random()*h,1+Math.random()*3,1);}});
+    const paper=std(0xffffff,.9,0,{map:skin,side:T.DoubleSide,bumpMap:noiseTex,bumpScale:.15});
+    add(g,new T.CylinderGeometry(.17,.17,1.55,48,1,true),paper,null,[0,0,Math.PI/2]);
+    const spiral=canvasTex(128,128,(x,w,h)=>{x.fillStyle='#efe3c4';x.fillRect(0,0,w,h);x.strokeStyle='rgba(110,85,45,.55)';x.lineWidth=2;x.beginPath();for(let a=0;a<6*Math.PI*2;a+=.1){const r=a*1.7;x.lineTo(64+Math.cos(a)*r*.62,64+Math.sin(a)*r*.62);}x.stroke();});
+    [-1,1].forEach(s=>add(g,new T.CircleGeometry(.168,40),std(0xffffff,.9,0,{map:spiral}),[s*.776,0,0],[0,s*Math.PI/2,0]));
+    const rb=phys(0x6e1626,.35,0,{clearcoat:.5,clearcoatRoughness:.3});
+    add(g,new T.CylinderGeometry(.182,.182,.1,40,1,true),Object.assign(rb.clone(),{side:T.DoubleSide}),[0,0,0],[0,0,Math.PI/2]);
+    [-1,1].forEach(s=>add(g,new T.TorusGeometry(.05,.022,10,20),rb,[s*.06,.205,.05],[0,s*.4,s*.9]));
+    add(g,new T.SphereGeometry(.035,14,10),rb,[0,.19,.05]);
+    [-1,1].forEach(s=>add(g,new T.BoxGeometry(.045,.26,.012),rb,[s*.05,.31,.07],[0,0,s*.35]));
+    g.rotation.z=.25;return g;
+  }
+
+  /* ── stack of hardcover books (Programs) ── */
+  function makeBooks(){
+    const g=new T.Group();
+    const pageTex=canvasTex(64,64,(x,w,h)=>{x.fillStyle='#efe6cf';x.fillRect(0,0,w,h);for(let i=0;i<h;i+=2){x.fillStyle=`rgba(150,130,90,${.25+Math.random()*.25})`;x.fillRect(0,i,w,1);}});
+    const book=(w,h,d,c,y,ry)=>{const b=new T.Group(),cov=phys(c,.55,0,{bumpMap:noiseTex,bumpScale:.35,clearcoat:.15,clearcoatRoughness:.6});
+      bev(b,w,.034,d,.012,cov,[0,h/2-.017,0]);bev(b,w,.034,d,.012,cov,[0,-h/2+.017,0]);
+      bev(b,.05,h,d,.015,cov,[-w/2+.025,0,0]);
+      add(b,new T.BoxGeometry(w-.09,h-.08,d-.05),std(0xffffff,.95,0,{map:pageTex}),[.03,0,.012]);
+      [.22,.44].forEach(k=>bev(b,.022,h+.004,d+.004,.006,gold(),[-w/2+.0+k*.1,0,0]));
+      add(b,new T.BoxGeometry(.045,.02,.3),std(0xb0262d,.6,0),[w/2-.5,-h/2-.005,d/2-.05]);
+      b.position.y=y;b.rotation.y=ry;g.add(b);};
+    book(1.3,.26,.92,0x1b3556,-.26,0);book(1.18,.22,.84,0x6e2230,-.02,.14);book(1.05,.2,.78,0x1f4a35,.18,-.1);
+    g.rotation.x=.18;return g;
+  }
+
+  /* ── laptop (Online degrees) ── */
+  function makeLaptop(){
+    const g=new T.Group(),al=phys(0xc3c6ce,.32,.9,{clearcoat:.1});
+    bev(g,1.5,.05,1.02,.02,al,[0,0,0]);
+    const keys=canvasTex(512,256,(x,w,h)=>{x.fillStyle='#b9bcc5';x.fillRect(0,0,w,h);x.fillStyle='#22242b';for(let r=0;r<6;r++)for(let c=0;c<15;c++)x.fillRect(10+c*33,12+r*30,29,25);});
+    add(g,new T.PlaneGeometry(1.34,.5),std(0xffffff,.6,.2,{map:keys}),[0,.0265,-.12],[-Math.PI/2,0,0]);
+    add(g,new T.PlaneGeometry(.52,.3),phys(0xa9acb6,.3,.8),[0,.0265,.33],[-Math.PI/2,0,0]);
+    add(g,new T.CylinderGeometry(.025,.025,1.4,12),std(0x6a6d76,.4,.8),[0,.03,-.5],[0,0,Math.PI/2]);
+    const lid=new T.Group();lid.position.set(0,.03,-.51);lid.rotation.x=-.28;g.add(lid);
+    bev(lid,1.5,.97,.03,.02,al,[0,.485,-.02]);
+    add(lid,new T.PlaneGeometry(1.43,.9),new T.MeshBasicMaterial({color:0x0b0c10}),[0,.485,-.0035+.0003]);
+    const scr=canvasTex(512,320,(x,w,h)=>{
+      const gr=x.createLinearGradient(0,0,w,h);gr.addColorStop(0,'#eef0ff');gr.addColorStop(1,'#e2f6ee');x.fillStyle=gr;x.fillRect(0,0,w,h);
+      x.fillStyle='#16123f';x.fillRect(0,0,w,34);x.fillStyle='#fff';x.font='bold 18px sans-serif';x.fillText('SmartEdJourney · Online Programs',14,23);
+      x.fillStyle='#1b1f3a';x.fillRect(22,56,300,170);x.fillStyle='#fff';x.beginPath();x.moveTo(150,110);x.lineTo(150,170);x.lineTo(200,140);x.fill();
+      x.fillStyle='#3558f0';x.fillRect(340,56,150,22);x.fillStyle='#12a065';x.fillRect(340,90,150,22);x.fillStyle='#7a5cff';x.fillRect(340,124,150,22);x.fillStyle='#cfd3ea';x.fillRect(340,158,150,22);x.fillRect(340,192,110,22);
+      x.fillStyle='#8a88aa';for(let i=0;i<4;i++)x.fillRect(22,244+i*17,i%2?300:360,8);});
+    add(lid,new T.PlaneGeometry(1.38,.86),new T.MeshBasicMaterial({map:scr,toneMapped:false}),[0,.485,.0003]);
+    g.rotation.x=.16;g.position.y=-.2;return g;
+  }
+
+  /* ── desk globe (Partner) ── */
+  function makeGlobe(){
+    const g=new T.Group();
+    const hash=(x,y)=>{const s=Math.sin(x*127.1+y*311.7)*43758.5453;return s-Math.floor(s);};
+    const vn=(x,y)=>{const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);return hash(xi,yi)*(1-u)*(1-v)+hash(xi+1,yi)*u*(1-v)+hash(xi,yi+1)*(1-u)*v+hash(xi+1,yi+1)*u*v;};
+    const map=canvasTex(512,256,(x,w,h)=>{const d=x.createImageData(w,h);
+      for(let j=0;j<h;j++)for(let i=0;i<w;i++){
+        const u=i/w*6.28318,vv=j/h*3.14159,nx=Math.cos(u)*Math.sin(vv)*3.1+5,ny=Math.cos(vv)*3.1+5,nz=Math.sin(u)*Math.sin(vv)*3.1+5;
+        const n=(vn(nx+nz*.7,ny+nz*.3)*.55+vn(nx*2.1+nz,ny*2.1)*.3+vn(nx*4.2,ny*4.2+nz*2)*.15);
+        const lat=Math.abs(j/h-.5)*2,k=(j*w+i)*4;let r,gc,b;
+        if(lat>.93){r=226;gc=232;b=238;}
+        else if(n>.53){const e=Math.min(1,(n-.53)*4);r=118+e*70;gc=132+e*44;b=96+e*10;if(e>.62){r+=20;gc+=2;b-=6;}}
+        else{const dpt=Math.min(1,(.53-n)*4);r=44-dpt*16;gc=86-dpt*26;b=118-dpt*30;}
+        d.data[k]=r;d.data[k+1]=gc;d.data[k+2]=b;d.data[k+3]=255;}
+      x.putImageData(d,0,0);x.strokeStyle='rgba(255,255,255,.1)';x.lineWidth=1;for(let i=0;i<=12;i++){x.beginPath();x.moveTo(i*w/12,0);x.lineTo(i*w/12,h);x.stroke();}for(let j=1;j<6;j++){x.beginPath();x.moveTo(0,j*h/6);x.lineTo(w,j*h/6);x.stroke();}});
+    const ball=new T.Group();ball.rotation.z=.41;g.add(ball);
+    add(ball,new T.SphereGeometry(.66,64,40),phys(0xffffff,.45,.02,{map,bumpMap:map,bumpScale:.3,clearcoat:.4,clearcoatRoughness:.35}));
+    add(ball,new T.CylinderGeometry(.014,.014,1.62,10),brass());
+    [-1,1].forEach(s=>add(ball,new T.SphereGeometry(.04,14,10),brass(),[0,s*.81,0]));
+    add(g,new T.TorusGeometry(.79,.026,14,80),brass(),[0,0,0]);
+    add(g,new T.LatheGeometry([[0,0],[.38,0],[.4,.02],[.38,.05],[.2,.08],[.08,.12],[.06,.26],[.0,.27]].map(p=>new T.Vector2(p[0],p[1])),40),brass(),[0,-.98,0]);
+    add(g,new T.CylinderGeometry(.03,.05,.22,12),brass(),[0,-.78,0]);
+    return g;
+  }
+
+  /* ── trophy cup on marble (Why us) ── */
+  function makeTrophy(){
+    const g=new T.Group(),gm=phys(0xd2a43a,.18,1,{clearcoat:.5,clearcoatRoughness:.1});
+    const prof=spline([[0,0],[.3,0],[.34,.05],[.26,.1],[.1,.18],[.07,.3],[.07,.48],[.15,.58],[.3,.74],[.43,.98],[.49,1.22],[.5,1.32]],60).map(p=>new T.Vector2(p.x,p.y-.7));
+    const inner=spline([[.5,1.32],[.46,1.3],[.4,1.04],[.26,.8],[0,.72]],30).map(p=>new T.Vector2(p.x,p.y-.7));
+    add(g,new T.LatheGeometry(prof.concat(inner),64),Object.assign(gm.clone(),{side:T.DoubleSide}),[0,.2,0]);
+    add(g,new T.TorusGeometry(.5,.014,8,56),gm,[0,.82,0],[Math.PI/2,0,0]);
+    [-1,1].forEach(s=>{const c=new T.CatmullRomCurve3([[s*.44,.48,0],[s*.64,.56,0],[s*.7,.36,0],[s*.5,.2,0],[s*.3,.16,0]].map(p=>new T.Vector3(...p)));add(g,new T.TubeGeometry(c,30,.03,10,false),gm);});
+    const marble=canvasTex(256,256,(x,w,h)=>{x.fillStyle='#1b1a22';x.fillRect(0,0,w,h);x.lineWidth=1;for(let i=0;i<26;i++){x.strokeStyle=`rgba(220,215,230,${.05+Math.random()*.14})`;x.beginPath();let px=Math.random()*w,py=0;x.moveTo(px,py);for(let k=0;k<8;k++){px+=Math.random()*60-30;py+=h/8;x.lineTo(px,py);}x.stroke();}});
+    const mm=phys(0xffffff,.22,0,{map:marble,clearcoat:.8,clearcoatRoughness:.12});
+    bev(g,.9,.14,.58,.025,mm,[0,-.6,0]);bev(g,.62,.09,.4,.02,mm,[0,-.48,0]);
+    bev(g,.42,.075,.012,.004,gold(),[0,-.6,.292]);
+    return g;
+  }
+
+  /* ── medal on ribbon (Student stories) ── */
+  function makeMedal(){
+    const g=new T.Group(),gm=phys(0xd2a43a,.2,1,{clearcoat:.5,clearcoatRoughness:.12});
+    const disc=new T.LatheGeometry([[0,-.03],[.44,-.03],[.5,-.015],[.52,.0],[.5,.02],[.44,.035],[.4,.025],[0,.025]].map(p=>new T.Vector2(p[0],p[1])),64);
+    add(g,disc,gm,[0,-.36,0],[Math.PI/2,0,0]);
+    add(g,new T.TorusGeometry(.37,.012,8,64),phys(0xb98a2a,.25,1),[0,-.36,.04]);
+    add(g,new T.TorusGeometry(.3,.008,8,64),phys(0xb98a2a,.25,1),[0,-.36,.036]);
+    const star=new T.Shape(),pts=10;for(let i=0;i<pts;i++){const a=i/pts*Math.PI*2-Math.PI/2,r=i%2?.095:.22;(i?star.lineTo:star.moveTo).call(star,Math.cos(a)*r,Math.sin(a)*r);}star.closePath();
+    add(g,new T.ExtrudeGeometry(star,{depth:.02,bevelEnabled:true,bevelThickness:.008,bevelSize:.008,bevelSegments:2}),phys(0xe6c466,.18,1,{clearcoat:.5}),[0,-.36,.036]);
+    add(g,new T.TorusGeometry(.055,.018,10,20),gm,[0,.17,0]);
+    const rib=canvasTex(64,128,(x,w,h)=>{x.fillStyle='#1d3a6b';x.fillRect(0,0,w,h);x.fillStyle='#f0ece0';x.fillRect(6,0,4,h);x.fillRect(w-10,0,4,h);for(let i=0;i<h;i+=2){x.fillStyle='rgba(255,255,255,.05)';x.fillRect(0,i,w,1);}});
+    [-1,1].forEach(s=>{const pg=new T.PlaneGeometry(.26,.82,2,14);const p=pg.attributes.position;for(let i=0;i<p.count;i++)p.setZ(i,Math.sin(p.getY(i)*5+s)*.012);pg.computeVertexNormals();
+      add(g,pg,std(0xffffff,.6,0,{map:rib,side:T.DoubleSide,bumpMap:noiseTex,bumpScale:.2}),[s*.14,.57,0],[0,0,s*-.24]);});
+    return g;
+  }
+
+  /* ── gift box with satin ribbon (Referral) ── */
+  function makeGift(){
+    const g=new T.Group(),rib=phys(0xd9b45f,.3,.45,{clearcoat:.4,clearcoatRoughness:.25});
+    const paper=std(0x1c4a3a,.62,0,{bumpMap:noiseTex,bumpScale:.25});
+    bev(g,.95,.74,.95,.03,paper,[0,-.12,0]);
+    bev(g,1.03,.2,1.03,.03,paper,[0,.35,0]);
+    bev(g,.15,.76,.97,.008,rib,[0,-.12,0]);bev(g,.97,.76,.15,.008,rib,[0,-.12,0]);
+    bev(g,.15,.21,1.05,.008,rib,[0,.35,0]);bev(g,1.05,.21,.15,.008,rib,[0,.35,0]);
+    [-1,1].forEach(s=>{const l=add(g,new T.TorusGeometry(.17,.04,12,32),rib,[s*.19,.56,0],[Math.PI/2.4,s*.45,s*.35]);l.scale.set(1,1.25,.55);});
+    [-1,1].forEach(s=>add(g,new T.BoxGeometry(.07,.28,.012),rib,[s*.09,.5,.12],[.5,0,s*.4]));
+    add(g,new T.SphereGeometry(.07,16,12),rib,[0,.47,0]);
+    g.rotation.set(.2,.5,0);return g;
+  }
+
+  /* ── sealed letter (Contact) ── */
+  function makeEnvelope(){
+    const g=new T.Group(),paper=std(0xf3ecdb,.92,0,{bumpMap:noiseTex,bumpScale:.18});
+    bev(g,1.4,.95,.035,.012,paper);
+    const tri=new T.Shape();tri.moveTo(-.7,.475);tri.lineTo(.7,.475);tri.lineTo(0,-.12);tri.closePath();
+    add(g,new T.ExtrudeGeometry(tri,{depth:.008,bevelEnabled:true,bevelThickness:.004,bevelSize:.004,bevelSegments:1}),std(0xe9dfc7,.92,0,{bumpMap:noiseTex,bumpScale:.18}),[0,0,.018]);
+    const wax=phys(0x7d1626,.28,0,{clearcoat:.9,clearcoatRoughness:.12});
+    add(g,new T.LatheGeometry([[0,.0],[.1,.0],[.135,.012],[.125,.03],[.1,.04],[0,.045]].map(p=>new T.Vector2(p[0],p[1])),28),wax,[0,-.1,.03],[Math.PI/2,0,0]);
+    add(g,new T.TorusGeometry(.075,.01,8,28),phys(0x651120,.3,0,{clearcoat:.8}),[0,-.1,.08]);
+    g.rotation.z=-.12;return g;
+  }
+
+  /* ── fountain pen (Services) ── */
+  function makePencil(){
+    const g=new T.Group(),resin=phys(0x14213d,.2,.05,{clearcoat:1,clearcoatRoughness:.08});
+    const body=new T.LatheGeometry([[0,.95],[.045,.97],[.075,.9],[.082,.6],[.082,.05],[.07,0],[.062,-.3],[.048,-.52],[.038,-.6],[0,-.6]].map(p=>new T.Vector2(p[0],p[1])),48);
+    add(g,body,resin);
+    [.62,.03].forEach(y=>add(g,new T.CylinderGeometry(.086,.086,.03,40),gold(),[0,y,0]));
+    add(g,new T.BoxGeometry(.016,.5,.014),gold(),[.088,.68,0]);add(g,new T.SphereGeometry(.014,10,8),gold(),[.088,.43,0]);
+    const nib=new T.Shape();nib.moveTo(-.04,0);nib.lineTo(.04,0);nib.quadraticCurveTo(.045,-.22,0,-.4);nib.quadraticCurveTo(-.045,-.22,-.04,0);
+    add(g,new T.ExtrudeGeometry(nib,{depth:.008,bevelEnabled:true,bevelThickness:.003,bevelSize:.003,bevelSegments:1}),phys(0xe0c06a,.15,1,{clearcoat:.4}),[0,-.58,-.004]);
+    add(g,new T.BoxGeometry(.004,.22,.012),std(0x2a2418,.5,.3),[0,-.78,0]);
+    g.scale.setScalar(1.3);g.rotation.z=.7;return g;
+  }
+
+  /* ── layout: cap in the middle, nine objects around it ── */
+  const cap=makeCap();root.add(cap);
+  const defs=[
+    [makeDiploma,'about','About'],[makePencil,'services','Services'],[makeBooks,'programs','Programs'],
+    [makeLaptop,'online','Online degrees'],[makeTrophy,'why','Why us'],[makeMedal,'testimonials','Student stories'],
+    [makeGlobe,'partner','Partner with us'],[makeGift,'referral','Referral program'],[makeEnvelope,'contact','Contact']];
+  const fl=defs.map((d,i)=>{
+    const ang=(i/defs.length)*Math.PI*2+Math.PI/2+.2,p=new T.Vector3(Math.cos(ang)*4.6,Math.sin(ang)*3.45+.1,Math.sin(i*2.3)*.8-.2);
+    const o=d[0]();const g=new T.Group();g.add(o);g.scale.setScalar(.98);g.position.copy(p);
+    g.userData={b:p.clone(),sp:.5+i*.07,ph:i*1.9,ry0:-p.x*.07,go:d[1],label:d[2],bounce:0,hov:0,turn:0,turnT:0};
+    root.add(g);return g;});
+
+  /* ── interaction ── */
+  const mouse={x:0,y:0},ray=new T.Raycaster(),pt=new T.Vector2();let hover=null;
+  const rect=()=>cv.getBoundingClientRect();
+  function setPt(e){const r=rect();pt.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);mouse.x=pt.x;mouse.y=pt.y;}
+  const wp=new T.Vector3();
+  /* exact hit first, then the nearest object within a finger-sized radius so moving/small objects open on the first tap */
+  function pick(){ray.setFromCamera(pt,cam);const hits=ray.intersectObjects(root.children,true);for(const h of hits){let o=h.object;while(o&&!(o.userData&&(o.userData.go||o.userData.isCap)))o=o.parent;if(o)return o;}
+    const r=rect(),tol=Math.max(34,Math.min(r.width,r.height)*.075);let best=null,bd=tol;
+    for(const o of root.children){if(!(o.userData&&(o.userData.go||o.userData.isCap)))continue;o.getWorldPosition(wp);wp.project(cam);
+      const dx=((wp.x-pt.x)/2)*r.width,dy=((wp.y-pt.y)/2)*r.height,d=Math.hypot(dx,dy);if(d<bd){bd=d;best=o;}}
+    return best;}
+  const tip=$('#tip');
+  const showTip=(o,e)=>{if(!o){tip.hidden=true;return;}const r=rect();tip.textContent=o.userData.label||'Career';tip.style.left=(e.clientX-r.left)+'px';tip.style.top=(e.clientY-r.top)+'px';tip.hidden=false;};
+  cv.addEventListener('pointermove',e=>{setPt(e);const o=pick();hover=o;cv.style.cursor=o?'pointer':'default';showTip(o,e);});
+  cv.addEventListener('pointerleave',()=>{hover=null;mouse.x=mouse.y=0;tip.hidden=true;});
+  let armed=null,navBusy=false;
+  cv.addEventListener('pointerdown',e=>{setPt(e);const o=pick();armed=o;if(!o)return;if(o.userData.go){o.userData.bounce=1;o.userData.turnT+=Math.PI*2;}else capTarget+=Math.PI*2;});
+  /* one press opens the section: the object chosen on press is used on release, even if it drifted meanwhile */
+  cv.addEventListener('pointerup',e=>{const o=armed;armed=null;if(!o||navBusy)return;navBusy=true;const id=o.userData.go||'career';
+    setTimeout(()=>{tip.hidden=true;go(id);},o.userData.go?260:380);setTimeout(()=>{navBusy=false;},1400);});
+  cv.addEventListener('pointercancel',()=>{armed=null;});
+  let capTarget=0,capSpin=0;
+
+  function size(){const w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;R.setSize(w,h,false);cam.aspect=w/h;cam.position.z=Math.max(15.5,5.9/(.2867*cam.aspect));cam.updateProjectionMatrix();if(reduce||!running)draw();}
+  let running=false,vis=true,t0=performance.now();
+  function draw(){R.render(scene,cam);}
+  function frame(now){
+    if(!running)return;requestAnimationFrame(frame);
+    const t=(now-t0)/1000;
+    root.rotation.y+=(mouse.x*.22-root.rotation.y)*.05;root.rotation.x+=(-mouse.y*.12-root.rotation.x)*.05;
+    capSpin+=(capTarget-capSpin)*.07;
+    cap.position.y=Math.sin(t*.9)*.12+.1;cap.rotation.y=Math.sin(t*.35)*.35+capSpin;
+    const ch=hover===cap?1.04:1;cap.scale.setScalar(cap.scale.x+(1.12*ch-cap.scale.x)*.12);
+    fl.forEach(g=>{const u=g.userData;
+      u.bounce=Math.max(0,u.bounce-.014);u.hov+=((g===hover?1:0)-u.hov)*.12;u.turn+=(u.turnT-u.turn)*.08;
+      g.position.y=u.b.y+Math.sin(t*u.sp+u.ph)*.2+Math.sin(u.bounce*Math.PI)*.9;
+      g.position.x=u.b.x+Math.cos(t*u.sp*.7+u.ph)*.1;
+      g.rotation.y=u.ry0+Math.sin(t*.4+u.ph)*.45+u.turn;g.rotation.x=Math.sin(t*.5+u.ph)*.06;
+      g.scale.setScalar(.98*(1+u.hov*.12+Math.sin(u.bounce*Math.PI)*.12));});
+    draw();
+  }
+  function start(){if(running||reduce||!vis||document.hidden)return;running=true;requestAnimationFrame(frame);}
+  function stop(){running=false;}
+  new ResizeObserver(size).observe(cv);size();
+  if(reduce){draw();return;}
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting;vis?start():stop();}).observe(cv);
+  document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+  start();
+})();
+
+
+/* ══ kinetic grid: page background that warps toward the cursor and ripples on click (port of kinetic-grid) ══ */
+(function(){
+  const cv=document.createElement('canvas');cv.id='kgrid';cv.setAttribute('aria-hidden','true');document.body.prepend(cv);
+  const ctx=cv.getContext('2d');if(!ctx)return;
+  const CELL=55,INFLUENCE=260,MAX_WARP=24,DOT=28,LERP=.08;
+  const BASE={r:22,g:18,b:63,a:.022},ACTIVE={r:122,g:100,b:240,a:.09},NODE={r:22,g:18,b:63,a:.035},NODE_ACTIVE={r:122,g:100,b:240,a:.14};
+  const GLOW='122,92,255',RIPPLE='122,92,255';
+  const lerpN=(a,b,t)=>a+(b-a)*t;
+  const col=(a,b,t)=>`rgba(${Math.round(lerpN(a.r,b.r,t))},${Math.round(lerpN(a.g,b.g,t))},${Math.round(lerpN(a.b,b.b,t))},${lerpN(a.a,b.a,t).toFixed(3)})`;
+  let W=0,H=0,dpr=1,dirty=true,raf=0;
+  const m={x:-9999,y:-9999},tgt={x:-9999,y:-9999},ripples=[];
+  const touch=matchMedia('(hover:none)').matches;
+  function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);dirty=true;if(reduce||touch)draw(performance.now());}
+  function warp(gx,gy,col,row,cols,rows){
+    const em=1.5,cp=Math.min(col/em,(cols-1-col)/em,1),rp=Math.min(row/em,(rows-1-row)/em,1),pin=cp*cp*rp*rp;
+    const dx=gx-m.x,dy=gy-m.y,dist=Math.sqrt(dx*dx+dy*dy),prox=Math.max(0,1-dist/INFLUENCE)*pin;
+    let rx=0,ry=0;
+    for(const r of ripples){const rdx=gx-r.x,rdy=gy-r.y,rd=Math.sqrt(rdx*rdx+rdy*rdy),ww=55,diff=rd-r.radius;
+      if(Math.abs(diff)<ww){const st=(1-Math.abs(diff)/ww)*r.opacity*18*pin,ang=Math.atan2(rdy,rdx),sg=diff<0?-1:1;rx+=Math.cos(ang)*st*sg*-1;ry+=Math.sin(ang)*st*sg*-1;}}
+    if(dist<INFLUENCE&&dist>0&&pin>0){const t=dist/INFLUENCE,e=t<.01?0:(1-t)*(1-t)*Math.min(1,dist/60),amt=e*MAX_WARP*pin,ang=Math.atan2(dy,dx);return {x:gx-Math.cos(ang)*amt+rx,y:gy-Math.sin(ang)*amt+ry,p:prox};}
+    return {x:gx+rx,y:gy+ry,p:prox};
+  }
+  function draw(now){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='rgba(22,18,63,0.018)';
+    for(let x=DOT/2;x<W;x+=DOT)for(let y=DOT/2;y<H;y+=DOT){ctx.beginPath();ctx.arc(x,y,.7,0,6.2832);ctx.fill();}
+    for(let i=ripples.length-1;i>=0;i--){const r=ripples[i],age=(now-r.born)/1000;r.radius=Math.max(0,age*400);r.opacity=Math.max(0,1-age*1.2);if(r.opacity<=0)ripples.splice(i,1);}
+    const cell=W<700?44:CELL,cols=Math.max(2,Math.ceil(W/cell))+1,rows=Math.max(2,Math.ceil(H/cell))+1,cw=W/(cols-1),ch=H/(rows-1);
+    const P=[];for(let r=0;r<rows;r++){P[r]=[];for(let c=0;c<cols;c++)P[r][c]=warp(c*cw,r*ch,c,r,cols,rows);}
+    const seg=(a,b)=>{const av=(a.p+b.p)/2,t=av*av*(3-2*av);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=col(BASE,ACTIVE,t);ctx.lineWidth=lerpN(.8,1.5,t);ctx.stroke();};
+    for(let r=0;r<rows;r++)for(let c=0;c<cols-1;c++)seg(P[r][c],P[r][c+1]);
+    for(let c=0;c<cols;c++)for(let r=0;r<rows-1;r++)seg(P[r][c],P[r+1][c]);
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+      const p=P[r][c],t=p.p*p.p*(3-2*p.p),rad=lerpN(1.8,3.2,t);
+      if(t>.3){const gr=rad+lerpN(0,6,(t-.3)/.7),g=ctx.createRadialGradient(p.x,p.y,rad*.5,p.x,p.y,gr);g.addColorStop(0,`rgba(${GLOW},${(t*.035).toFixed(3)})`);g.addColorStop(1,`rgba(${GLOW},0)`);ctx.beginPath();ctx.arc(p.x,p.y,gr,0,6.2832);ctx.fillStyle=g;ctx.fill();}
+      ctx.beginPath();ctx.arc(p.x,p.y,rad,0,6.2832);ctx.fillStyle=col(NODE,NODE_ACTIVE,t);ctx.fill();}
+    for(const r of ripples){ctx.beginPath();ctx.arc(r.x,r.y,Math.max(0,r.radius),0,6.2832);ctx.strokeStyle=`rgba(${RIPPLE},${(r.opacity*.04).toFixed(3)})`;ctx.lineWidth=1.5;ctx.stroke();}
+  }
+  function loop(now){
+    raf=requestAnimationFrame(loop);
+    const dx=tgt.x-m.x,dy=tgt.y-m.y;
+    if(Math.abs(dx)>.3||Math.abs(dy)>.3){m.x=lerpN(m.x,tgt.x,LERP);m.y=lerpN(m.y,tgt.y,LERP);dirty=true;}
+    if(ripples.length)dirty=true;
+    if(dirty){draw(now);dirty=false;}
+  }
+  addEventListener('resize',resize);resize();
+  if(reduce)return;
+  addEventListener('mousemove',e=>{if(m.x===-9999){m.x=e.clientX;m.y=e.clientY;}tgt.x=e.clientX;tgt.y=e.clientY;dirty=true;},{passive:true});
+  addEventListener('touchmove',e=>{const t=e.touches[0];if(!t)return;if(m.x===-9999){m.x=t.clientX;m.y=t.clientY;}tgt.x=t.clientX;tgt.y=t.clientY;dirty=true;},{passive:true});
+  addEventListener('click',e=>{ripples.push({x:e.clientX,y:e.clientY,radius:0,opacity:1,born:performance.now()});dirty=true;},{passive:true});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else raf=requestAnimationFrame(loop);});
+  raf=requestAnimationFrame(loop);
+})();
+
+
+
+/* ══ SEJ assistant: answers from the site's own content, forwards questions to the team's Gmail ══ */
+window.SEJChat=(function(){
+  const ENDPOINT=(window.SEJ_CHAT_ENDPOINT||'').trim();
+  const WA='918939639748',MAIL='smartedjourney.sols@gmail.com';
+  const sid=Math.random().toString(36).slice(2,8).toUpperCase();
+  const S={name:'',phone:'',email:'',contact:'',asked:0,sent:0,log:[],last:'',greeted:false,skipped:false};
+  /* mail relay used when no Apps Script URL is set: delivers straight to the company Gmail */
+  const RELAY='https://formsubmit.co/ajax/'+MAIL;
+  const box=$('#cmsgs'),input=$('#cinput'),panel=$('#cpanel');
+  const norm=s=>s.toLowerCase().replace(/[^a-z0-9+ ]/g,'').replace(/\s+/g,' ').trim();
+  const phones='• +91 89516 79748 (call)\n• +91 70990 16113 (call)\n• +91 92824 77990 (call)\n• +91 89396 39748 (WhatsApp)\n• '+MAIL;
+
+  /* programs index, built from the same data the page shows */
+  const LV={ug:'UG',pg:'PG',uo:'Online UG',po:'Online PG',co:'Certificate'};
+  const PROGS=[];
+  [[UG,'ug'],[PG,'pg'],[OUG,'uo'],[OPG,'po'],[CERT,'co']].forEach(([arr,lv])=>arr.forEach(c=>c.d.forEach(n=>{const k=norm(n).replace(/ /g,'');if(k.length>=3)PROGS.push({n,k,cat:c.n,lv});})));
+
+  const sv=i=>SVCS[i].d;
+  const KB=[
+    {id:'greet',k:['hi','hello','hey','namaste','good morning','good evening','good afternoon'],a:()=>"Hi! I can answer questions about our services, programs, online degrees, accommodation, and how to reach us. What would you like to know?",c:['What services do you offer?','Which programs can I choose?','How do I contact you?']},
+    {id:'thanks',k:['thank','thanks','thx','great','awesome'],a:()=>"You're welcome! If anything else comes up, ask here or message us on WhatsApp.",c:['Talk to a human']},
+    {id:'services',k:['service','what do you do','what you offer','what do you offer','help with','offer','provide'],a:()=>"We help students from the first college choice to the first job:\n"+SVCS.map(s=>'• '+s.n).join('\n'),c:['Education counseling','Career counseling','Accommodation & guardian','Parent counseling']},
+    {id:'edu',k:['education counsel','admission counsel','shortlist','enrol','enroll','documentation','apply','application'],a:()=>sv(0),c:['Guaranteed admissions','Which programs can I choose?','Talk to a human']},
+    {id:'career',k:['career','resume','interview','linkedin','job','placement','internship','roadmap','mentor session'],a:()=>sv(1)+"\n\nOur career process: 1) Profile assessment, 2) Industry expert session, 3) Career roadmap, 4) Resume & interview readiness, 5) Placement support.",c:['SEJ Community','Talk to a human']},
+    {id:'guar',k:['guarantee','guaranteed','tie-up','tie up','tieup','partnership with college','private college','seat','direct admission'],a:()=>sv(2),c:['Fees','Which programs can I choose?','Talk to a human']},
+    {id:'comm',k:['community','network','peer','off-campus','off campus','alumni'],a:()=>sv(3),c:['Career counseling','Talk to a human']},
+    {id:'acc',k:['accommodation','hostel','rental','rent','housing','guardian','relocat','pg accommodation','place to stay','room'],a:()=>sv(4),c:['Parent counseling','Talk to a human']},
+    {id:'parent',k:['parent','family','mother','father','my son','my daughter'],a:()=>sv(5),c:['Accommodation & guardian','Talk to a human']},
+    {id:'prog',k:['program','programme','course','degree','undergraduate','postgraduate','stream','what can i study','branches','ug ','pg ','ug','pg'],a:()=>"We counsel across many fields.\n• UG: "+UG.map(c=>c.n).join(', ')+"\n• PG: "+PG.map(c=>c.n).join(', ')+"\nTell me a specific course (like MBBS, B.Tech or MBA) and I'll check.",c:['Online degrees','Talk to a human']},
+    {id:'online',k:['online','part-time','part time','work and study','working professional','distance','certificate','diploma'],a:()=>"We offer UGC/AICTE-recognised online and part-time degrees from top Indian universities.\n• Online UG: "+OUG.map(c=>c.n).join(', ')+"\n• Online PG: "+OPG.map(c=>c.n).join(', ')+"\n• Certificates: "+CERT.map(c=>c.n).join(', '),c:['Talk to a human']},
+    {id:'exam',k:['neet','jee','cuet','entrance','exam','cutoff','cut off','eligibility','eligible','percentile','rank'],human:true,a:()=>"Our counselors guide students on how entrance exams and eligibility connect to admissions. For specifics like cutoffs or dates, our team can help you directly."},
+    {id:'fees',k:['fee','fees','cost','price','charges','how much','payment','scholarship','emi','loan','budget'],human:true,a:()=>"Fees depend on the program and the college, so I can't quote a number here. What I can say: our process has no hidden fees and no middlemen. Share your details and the team will give you exact figures."},
+    {id:'contact',k:['contact','phone','number','call','whatsapp','email','mail','reach','talk to'],a:()=>"You can reach us here:\n"+phones+"\nWe typically respond within minutes."},
+    {id:'office',k:['office','address','location','where are you','visit','guwahati','bengaluru','bangalore','assam','karnataka'],a:()=>"Our offices:\n• Assam: Natun Sarania, Gandhi Basti Road, Silpukhuri, Guwahati\n• Karnataka: HSR Layout, Sector 1, 27th Main, Bengaluru"},
+    {id:'about',k:['who are you','about','trust','founded','since','how long','experience','students placed','legit','genuine'],a:()=>"SmartEdJourney started in 2021 and grew for five years purely through referrals, with no advertising. Today we have 300+ college partnerships and have crossed 200+ student admissions. We work with zero middlemen and a fully transparent process."},
+    {id:'ref',k:['refer','referral','reward','earn','cash incentive','gift'],a:()=>"Refer a student or family you know. When they join SmartEdJourney, you earn rewards: cash incentives, exclusive gifts, priority access to counseling sessions, and community recognition."},
+    {id:'partner',k:['partner','collaborat','corporate','coaching institute','become a counselor','join your team'],a:()=>"We partner with colleges and universities, corporates and employers, coaching institutes, and individual counselors. The quickest way to start is a WhatsApp message to +91 89396 39748."},
+    {id:'time',k:['timing','hours','when are you open','open now','available'],a:()=>"We typically respond within minutes. For the fastest reply, message us on WhatsApp at +91 89396 39748."},
+    {id:'human',k:['human','agent','real person','callback','call back','call me','speak to','expert','team'],human:true,a:()=>"Happy to connect you with our team."}
+  ];
+  const CHIP_ROUTE={'What services do you offer?':'services','Which programs can I choose?':'programs','How do I contact you?':'contact','Education counseling':'edu','Career counseling':'career','Accommodation & guardian':'acc','Parent counseling':'parent','Guaranteed admissions':'guar','SEJ Community':'comm','Online degrees':'online','Fees':'fees','Talk to a human':'human'};
+
+  /* ── AI orb: canvas port of the AiOrb states (idle, listening, thinking, tool-call, streaming, waiting-approval, error, done) ── */
+  const ORB_LABELS={idle:'Assistant is ready',listening:'Assistant is listening',thinking:'Assistant is thinking','tool-call':'Sending to our team',streaming:'Assistant is writing the answer','waiting-approval':'Waiting for your details',error:'Something went wrong',done:'Assistant has finished'};
+  const ORB_TONE={idle:'--muted',listening:'--violet',thinking:'--violet','tool-call':'--violet',streaming:'--violet','waiting-approval':'#E08A00',error:'#C0262D',done:'--violet'};
+  const SETTLES={idle:1,listening:1,'waiting-approval':1,done:1};
+  const orb=(function(){
+    const c=$('#corb'),x=c.getContext('2d'),N=46,dpr=Math.min(devicePixelRatio||1,2);c.width=c.height=N*dpr;x.scale(dpr,dpr);
+    const dots=[];[[0,1],[.3,6],[.58,12],[.86,18]].forEach(([r,n],ri)=>{for(let i=0;i<n;i++)dots.push({r,a:i/n*6.2832+(ri%2?.26:0),ri});});
+    let state='idle',since=performance.now(),raf=0,color='#7a5cff',on=false;
+    const lab=$('#cstat');
+    const readColor=()=>{const v=ORB_TONE[state];color=v[0]==='#'?v:(getComputedStyle(document.documentElement).getPropertyValue(v).trim()||'#7a5cff');};
+    function paint(t){
+      x.clearRect(0,0,N,N);const cx=N/2,R=N/2-5;
+      for(const d of dots){
+        const px=cx+Math.cos(d.a)*d.r*R,py=cx+Math.sin(d.a)*d.r*R;let s=.6,al=.8;
+        if(state==='listening'){s=.55+.4*Math.abs(Math.sin(t*3+d.a*2+d.ri));al=.9;}
+        else if(state==='thinking'){const da=(((d.a-t*3)%6.2832)+6.2832)%6.2832;al=.25+.75*Math.max(0,1-da/2.2);s=.5+.5*al;}
+        else if(state==='tool-call'){const dd=Math.abs((px-cx)-Math.sin(t*3)*R)/R;al=.25+.75*Math.max(0,1-dd*2.2);s=.5+.5*al;}
+        else if(state==='streaming'){const w=Math.sin((px-cx)/R*3-t*6);s=.6+.35*w;al=.6+.4*w;}
+        else if(state==='waiting-approval'){s=.65+.2*Math.sin(t*2+d.ri);al=.95;}
+        else if(state==='error'){s=.8;al=.55;}
+        else{const w=Math.sin(t*1.4-d.r*3);s=.62+.22*w;al=.65+.25*w;}
+        x.globalAlpha=Math.max(.12,Math.min(1,al));x.fillStyle=color;x.beginPath();x.arc(px,py,Math.max(.9,s*2.3),0,6.2832);x.fill();
+      }
+      x.globalAlpha=1;
+    }
+    function loop(now){
+      if(SETTLES[state]&&now-since>5000){paint(since/1000+5);raf=0;return;}   /* resting states hold still after 5 s */
+      paint(now/1000);raf=requestAnimationFrame(loop);
+    }
+    function kick(){cancelAnimationFrame(raf);raf=0;if(!on)return;if(reduce){paint(0);return;}raf=requestAnimationFrame(loop);}
+    return {
+      set(st){if(st===state)return;state=st;since=performance.now();readColor();if(lab)lab.textContent=ORB_LABELS[st];kick();},
+      get state(){return state;},
+      start(){on=true;readColor();kick();},
+      stop(){on=false;cancelAnimationFrame(raf);raf=0;}
+    };
+  })();
+
+  /* ── chat-bubble layout (avatar + bubble, sent vs received, loading dots, copy / regenerate actions) ── */
+  const LOADING='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Assistant is typing" role="img"><circle cx="4" cy="12" r="2" fill="currentColor"><animate id="sq1" begin="0;sq3.end+0.25s" attributeName="cy" calcMode="spline" dur="0.6s" values="12;6;12" keySplines=".33,.66,.66,1;.33,0,.66,.33"/></circle><circle cx="12" cy="12" r="2" fill="currentColor"><animate begin="sq1.begin+0.1s" attributeName="cy" calcMode="spline" dur="0.6s" values="12;6;12" keySplines=".33,.66,.66,1;.33,0,.66,.33"/></circle><circle cx="20" cy="12" r="2" fill="currentColor"><animate id="sq3" begin="sq1.begin+0.2s" attributeName="cy" calcMode="spline" dur="0.6s" values="12;6;12" keySplines=".33,.66,.66,1;.33,0,.66,.33"/></circle></svg>';
+  const scroll=()=>{box.scrollTop=box.scrollHeight;};
+  const initials=()=>S.name?S.name.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase():'You';
+  function row(kind){
+    const r=document.createElement('div');r.className='crow '+kind;
+    const av=document.createElement('span');av.className='cav';av.textContent=kind==='me'?initials():'AI';
+    const col=document.createElement('div');col.className='ccol';const b=document.createElement('div');b.className='cbub';col.appendChild(b);r.append(av,col);box.appendChild(r);scroll();return {r,b,col};
+  }
+  const add=(cls,txt)=>{if(cls==='note'){const d=document.createElement('div');d.className='msg note';d.textContent=txt;box.appendChild(d);scroll();return d;}const {b}=row(cls==='me'?'me':'bot');b.textContent=txt;return b;};
+  function chips(list){const w=document.createElement('div');w.className='cchips';list.forEach(t=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.onclick=()=>{w.remove();ask(t,true);};w.appendChild(b);});box.appendChild(w);scroll();}
+  function typeInto(b,txt){
+    return new Promise(res=>{
+      if(reduce){b.textContent=txt;scroll();return res();}
+      b.textContent='';let i=0;const step=Math.max(2,Math.ceil(txt.length/80));
+      const iv=setInterval(()=>{i=Math.min(txt.length,i+step);b.textContent=txt.slice(0,i);scroll();if(i>=txt.length){clearInterval(iv);res();}},16);
+    });
+  }
+  function addActions(col,b,txt,q){
+    if(txt.length<24)return;
+    const w=document.createElement('div');w.className='cacts';
+    const mk=(icon,label,fn)=>{const x=document.createElement('button');x.type='button';x.className='cact';x.title=label;x.setAttribute('aria-label',label);x.innerHTML=ICO(icon);x.onclick=fn;return x;};
+    const cp=mk('copy','Copy answer',async()=>{try{await navigator.clipboard.writeText(txt);}catch(e){const r=document.createRange();r.selectNodeContents(b);const s2=getSelection();s2.removeAllRanges();s2.addRange(r);}cp.innerHTML=ICO('check');setTimeout(()=>{cp.innerHTML=ICO('copy');},1400);});
+    w.appendChild(cp);
+    if(q)w.appendChild(mk('refresh','Regenerate answer',()=>regen(b,w,q)));
+    col.appendChild(w);scroll();
+  }
+  function bot(txt,ch,delay,q){
+    return new Promise(res=>{
+      orb.set('thinking');
+      const {b,col}=row('bot');b.innerHTML=LOADING;
+      setTimeout(async()=>{
+        orb.set('streaming');await typeInto(b,txt);S.log.push('Bot: '+txt);addActions(col,b,txt,q);
+        if(ch)chips(ch);orb.set('done');res();
+      },reduce?0:(delay??450));
+    });
+  }
+  async function regen(b,w,q){
+    w.remove();orb.set('thinking');b.innerHTML=LOADING;await new Promise(r=>setTimeout(r,reduce?0:500));
+    const res=resolve(q,!!CHIP_ROUTE[q]);let txt;
+    if(res.progs.length)txt=`Yes, we counsel for this:\n${res.progs.map(p=>`• ${p.n} (${LV[p.lv]}, ${p.cat})`).join('\n')}\n\nWant fees, eligibility or college options? Our team can share exact details.`;
+    else if(res.entry&&!res.entry.human)txt=res.entry.a();
+    else txt="I'm not sure about that one, and I don't want to guess. Our team can answer you directly.";
+    orb.set('streaming');await typeInto(b,txt);addActions(b.parentElement,b,txt,q);orb.set('done');
+  }
+  const link=(label,href,alt)=>{const a=document.createElement('a');a.className='cbtn2'+(alt?' alt':'');a.href=href;a.target='_blank';a.rel='noopener';a.textContent=label;return a;};
+  function actions(items){const w=document.createElement('div');w.className='cchips';items.forEach(i=>w.appendChild(i));box.appendChild(w);scroll();}
+
+  /* ── Indian mobile validation: 10 digits, starts with 6-9 (+91 / 91 / 0 prefix allowed) ── */
+  function parseIN(v){
+    let d=String(v||'').replace(/[\s\-().]/g,'');
+    if(/^\+91\d{10}$/.test(d))d=d.slice(3);else if(/^91\d{10}$/.test(d))d=d.slice(2);else if(/^0\d{10}$/.test(d))d=d.slice(1);
+    if(!/^[6-9]\d{9}$/.test(d)||/^(\d)\1{9}$/.test(d))return null;
+    return d;
+  }
+  const fmt=d=>'+91 '+d.slice(0,5)+' '+d.slice(5);
+  const okEmail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+
+  /* ── send to the team's Gmail. Only ever called for visitors with a valid mobile number ── */
+  async function send(type,extra){
+    if(!S.phone||S.sent>=25)return 'blocked';
+    S.sent++;
+    const p=Object.assign({type,session:sid,name:S.name,phone:S.phone,email:S.email,contact:S.contact,page:location.href,time:new Date().toISOString(),transcript:S.log.slice(-14).join('\n')},extra||{});
+    try{
+      if(ENDPOINT){await fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p),keepalive:true});return 'sent';}
+      const body={_subject:'[SEJ Chat] '+S.name+' · '+S.contact,_template:'table',_captcha:'false',_replyto:S.email||undefined,Name:S.name,'Mobile (India)':S.contact,Email:S.email||'(not given)',Request:type==='callback'?'Wants a call back':'Question',Question:p.question||'','Bot could answer':p.answered||'',Page:p.page,'Chat session':sid,Time:p.time,'Recent conversation':p.transcript};
+      const r=await fetch(RELAY,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)});
+      const j=await r.json().catch(()=>({}));
+      return (j.success===true||j.success==='true')?'sent':'fail';
+    }catch(e){return 'fail';}
+  }
+  function fallbackLinks(q){
+    const txt=`Hi SmartEdJourney, I have a question: ${q}${S.name?`\nName: ${S.name}`:''}${S.contact?`\nMobile: ${S.contact}`:''}`;
+    actions([link('Send on WhatsApp','https://wa.me/'+WA+'?text='+encodeURIComponent(txt)),link('Email us','mailto:'+MAIL+'?subject='+encodeURIComponent('Website question')+'&body='+encodeURIComponent(txt),true)]);
+  }
+
+  /* ── details form (intro, or when a question needs the team) ── */
+  function detailsForm(opts){
+    opts=opts||{};
+    const f=document.createElement('form');f.className='cform';f.noValidate=true;
+    f.innerHTML=`<label>Your name<input name="n" maxlength="80" autocomplete="name" value="${esc(S.name)}"></label>
+<label>Mobile number (India)<input name="p" type="tel" inputmode="numeric" maxlength="16" autocomplete="tel" placeholder="10-digit mobile, e.g. 98765 43210" value="${esc(S.phone)}"></label>
+<label>Email (optional)<input name="e" type="email" maxlength="120" autocomplete="email" value="${esc(S.email)}"></label>
+${opts.q!==undefined?'<label>Your question<textarea name="q" maxlength="500" rows="3"></textarea></label>':''}
+<input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<small class="err" role="alert" style="color:#c0262d;font-weight:700"></small>
+<small>${opts.intro?'Your questions go straight to our team with your number so we can call or WhatsApp you back.':'Our team will contact you about this question only.'}</small>
+<div class="row"><button class="cbtn2" type="submit">${opts.intro?'Start chat':'Send to our team'}</button><button class="cbtn2 alt" type="button" data-x>${opts.intro?'Skip for now':'Not now'}</button></div>`;
+    if(opts.q!==undefined)$('textarea',f).value=opts.q;
+    const err=$('.err',f);
+    f.onsubmit=async e=>{
+      e.preventDefault();const fd=new FormData(f);if(fd.get('website'))return;
+      const name=String(fd.get('n')).trim(),ph=parseIN(fd.get('p')),em=String(fd.get('e')||'').trim(),q=opts.q!==undefined?String(fd.get('q')).trim():'';
+      const bad=(el,msg)=>{err.textContent=msg;const i=$('[name='+el+']',f);i.setAttribute('aria-invalid','true');i.focus();};
+      $$('input',f).forEach(i=>i.removeAttribute('aria-invalid'));
+      if(name.length<2)return bad('n','Please enter your name.');
+      if(!ph)return bad('p','Enter a valid 10-digit Indian mobile number (starts with 6, 7, 8 or 9). Your question has not been sent.');
+      if(em&&!okEmail(em))return bad('e','That email address does not look right. Fix it or leave it empty.');
+      if(opts.q!==undefined&&q.length<3)return bad('q','Please type your question.');
+      S.name=name;S.phone=ph;S.email=em;S.contact=fmt(ph);S.skipped=false;
+      f.remove();orb.set(opts.intro?'idle':'tool-call');
+      if(opts.intro){S.log.push(`Visitor: ${S.name} / ${S.contact}`);add('me',`${S.name} · ${S.contact}`);await bot(`Thanks ${S.name.split(' ')[0]}! Ask me anything. Your questions are sent to our team along with your number, so we can follow up.`,['What services do you offer?','Which programs can I choose?','Online degrees','Fees','Talk to a human'],300);return;}
+      add('me',`${S.name} · ${S.contact}\n${q}`);S.log.push(`Visitor details: ${S.name} / ${S.contact}`,'Visitor: '+q);
+      const r=await send('lead',{question:q,answered:'no'});
+      await afterSend(r,q);
+    };
+    $('[data-x]',f).onclick=()=>{f.remove();S.skipped=true;orb.set('idle');bot(opts.intro?"No problem. I can still answer common questions, but they won't be sent to our team unless you share your number. You can also use WhatsApp or call us any time.":"No problem. You can always reach us on WhatsApp or by phone.",opts.intro?['What services do you offer?','Which programs can I choose?','Online degrees','How do I contact you?']:['Ask another question']);};
+    box.appendChild(f);scroll();orb.set('waiting-approval');$('input',f).focus();
+  }
+  async function afterSend(r,q){
+    if(r==='sent'){orb.set('done');await bot(`Done. Your question has been sent to our team and they'll reach out on ${S.contact}. For a faster reply you can also message us on WhatsApp.`,null,300);actions([link('Open WhatsApp','https://wa.me/'+WA+'?text='+encodeURIComponent('Hi, I just asked on your website: '+q))]);}
+    else{
+      orb.set('error');setTimeout(()=>{if(orb.state==='error')orb.set('idle');},4000);
+      const why=location.protocol==='file:'?"Email sending is blocked when this page is opened as a file on a computer. It works once the website is online.":"The email service isn't reachable right now.";
+      await bot(`I couldn't send that to our team automatically. ${why} Please use one of these so it reaches us:`,null,300);fallbackLinks(q);
+    }
+  }
+
+  /* ── answer engine ── */
+  function findProgs(q){
+    const nq=norm(q),sq=nq.replace(/ /g,'');
+    const hits=PROGS.filter(p=>sq.includes(p.k)&&p.k.length>=3&&(p.k.length>4||nq.split(' ').some(w=>w===p.k)||nq.includes(norm(p.n))));
+    const best=[];const seen=new Set();
+    hits.sort((a,b)=>b.k.length-a.k.length).forEach(p=>{const key=p.k+p.lv;if(!seen.has(key)&&best.length<4){seen.add(key);best.push(p);}});
+    return best;
+  }
+  const lev=(a,b)=>{const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];}for(let j=1;j<=b.length;j++)m[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return m[a.length][b.length];};
+  function match(q){
+    const nq=' '+norm(q)+' ',toks=nq.trim().split(' ');let best=null,bs=0;
+    KB.forEach(e=>{let s=0;e.k.forEach(k=>{const nk=norm(k);if(!nk)return;let hit=nk.length<=3?nq.includes(' '+nk+' '):nq.includes(nk);if(!hit&&nk.length>=5&&!nk.includes(' '))hit=toks.some(t=>t.length>=5&&Math.abs(t.length-nk.length)<=1&&lev(t,nk)<=1);if(hit)s+=nk.length>5?2:1;});if(s>bs){bs=s;best=e;}});
+    return bs>=1?best:null;
+  }
+  function resolve(q,fromChip){
+    let entry=null,progs=[];
+    if(fromChip&&CHIP_ROUTE[q])entry=KB.find(e=>e.id===CHIP_ROUTE[q]);
+    else{progs=findProgs(q);if(!progs.length)entry=match(q);}
+    return {entry,progs};
+  }
+  async function ask(q,fromChip){
+    q=q.trim().slice(0,400);if(!q)return;
+    add('me',q);S.log.push('Visitor: '+q);S.last=q;S.asked++;
+    if(q==='Ask another question'){await bot('Sure, go ahead and type your question.');return;}
+    const {entry,progs}=resolve(q,fromChip);
+    const answered=!!(progs.length||(entry&&!entry.human));
+    const topic=progs.length?'program':(entry?entry.id:'unknown');
+    const needsTeam=!answered||(entry&&entry.human);
+    const trivial=entry&&['greet','thanks'].includes(entry.id);
+    let r='blocked';
+    if(S.phone&&!trivial){
+      const type=entry&&entry.id==='human'?'callback':'question';
+      if(needsTeam){orb.set('tool-call');r=await send(type,{question:q,answered:'no',topic});}
+      else send(type,{question:q,answered:'yes',topic});
+    }
+    if(progs.length){
+      const list=progs.map(p=>`• ${p.n} (${LV[p.lv]}, ${p.cat})`).join('\n');
+      await bot(`Yes, we counsel for this:\n${list}\n\nWant fees, eligibility or college options? Our team can share exact details.`,['Fees','Talk to a human'],450,q);return;
+    }
+    if(entry&&!entry.human){await bot(entry.a(),entry.c,450,q);if(entry.id==='contact')actions([link('WhatsApp','https://wa.me/'+WA),link('Call +91 89516 79748','tel:+918951679748',true)]);return;}
+    if(entry&&entry.human)await bot(entry.a());
+    else await bot("I'm not sure about that one, and I don't want to guess. Our team can answer you directly.",null,500);
+    if(S.phone){await afterSend(r,q);}
+    else{await bot("Share your name and mobile number and I'll pass it on.",null,250);detailsForm({q:entry&&entry.id==='fees'?q:(entry?'':q)});}
+  }
+
+  /* ── open / close ── */
+  function open(){
+    panel.classList.add('open');document.body.classList.add('chat-open');orb.start();
+    if(!S.greeted){S.greeted=true;
+      bot("Hi, I'm the SEJ assistant. Ask me about our services, programs, online degrees, accommodation or how to reach us.",null,200).then(()=>{add('note','To send your questions to our team, share your name and mobile number first.');detailsForm({intro:true});});}
+    setTimeout(()=>input.focus(),60);
+  }
+  function close(){panel.classList.remove('open');document.body.classList.remove('chat-open');orb.stop();}
+  input.addEventListener('input',()=>{if(['idle','done','listening'].includes(orb.state))orb.set(input.value.trim()?'listening':'idle');});
+  $('#cin').addEventListener('submit',e=>{e.preventDefault();const v=input.value;input.value='';ask(v,false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('open'))close();});
+  return {open,close};
+})();
+
+</script>
+</body></html>
